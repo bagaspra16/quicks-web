@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+}
+.v1_398 {
+  width: 100%;
+  height: 1080px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v1_633 {
+  width: 100%;
+  height: 1080px;
+  background: url("../images/v1_633.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v801_1801 {
+  width: 100%;
+  height: 100%;
+  background: rgba(51,51,51,1);
+  opacity: 1;
+  position: absolute;
+  top: 58px;
+  left: 285px;
+}
+.v801_1802 {
+  width: 285px;
+  height: 100%;
+  background: rgba(51,51,51,1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.v801_1803 {
+  width: 100%;
+  height: 58px;
+  background: rgba(79,79,79,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 283px;
+}
+.v801_1804 {
+  width: 16px;
+  height: 16px;
+  background: rgba(242,242,242,1);
+  opacity: 1;
+  position: absolute;
+  top: 19px;
+  left: 309px;
+}
+.v801_1805 {
+  width: 1px;
+  height: 100%;
+  background: rgba(242,242,242,1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 282px;
+}
+.v1_511 {
+  width: 68px;
+  height: 68px;
+  background: url("../images/v1_511.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 985px;
+  left: 1818px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.10000000149011612);
+  overflow: hidden;
+}
+.v801_1806 {
+  width: 68px;
+  height: 68px;
+  background: rgba(47,128,237,1);
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.v1_513 {
+  width: 56px;
+  height: 56px;
+  background: url("../images/v1_513.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  overflow: hidden;
+}
+.v1_514 {
+  width: 56px;
+  height: 56px;
+  background: url("../images/v1_514.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+.v801_1807 {
+  width: 18px;
+  height: 32px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: absolute;
+  top: 11px;
+  left: 19px;
+}

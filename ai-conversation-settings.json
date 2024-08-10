@@ -1,0 +1,18 @@
+{
+    "apiSettings": {
+        "endpoint": "https://Humor-API.proxy-production.allthingsdev.co/memes/random?keywords=airplane",
+        "method": "GET",
+        "headers": {
+            "x-apihub-key": "CE6bE5HJj9VzMWxfsjRe9dx2VEhWKeQE0YRIZVk1SXX-5p0LBQ",
+            "x-apihub-host": "Humor-API.allthingsdev.co",
+            "x-apihub-endpoint": "ae826f2b-78a4-4e25-aecc-5bdc562d7724"
+        }
+    },
+    "conversation": {
+        "sentMessageClass": "sent",
+        "receivedMessageClass": "received"
+    },
+    "messages": {
+        "error": "Sorry, I could not fetch a meme at this time."
+    }
+}

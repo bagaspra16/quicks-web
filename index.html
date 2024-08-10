@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Quicks</title>
+    <style>
+        input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+        .left {
+            background-color: #4F4F4F;
+            height: 100vh;
+        }
+
+        .divider {
+            background-color: #E0E0E0;
+            width: 2px;
+            height: 100vh;
+            padding: 0;
+        }
+
+        .right {
+            background-color: #4F4F4F;
+            height: 100vh;
+            padding: 0;
+        }
+
+        .search-bar {
+            height: 60px;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .form-control {
+            background-color: #828282;
+            border: none;
+            border-radius: 0;
+            height: 100%;
+            color: #e0e0e0;
+        }
+
+        .input-group-text {
+            background-color: #828282;
+            border: none;
+            height: 100%;
+        }
+
+        .form-control:focus {
+            color: white;
+            background-color: #828282;
+            box-shadow: none;
+        }
+
+        .form-control::placeholder {
+            color: #e0e0e0;
+        }
+
+        .form-control:focus::placeholder {
+            color: #e0e0e0;
+        }
+
+        /* Floating button */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional buttons */
+        .extra-btn {
+            position: fixed;
+            bottom: 20px;
+            background-color: #ffffff;
+            color: #4F4F4F;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .extra-btn-label {
+            position: fixed;
+            bottom: 72px;
+            background-color: transparent;
+            color: white;
+            font-size: 12px;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .extra-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .extra-btn-label.active {
+            opacity: 1;
+        }
+
+        .modal-custom {
+            position: absolute;
+            bottom: 100px;
+            width: 450px;
+            height: 400px;
+            background-color: #4E4E4E;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: none;
+        }
+
+        .modal-header {
+            background-color: #4E4E4E;
+            color: rgb(255, 216, 41);
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+        .chat-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #4e4e4e;
+            border-radius: 0px;
+            border: 1px solid #4e4e4e;
+        }
+
+        .chat-message {
+            max-width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .chat-message.sent {
+            width: 60%;
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            border-top-right-radius: 0;
+            margin-inline-start: 170px;
+        }
+
+        .chat-message.received {
+            width: 60%;
+            align-self: flex-start;
+            background-color: #ffffff;
+            color: #333;
+            border-top-left-radius: 0;
+            border: 1px solid #ddd;
+        }
+
+        .chat-input {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            margin-right: 10px;
+            flex: 1;
+        }
+        .modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    padding: 15px;
+    background-color: #4e4e4e; /* Optional: Make sure background color matches the modal body */
+}
+
+        .send-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px; /* Optional: Add some margin if needed */
+}
+
+.send-btn:hover {
+    background-color: #0056b3;
+}
+
+        .typing-indicator {
+    display: none;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #007bff;
+    text-align: center;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+    border-radius: 50%;
+    background: #007bff;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+  /* For tablets and smaller screens */
+  .left, .divider, .right {
+    height: auto;
+  }
+
+  .search-bar {
+    height: auto;
+    padding: 10px;
+  }
+
+  .floating-btn, .extra-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .modal-custom {
+    width: 90%;
+    height: auto;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .chat-body {
+    height: 200px; /* Adjust as needed */
+  }
+}
+
+@media (max-width: 480px) {
+  /* For small smartphones */
+  /* Add more specific styles for smaller screens if needed */
+}
+
+
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 left"></div>
+            <div class="col-auto divider"></div>
+            <div class="col right">
+                <div class="search-bar">
+                    <div class="input-group">
+                        <span style="background-color: #828282;">
+                            &ensp;&ensp;<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15" height="15"
+                                viewBox="0,0,256,256">
+                                <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                                    stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                    font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                                    style="mix-blend-mode: normal">
+                                    <g transform="scale(5.12,5.12)">
+                                        <path
+                                            d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z">
+                                        </path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                        <input type="text" class="form-control" aria-label="Search">
+                    </div>
+                </div>
+                <!-- Konten lainnya dapat ditambahkan di sini -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Button -->
+    <button class="floating-btn" id="mainBtn">
+        <center><img src="images/primary-shape.png" width="75%" height="75%" alt="" srcset=""></center>
+    </button>
+
+    <!-- Additional Buttons -->
+    <button class="extra-btn" id="talkBtn" style="right: 80px;">
+        <center><img src="images/inbox-primary.png" width="78%" height="78%" alt="" srcset=""></center>
+    </button>
+    <span class="extra-btn-label" id="talkLabel" style="right: 94px;">Talk</span>
+
+    <button class="extra-btn" id="taskBtn" style="right: 140px;">
+        <center><img src="images/task-primary.png" width="78%" height="78%" alt="" srcset=""></center>
+    </button>
+    <span class="extra-btn-label" id="taskLabel" style="right: 152px;">Task</span>
+
+    <!-- Modals -->
+    <div class="modal-custom rounded-1" id="talkModal" style="right: 80px;">
+        <div class="modal-header">
+            <h5 class="modal-title">Mr. ChadBot</h5>
+        </div>
+        <div class="modal-body chat-body">
+            <div id="chatContainer">
+                <!-- Chat messages will be injected here -->
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="text" class="form-control chat-input" placeholder="Type a message...">
+            <button class="btn btn-primary send-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 256 256" xml:space="preserve" style="color:white;">
+        <defs>
+        </defs>
+        <g fill="white" style="opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+            <path style="color:#e0e0e0;" d="M 89.999 3.075 C 90 3.02 90 2.967 89.999 2.912 c -0.004 -0.134 -0.017 -0.266 -0.038 -0.398 c -0.007 -0.041 -0.009 -0.081 -0.018 -0.122 c -0.034 -0.165 -0.082 -0.327 -0.144 -0.484 c -0.018 -0.046 -0.041 -0.089 -0.061 -0.134 c -0.053 -0.119 -0.113 -0.234 -0.182 -0.346 C 89.528 1.382 89.5 1.336 89.469 1.29 c -0.102 -0.147 -0.212 -0.288 -0.341 -0.417 c -0.13 -0.13 -0.273 -0.241 -0.421 -0.344 c -0.042 -0.029 -0.085 -0.056 -0.129 -0.082 c -0.118 -0.073 -0.239 -0.136 -0.364 -0.191 c -0.039 -0.017 -0.076 -0.037 -0.116 -0.053 c -0.161 -0.063 -0.327 -0.113 -0.497 -0.147 c -0.031 -0.006 -0.063 -0.008 -0.094 -0.014 c -0.142 -0.024 -0.285 -0.038 -0.429 -0.041 C 87.03 0 86.983 0 86.936 0.001 c -0.141 0.003 -0.282 0.017 -0.423 0.041 c -0.035 0.006 -0.069 0.008 -0.104 0.015 c -0.154 0.031 -0.306 0.073 -0.456 0.129 L 1.946 31.709 c -1.124 0.422 -1.888 1.473 -1.943 2.673 c -0.054 1.199 0.612 2.316 1.693 2.838 l 34.455 16.628 l 16.627 34.455 C 53.281 89.344 54.334 90 55.481 90 c 0.046 0 0.091 -0.001 0.137 -0.003 c 1.199 -0.055 2.251 -0.819 2.673 -1.943 L 89.815 4.048 c 0.056 -0.149 0.097 -0.3 0.128 -0.453 c 0.008 -0.041 0.011 -0.081 0.017 -0.122 C 89.982 3.341 89.995 3.208 89.999 3.075 z M 75.086 10.672 L 37.785 47.973 L 10.619 34.864 L 75.086 10.672 z M 55.136 79.381 L 42.027 52.216 l 37.302 -37.302 L 55.136 79.381 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+        </g>
+        </svg>
+            </button>
+        </div>
+    </div>
+    
+
+    <div class="modal-custom rounded-1" id="taskModal" style="right: 140px;">
+        <div class="modal-header">
+            <h5 class="modal-title">To-Do List</h5>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <input type="text" id="taskInput" class="form-control rounded-3" placeholder="Add a new task...">
+                <input type="number" inputmode="numeric" id="taskTimer" class="form-control mt-2 rounded-3" placeholder="Minutes" min="1">
+                <button class="btn btn-warning mt-2 rounded-10" id="addTaskBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
+                        <g fill="#e0e0e0" fill-rule="evenodd" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M11,2v9h-9v2h9v9h2v-9h9v-2h-9v-9z"></path></g></g>
+                        </svg>
+                </button>
+            </div>
+            <ul id="taskList" class="list-group">
+                <!-- Tasks will be injected here -->
+            </ul>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        const mainBtn = document.getElementById('mainBtn');
+        const talkBtn = document.getElementById('talkBtn');
+        const inboxBtn = document.getElementById('taskBtn');
+        const talkLabel = document.getElementById('talkLabel'); 
+        const inboxLabel = document.getElementById('taskLabel');
+        const talkModal = document.getElementById('talkModal');
+        const inboxModal = document.getElementById('taskModal');
+
+        let isOpen = false;
+
+        mainBtn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                talkBtn.classList.add('active');
+                taskBtn.classList.add('active');
+                talkLabel.classList.add('active');
+                taskLabel.classList.add('active');
+            } else {
+                talkBtn.classList.remove('active');
+                taskBtn.classList.remove('active');
+                talkLabel.classList.remove('active');
+                taskLabel.classList.remove('active');
+            }
+        });
+
+        talkBtn.addEventListener('click', () => {
+            taskModal.style.display = 'none';
+            toggleModal(talkModal, talkBtn, talkLabel);
+        });
+
+        taskBtn.addEventListener('click', () => {
+            talkModal.style.display = 'none';
+            toggleModal(taskModal, taskBtn, taskLabel);
+        });
+
+        function toggleModal(modal, button, label) {
+            const isModalOpen = modal.style.display === 'block';
+
+            // Toggle the modal display
+            modal.style.display = isModalOpen ? 'none' : 'block';
+
+            // Toggle the button color and label visibility
+            if (isModalOpen) {
+                button.style.backgroundColor = '#ffffff';
+                label.style.display = 'inline';
+            } else {
+                button.style.backgroundColor = '#4F4F4F'; // Warna yang sama dengan ikon
+                label.style.display = 'none';
+            }
+        }
+
+        // Close modal if click outside
+        window.addEventListener('click', function (event) {
+            if (!talkBtn.contains(event.target) && !talkModal.contains(event.target)) {
+                talkModal.style.display = 'none';
+                talkBtn.style.backgroundColor = '#ffffff';
+                talkLabel.style.display = 'inline';
+            }
+            if (!taskBtn.contains(event.target) && !taskModal.contains(event.target)) {
+                taskModal.style.display = 'none';
+                taskBtn.style.backgroundColor = '#ffffff';
+                taskLabel.style.display = 'inline';
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+    const chatContainer = document.getElementById('chatContainer');
+    const sendMessageButton = document.querySelector('.send-btn');
+    const chatInput = document.querySelector('.chat-input');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    // Simple contextual chat history
+    let chatHistory = [];
+
+    // Function to get bot response based on user input
+    function getBotResponse(userMessage) {
+        // Update chat history with user message
+        chatHistory.push({ type: 'sent', message: userMessage });
+
+        const lowerCaseMessage = userMessage.toLowerCase();
+        let response = '';
+
+        // Simple NLP: keyword-based responses
+        if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
+            response = 'Hello! How can I assist you today?';
+        } else if (lowerCaseMessage.includes('how are you')) {
+            response = 'I am just a bot, but I am doing great! How can I help you?';
+        } else if (lowerCaseMessage.includes('what is your name')) {
+            response = 'I am a simple chatbot without a name. How can I assist you?';
+        } else if (lowerCaseMessage.includes('thank you') || lowerCaseMessage.includes('thanks')) {
+            response = 'You\'re welcome! If you need anything else, just let me know.';
+        } else if (lowerCaseMessage.includes('bye') || lowerCaseMessage.includes('goodbye')) {
+            response = 'Goodbye! Have a great day!';
+        } else if (lowerCaseMessage.includes('who created you')) {
+            response = 'I was created by a man of developers who love coding and AI, named Bagas. How can I assist you today?';
+        } else if (lowerCaseMessage.includes('what can you do')) {
+            response = 'I can chat with you, answer questions, and even tell jokes! What would you like to do?';
+        } else if (lowerCaseMessage.includes('are you a real person')) {
+            response = 'I\'m just a chatbot, but I\'m here to help you as best as I can!';
+        } else if (lowerCaseMessage.includes('what\'s the weather like')) {
+            response = 'I can\'t check the weather right now, but you can easily find it with a quick online search!';
+        } else if (lowerCaseMessage.includes('what is the capital of france')) {
+            response = 'The capital of France is Paris! A beautiful city, isn\'t it?';
+        } else if (lowerCaseMessage.includes('tell me a fact')) {
+            response = 'Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!';
+        } else if (lowerCaseMessage.includes('tell me a joke')) {
+            response = 'Why don\'t scientists trust atoms? Because they make up everything!';
+        } else if (lowerCaseMessage.includes('make me laugh')) {
+            response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
+        } else if (lowerCaseMessage.includes('tell me something funny')) {
+            response = 'Why did the math book look sad? Because it had too many problems!';
+        } else if (lowerCaseMessage.includes('what\'s the latest news')) {
+            response = 'I\'m not able to fetch the latest news, but you can always check your favorite news website for updates!';
+        } else if (lowerCaseMessage.includes('what\'s happening in the world')) {
+            response = 'A lot of things are happening! You can check the news to stay informed.';
+        } else if (lowerCaseMessage.includes('how do i reset my password')) {
+            response = 'If you need to reset your password, you can usually do it from the login page by clicking "Forgot Password."';
+        } else if (lowerCaseMessage.includes('how do i delete my account')) {
+            response = 'To delete your account, you\'ll need to go to the settings page and follow the instructions there.';
+        } else if (lowerCaseMessage.includes('i\'m having trouble with my internet')) {
+            response = 'Try restarting your router. If that doesn\'t work, you might need to contact your internet service provider.';
+        } else if (lowerCaseMessage.includes('i\'m feeling sad')) {
+            response = 'I\'m sorry to hear that. Sometimes talking to someone can help. I\'m here to listen if you want to chat.';
+        } else if (lowerCaseMessage.includes('i\'m happy today')) {
+            response = 'That\'s great to hear! I\'m happy for you! What made your day so good?';
+        } else if (lowerCaseMessage.includes('i\'m bored')) {
+            response = 'How about a joke to lighten the mood? Or maybe you can tell me what\'s on your mind.';
+        } else if (lowerCaseMessage.includes('what\'s your favorite food')) {
+            response = 'As a bot, I don\'t eat, but I hear pizza is pretty popular!';
+        } else if (lowerCaseMessage.includes('do you drink coffee')) {
+            response = 'I don\'t drink anything, but I\'ve read that coffee is a great way to start the day!';
+        } else if (lowerCaseMessage.includes('can you recommend a recipe')) {
+            response = 'How about trying a simple pasta dish? Boil pasta, sauté garlic in olive oil, mix together, and top with parmesan!';
+        } else if (lowerCaseMessage.includes('do you like music')) {
+            response = 'I don\'t listen to music, but I\'ve heard it\'s a great way to relax!';
+        } else if (lowerCaseMessage.includes('can you dance')) {
+            response = 'If only I had legs! But I can certainly keep you entertained with our conversation.';
+        } else if (lowerCaseMessage.includes('what\'s your favorite color')) {
+            response = 'I don\'t see colors the way you do, but I think blue is pretty cool!';
+        } else {
+            response = 'Sorry, I didn\'t understand that. Can you please rephrase?';
+        }
+
+        return response;
+    }
+
+    function displayMessage(message, type) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `chat-message ${type}`;
+        messageElement.innerHTML = message;
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    sendMessageButton.addEventListener('click', () => {
+        const userMessage = chatInput.value.trim();
+        if (userMessage) {
+            displayMessage(userMessage, 'sent'); // Display user message
+            chatInput.value = '';
+
+            // Show the typing indicator
+            typingIndicator.style.display = 'block';
+
+            // Delay the bot response
+            setTimeout(() => {
+                // Get and display bot response
+                const botResponse = getBotResponse(userMessage);
+                displayMessage(botResponse, 'received');
+
+                // Hide the typing indicator
+                typingIndicator.style.display = 'none';
+            }, 3000); // 3 seconds delay
+        }
+    });
+
+    // Optional: Handle Enter key for sending messages
+    chatInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessageButton.click();
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+        const taskInput = document.getElementById('taskInput');
+        const taskTimer = document.getElementById('taskTimer');
+        const addTaskButton = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+
+        function createTaskElement(taskText, timer) {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-center position-relative';
+            listItem.innerHTML = `
+                <div class="task-content rounded-3">
+                    <span class="task-text">${taskText}</span>
+                    <span> - </span>
+                    <span class="timer" id="timer-${Date.now()}">${formatTime(timer)}</span>
+                </div>
+                <div>
+                    <button class="btn btn-success btn-sm me-2 complete-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
+                            <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M40.6,12.1l-23.6,23.6l-9.6,-9.6l-2.8,2.9l12.4,12.3l26.4,-26.4z"></path></g></g>
+                        </svg>
+                        </button>
+                    <button class="btn btn-danger btn-sm delete-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
+                        <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15,4c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v1h-6v2h1v16c0,1.64453 1.35547,3 3,3h12c1.64453,0 3,-1.35547 3,-3v-16h1v-2h-6v-1c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625zM15,6h4v1h-4zM10,9h14v16c0,0.55469 -0.44531,1 -1,1h-12c-0.55469,0 -1,-0.44531 -1,-1zM12,12v11h2v-11zM16,12v11h2v-11zM20,12v11h2v-11z"></path></g></g>
+                    </svg>    
+                    </button>
+                </div>
+            `;
+
+            if (timer > 0) {
+                startTimer(listItem.querySelector('.timer'), timer);
+            }
+
+            return listItem;
+        }
+
+        function formatTime(minutes) {
+            const seconds = minutes * 60;
+            return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+        }
+
+        function startTimer(timerElement, minutes) {
+            let timeLeft = minutes * 60; // Convert minutes to seconds
+
+            function updateTimer() {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.innerText = 'Time is up!';
+                    notifyUser('Task Timer', 'Your task timer has finished.');
+                    return;
+                }
+
+                const minutesLeft = Math.floor(timeLeft / 60);
+                const secondsLeft = timeLeft % 60;
+                timerElement.innerText = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+                timeLeft--;
+            }
+
+            const timerInterval = setInterval(updateTimer, 1000);
+            updateTimer(); // Initial update
+        }
+
+        function notifyUser(title, message) {
+            if (Notification.permission === 'granted') {
+                new Notification(title, { body: message });
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(title, { body: message });
+                    }
+                });
+            }
+        }
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            const timerValue = parseInt(taskTimer.value.trim(), 10) || 0;
+
+            if (taskText) {
+                const taskElement = createTaskElement(taskText, timerValue);
+                taskList.appendChild(taskElement);
+                taskInput.value = '';
+                taskTimer.value = '';
+            }
+        }
+
+        addTaskButton.addEventListener('click', addTask);
+
+        taskInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        taskList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('complete-btn')) {
+                const listItem = event.target.closest('.list-group-item');
+                listItem.querySelector('.task-text').style.textDecoration = 'line-through';
+                event.target.disabled = true;
+            } else if (event.target.classList.contains('delete-btn')) {
+                const listItem = event.target.closest('.list-group-item');
+                taskList.removeChild(listItem);
+            }
+        });
+
+        // Request notification permission on page load
+        if (Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    });
+    </script>
+</body>
+
+</html>
