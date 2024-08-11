@@ -493,75 +493,100 @@
 
     // Function to get bot response based on user input
     function getBotResponse(userMessage) {
-        // Update chat history with user message
-        chatHistory.push({ type: 'sent', message: userMessage });
+    // Update chat history with user message
+    chatHistory.push({ type: 'sent', message: userMessage });
 
-        const lowerCaseMessage = userMessage.toLowerCase();
-        let response = '';
+    const lowerCaseMessage = userMessage.toLowerCase();
+    let response = '';
 
-        // Simple NLP: keyword-based responses
-        if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
-            response = 'Hello! How can I assist you today?';
-        } else if (lowerCaseMessage.includes('how are you')) {
-            response = 'I am just a bot, but I am doing great! How can I help you?';
-        } else if (lowerCaseMessage.includes('what is your name')) {
-            response = 'I am a simple chatbot named Sigma, i\'m a real Sigma. How can I assist you?';
-        } else if (lowerCaseMessage.includes('thank you') || lowerCaseMessage.includes('thanks')) {
-            response = 'You\'re welcome! If you need anything else, just let me know.';
-        } else if (lowerCaseMessage.includes('bye') || lowerCaseMessage.includes('goodbye')) {
-            response = 'Goodbye! Have a great day!';
-        } else if (lowerCaseMessage.includes('who created you')) {
-            response = 'I was created by a man of developers who love coding and AI, named Bagas. How can I assist you today?';
-        } else if (lowerCaseMessage.includes('what can you do')) {
-            response = 'I can chat with you, answer questions, and even tell jokes! What would you like to do?';
-        } else if (lowerCaseMessage.includes('are you a real person')) {
-            response = 'I\'m just a chatbot, but I\'m here to help you as best as I can!';
-        } else if (lowerCaseMessage.includes('what\'s the weather like')) {
-            response = 'I can\'t check the weather right now, but you can easily find it with a quick online search!';
-        } else if (lowerCaseMessage.includes('what is the capital of france')) {
-            response = 'The capital of France is Paris! A beautiful city, isn\'t it?';
-        } else if (lowerCaseMessage.includes('tell me a fact')) {
-            response = 'Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!';
-        } else if (lowerCaseMessage.includes('tell me a joke')) {
-            response = 'Why don\'t scientists trust atoms? Because they make up everything!';
-        } else if (lowerCaseMessage.includes('make me laugh')) {
-            response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
-        } else if (lowerCaseMessage.includes('tell me something funny')) {
-            response = 'Why did the math book look sad? Because it had too many problems!';
-        } else if (lowerCaseMessage.includes('what\'s the latest news')) {
-            response = 'I\'m not able to fetch the latest news, but you can always check your favorite news website for updates!';
-        } else if (lowerCaseMessage.includes('what\'s happening in the world')) {
-            response = 'A lot of things are happening! You can check the news to stay informed.';
-        } else if (lowerCaseMessage.includes('how do i reset my password')) {
-            response = 'If you need to reset your password, you can usually do it from the login page by clicking "Forgot Password."';
-        } else if (lowerCaseMessage.includes('how do i delete my account')) {
-            response = 'To delete your account, you\'ll need to go to the settings page and follow the instructions there.';
-        } else if (lowerCaseMessage.includes('i\'m having trouble with my internet')) {
-            response = 'Try restarting your router. If that doesn\'t work, you might need to contact your internet service provider.';
-        } else if (lowerCaseMessage.includes('i\'m feeling sad')) {
-            response = 'I\'m sorry to hear that. Sometimes talking to someone can help. I\'m here to listen if you want to chat.';
-        } else if (lowerCaseMessage.includes('i\'m happy today')) {
-            response = 'That\'s great to hear! I\'m happy for you! What made your day so good?';
-        } else if (lowerCaseMessage.includes('i\'m bored')) {
-            response = 'How about a joke to lighten the mood? Or maybe you can tell me what\'s on your mind.';
-        } else if (lowerCaseMessage.includes('what\'s your favorite food')) {
-            response = 'As a bot, I don\'t eat, but I hear pizza is pretty popular!';
-        } else if (lowerCaseMessage.includes('do you drink coffee')) {
-            response = 'I don\'t drink anything, but I\'ve read that coffee is a great way to start the day!';
-        } else if (lowerCaseMessage.includes('can you recommend a recipe')) {
-            response = 'How about trying a simple pasta dish? Boil pasta, sauté garlic in olive oil, mix together, and top with parmesan!';
-        } else if (lowerCaseMessage.includes('do you like music')) {
-            response = 'I don\'t listen to music, but I\'ve heard it\'s a great way to relax!';
-        } else if (lowerCaseMessage.includes('can you dance')) {
-            response = 'If only I had legs! But I can certainly keep you entertained with our conversation.';
-        } else if (lowerCaseMessage.includes('what\'s your favorite color')) {
-            response = 'I don\'t see colors the way you do, but I think blue is pretty cool!';
-        } else {
-            response = 'Sorry, I didn\'t understand that. Can you please rephrase?';
-        }
+    // Simple NLP: keyword-based responses
+    if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
+        response = 'Hello! How can I assist you today?';
+    } else if (lowerCaseMessage.includes('how are you')) {
+        response = 'I am just a bot, but I am doing great! How can I help you?';
+    } else if (lowerCaseMessage.includes('what is your name')) {
+        response = 'I am a simple chatbot named Sigma, I\'m a real Sigma. How can I assist you?';
+    } else if (lowerCaseMessage.includes('thank you') || lowerCaseMessage.includes('thanks')) {
+        response = 'You\'re welcome! If you need anything else, just let me know.';
+    } else if (lowerCaseMessage.includes('bye') || lowerCaseMessage.includes('goodbye')) {
+        response = 'Goodbye! Have a great day!';
+    } else if (lowerCaseMessage.includes('who created you')) {
+        response = 'I was created by a team of developers who love coding and AI, named Bagas. How can I assist you today?';
+    } else if (lowerCaseMessage.includes('what can you do')) {
+        response = 'I can chat with you, answer questions, and even tell jokes! What would you like to do?';
+    } else if (lowerCaseMessage.includes('are you a real person')) {
+        response = 'I\'m just a chatbot, but I\'m here to help you as best as I can!';
+    } else if (lowerCaseMessage.includes('what\'s the weather like')) {
+        response = 'I can\'t check the weather right now, but you can easily find it with a quick online search!';
+    } else if (lowerCaseMessage.includes('what is the capital of france')) {
+        response = 'The capital of France is Paris! A beautiful city, isn\'t it?';
+    } else if (lowerCaseMessage.includes('tell me a fact')) {
+        response = 'Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!';
+    } else if (lowerCaseMessage.includes('tell me a joke')) {
+        response = 'Why don\'t scientists trust atoms? Because they make up everything!';
+    } else if (lowerCaseMessage.includes('make me laugh')) {
+        response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
+    } else if (lowerCaseMessage.includes('tell me something funny')) {
+        response = 'Why did the math book look sad? Because it had too many problems!';
+    } else if (lowerCaseMessage.includes('what\'s the latest news')) {
+        response = 'I\'m not able to fetch the latest news, but you can always check your favorite news website for updates!';
+    } else if (lowerCaseMessage.includes('what\'s happening in the world')) {
+        response = 'A lot of things are happening! You can check the news to stay informed.';
+    } else if (lowerCaseMessage.includes('how do i reset my password')) {
+        response = 'If you need to reset your password, you can usually do it from the login page by clicking "Forgot Password."';
+    } else if (lowerCaseMessage.includes('how do i delete my account')) {
+        response = 'To delete your account, you\'ll need to go to the settings page and follow the instructions there.';
+    } else if (lowerCaseMessage.includes('i\'m having trouble with my internet')) {
+        response = 'Try restarting your router. If that doesn\'t work, you might need to contact your internet service provider.';
+    } else if (lowerCaseMessage.includes('i\'m feeling sad')) {
+        response = 'I\'m sorry to hear that. Sometimes talking to someone can help. I\'m here to listen if you want to chat.';
+    } else if (lowerCaseMessage.includes('i\'m happy today')) {
+        response = 'That\'s great to hear! I\'m happy for you! What made your day so good?';
+    } else if (lowerCaseMessage.includes('i\'m bored')) {
+        response = 'How about a joke to lighten the mood? Or maybe you can tell me what\'s on your mind.';
+    } else if (lowerCaseMessage.includes('what\'s your favorite food')) {
+        response = 'As a bot, I don\'t eat, but I hear pizza is pretty popular!';
+    } else if (lowerCaseMessage.includes('do you drink coffee')) {
+        response = 'I don\'t drink anything, but I\'ve read that coffee is a great way to start the day!';
+    } else if (lowerCaseMessage.includes('can you recommend a recipe')) {
+        response = 'How about trying a simple pasta dish? Boil pasta, sauté garlic in olive oil, mix together, and top with parmesan!';
+    } else if (lowerCaseMessage.includes('do you like music')) {
+        response = 'I don\'t listen to music, but I\'ve heard it\'s a great way to relax!';
+    } else if (lowerCaseMessage.includes('can you dance')) {
+        response = 'If only I had legs! But I can certainly keep you entertained with our conversation.';
+    } else if (lowerCaseMessage.includes('what\'s your favorite color')) {
+        response = 'I don\'t see colors the way you do, but I think blue is pretty cool!';
+    } else {
+        // Response variations for undefined inputs
+        const undefinedResponses = [
+            'Alright.',
+            'Okay, got it.',
+            'Sorry, I just understood.',
+            'I\'m glad to hear that!',
+            'I\'m here for you.',
+            'Let me think...',
+            'I\'ll keep that in mind.',
+            'Hmm, interesting!',
+            'Thanks for sharing!',
+            'I didn\'t quite catch that, could you rephrase?',
+            'I\'m sorry, could you explain that again?',
+            'I\'m learning something new!',
+            'Let me know if I can help with anything else.',
+            'Gotcha!',
+            'I\'m still here!',
+            'Thanks for being patient with me.',
+            'That’s something I’m still learning about.',
+            'I’m sorry, I don’t have the answer to that yet.',
+            'I’ll try to do better next time.',
+            'I’m always here to help!'
+        ];
 
-        return response;
+        // Randomly select a response from the list
+        response = undefinedResponses[Math.floor(Math.random() * undefinedResponses.length)];
     }
+
+    return response;
+}
 
     function displayMessage(message, type) {
         const messageElement = document.createElement('div');
