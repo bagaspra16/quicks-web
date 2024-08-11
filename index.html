@@ -255,7 +255,9 @@
         transform: scale(1);
     }
 }
-
+.svg-icon {
+    pointer-events: none; /* This allows clicks to pass through the SVG */
+}
 @media (max-width: 768px) {
   /* For tablets and smaller screens */
   .left, .divider, .right {
@@ -579,115 +581,140 @@
     });
 });
 document.addEventListener('DOMContentLoaded', function () {
-        const taskInput = document.getElementById('taskInput');
-        const taskTimer = document.getElementById('taskTimer');
-        const addTaskButton = document.getElementById('addTaskBtn');
-        const taskList = document.getElementById('taskList');
+    const taskInput = document.getElementById('taskInput');
+    const taskTimer = document.getElementById('taskTimer');
+    const addTaskButton = document.getElementById('addTaskBtn');
+    const taskList = document.getElementById('taskList');
+    let activeTimers = {}; // To store active timers and their intervals
 
-        function createTaskElement(taskText, timer) {
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item d-flex justify-content-between align-items-center position-relative';
-            listItem.innerHTML = `
-                <div class="task-content rounded-3">
-                    <span class="task-text">${taskText}</span>
-                    <span> - </span>
-                    <span class="timer" id="timer-${Date.now()}">${formatTime(timer)}</span>
-                </div>
-                <div>
-                    <button class="btn btn-success btn-sm me-2 complete-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
-                            <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M40.6,12.1l-23.6,23.6l-9.6,-9.6l-2.8,2.9l12.4,12.3l26.4,-26.4z"></path></g></g>
-                        </svg>
-                        </button>
-                    <button class="btn btn-danger btn-sm delete-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
-                        <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15,4c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v1h-6v2h1v16c0,1.64453 1.35547,3 3,3h12c1.64453,0 3,-1.35547 3,-3v-16h1v-2h-6v-1c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625zM15,6h4v1h-4zM10,9h14v16c0,0.55469 -0.44531,1 -1,1h-12c-0.55469,0 -1,-0.44531 -1,-1zM12,12v11h2v-11zM16,12v11h2v-11zM20,12v11h2v-11z"></path></g></g>
+    function createTaskElement(taskText, timer) {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-center position-relative';
+        listItem.innerHTML = `
+            <div class="task-content rounded-3">
+                <span class="task-text">${taskText}</span>
+                <span> - </span>
+                <span class="timer" id="timer-${Date.now()}">${formatTime(timer)}</span>
+            </div>
+            <div>
+                <button class="btn btn-success btn-sm me-2 complete-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
+                        <g fill="#e0e0e0">
+                            <g transform="scale(5.33333,5.33333)">
+                                <path d="M40.6,12.1l-23.6,23.6l-9.6,-9.6l-2.8,2.9l12.4,12.3l26.4,-26.4z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+                <button class="btn btn-danger btn-sm delete-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
+                        <g fill="#e0e0e0">
+                            <g transform="scale(8,8)">
+                                <path d="M15,4c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v1h-6v2h1v16c0,1.64453 1.35547,3 3,3h12c1.64453,0 3,-1.35547 3,-3v-16h1v-2h-6v-1c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625zM15,6h4v1h-4zM10,9h14v16c0,0.55469 -0.44531,1 -1,1h-12c-0.55469,0 -1,-0.44531 -1,-1zM12,12v11h2v-11zM16,12v11h2v-11zM20,12v11h2v-11z"></path>
+                        </g>
                     </svg>    
-                    </button>
-                </div>
-            `;
+                </button>   
+            </div>
+        `;
 
-            if (timer > 0) {
-                startTimer(listItem.querySelector('.timer'), timer);
+        if (timer > 0) {
+            startTimer(listItem.querySelector('.timer'), timer, taskText);
+        }
+
+        return listItem;
+    }
+
+    function formatTime(minutes) {
+        const seconds = minutes * 60;
+        return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+    }
+
+    function startTimer(timerElement, minutes, taskText) {
+        let timeLeft = minutes * 60; // Convert minutes to seconds
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(activeTimers[timerElement.id]);
+                timerElement.innerText = 'Time is up!';
+                notifyUser(`Task Timer: ${taskText}`, `Your task "${taskText}" has finished.`);
+                return;
             }
 
-            return listItem;
+            const minutesLeft = Math.floor(timeLeft / 60);
+            const secondsLeft = timeLeft % 60;
+            timerElement.innerText = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+            timeLeft--;
         }
 
-        function formatTime(minutes) {
-            const seconds = minutes * 60;
-            return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-        }
+        const timerInterval = setInterval(updateTimer, 1000);
+        activeTimers[timerElement.id] = timerInterval;
+        updateTimer(); // Initial update
+    }
 
-        function startTimer(timerElement, minutes) {
-            let timeLeft = minutes * 60; // Convert minutes to seconds
-
-            function updateTimer() {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerElement.innerText = 'Time is up!';
-                    notifyUser('Task Timer', 'Your task timer has finished.');
-                    return;
+    function notifyUser(title, message) {
+        if (Notification.permission === 'granted') {
+            new Notification(title, { body: message });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification(title, { body: message });
                 }
-
-                const minutesLeft = Math.floor(timeLeft / 60);
-                const secondsLeft = timeLeft % 60;
-                timerElement.innerText = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
-                timeLeft--;
-            }
-
-            const timerInterval = setInterval(updateTimer, 1000);
-            updateTimer(); // Initial update
+            });
         }
+    }
 
-        function notifyUser(title, message) {
-            if (Notification.permission === 'granted') {
-                new Notification(title, { body: message });
-            } else if (Notification.permission !== 'denied') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(title, { body: message });
-                    }
-                });
-            }
+    function addTask() {
+        const taskText = taskInput.value.trim();
+        const timerValue = parseInt(taskTimer.value.trim(), 10) || 0;
+
+        if (taskText) {
+            const taskElement = createTaskElement(taskText, timerValue);
+            taskList.appendChild(taskElement);
+            taskInput.value = '';
+            taskTimer.value = '';
         }
+    }
 
-        function addTask() {
-            const taskText = taskInput.value.trim();
-            const timerValue = parseInt(taskTimer.value.trim(), 10) || 0;
+    addTaskButton.addEventListener('click', addTask);
 
-            if (taskText) {
-                const taskElement = createTaskElement(taskText, timerValue);
-                taskList.appendChild(taskElement);
-                taskInput.value = '';
-                taskTimer.value = '';
-            }
-        }
-
-        addTaskButton.addEventListener('click', addTask);
-
-        taskInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                addTask();
-            }
-        });
-
-        taskList.addEventListener('click', (event) => {
-            if (event.target.classList.contains('complete-btn')) {
-                const listItem = event.target.closest('.list-group-item');
-                listItem.querySelector('.task-text').style.textDecoration = 'line-through';
-                event.target.disabled = true;
-            } else if (event.target.classList.contains('delete-btn')) {
-                const listItem = event.target.closest('.list-group-item');
-                taskList.removeChild(listItem);
-            }
-        });
-
-        // Request notification permission on page load
-        if (Notification.permission === 'default') {
-            Notification.requestPermission();
+    taskInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            addTask();
         }
     });
+
+    taskList.addEventListener('click', (event) => {
+        if (event.target.closest('.complete-btn')) {
+            const listItem = event.target.closest('.list-group-item');
+            const timerElement = listItem.querySelector('.timer');
+            const timerId = timerElement.id;
+
+            clearInterval(activeTimers[timerId]);
+            delete activeTimers[timerId]; // Stop the timer but do not delete the task
+            listItem.querySelector('.task-text').style.textDecoration = 'line-through';
+            event.target.disabled = true;
+
+        } else if (event.target.closest('.delete-btn')) {
+            event.stopPropagation(); // Prevents the modal from closing
+            const listItem = event.target.closest('.list-group-item');
+            const timerElement = listItem.querySelector('.timer');
+            const timerId = timerElement.id;
+
+            if (activeTimers[timerId]) {
+                clearInterval(activeTimers[timerId]);
+                delete activeTimers[timerId];
+            }
+
+            taskList.removeChild(listItem);
+        }
+    });
+
+    // Request notification permission on page load
+    if (Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+});
+
     </script>
 </body>
 
