@@ -427,11 +427,11 @@ input::-webkit-outer-spin-button,
   }
 
   .chat-body {
-    height: 530px; /* Adjust as needed */
-    max-height: 530px;
+    height: 540px; /* Adjust as needed */
+    max-height: 540px;
   }
   .chat-message.sent{
-  margin-inline-start: 135px;
+  margin-inline-start: 145px;
   }
 }
 
