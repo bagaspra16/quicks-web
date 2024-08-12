@@ -427,8 +427,8 @@ input::-webkit-outer-spin-button,
   }
 
   .chat-body {
-    height: 600px; /* Adjust as needed */
-    max-height: 600px;
+    height: 500px; /* Adjust as needed */
+    max-height: 500px;
   }
   .chat-message.sent{
   margin-inline-start: 135px;
