@@ -192,6 +192,8 @@
         }
 
         .chat-input {
+            
+            height: 40px; /* Adjust as needed */
             border-radius: 20px;
             padding: 10px;
             border: 1px solid #ddd;
@@ -199,12 +201,17 @@
             margin-right: 10px;
             flex: 1;
         }
-        .modal-footer {
+        /* ... your existing CSS ... */
+
+.modal-footer {
     display: flex;
-    justify-content: flex-end; /* Aligns items to the right */
+    flex-direction: column; /* Important: Change to column for vertical stacking */
+    align-items: flex-end; /* Align items to the right */
     padding: 15px;
-    background-color: #4e4e4e; /* Optional: Make sure background color matches the modal body */
+    background-color: #4e4e4e;
+    gap: 10px; /* Add spacing between input and button */
 }
+
 
         .send-btn {
     background-color: #007bff;
@@ -482,7 +489,7 @@
                 taskLabel.style.display = 'inline';
             }
         });
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const chatContainer = document.getElementById('chatContainer');
     const sendMessageButton = document.querySelector('.send-btn');
     const chatInput = document.querySelector('.chat-input');
@@ -498,92 +505,241 @@
 
     const lowerCaseMessage = userMessage.toLowerCase();
     let response = '';
+    // Additional keyword categories and responses
+        const keywordCategories = [
+        {
+            keywords: ['laugh', 'joke', 'funny', 'humor'],
+            responses: [
+                'Why don’t skeletons fight each other? They don’t have the guts!',
+                'I’ve got a joke for you: What do you get when you cross a snowman with a vampire? Frostbite!',
+                'Here’s something funny: Why did the golfer bring two pairs of pants? In case he got a hole in one!',
+                'Humor can brighten anyone’s day. Did you hear about the cheese factory that exploded? There was nothing left but de-brie!',
+                'I love a good laugh! Here’s a joke: Why don’t scientists trust atoms? Because they make up everything!',
+                'If you need a laugh, here’s one: Why was the math book sad? It had too many problems.',
+                'Let me tell you something funny: Why did the bicycle fall over? It was two-tired!',
+                'Here’s a humorous thought: Why did the scarecrow win an award? Because he was outstanding in his field!'
+            ]
+        },
+        {
+            keywords: ['sad', 'mad', 'upset', 'angry', 'depressed', 'down'],
+            responses: [
+                'I’m really sorry you’re feeling this way. It’s okay to not be okay, and I’m here to listen.',
+                'It’s tough to feel upset, but it’s also okay to let those feelings out. I’m here for you.',
+                'Feeling down happens to everyone at times. Remember, after every storm comes a rainbow.',
+                'I wish I could give you a big hug right now. Sometimes talking about it can help; I’m here to listen.',
+                'It’s okay to feel angry or upset. Sometimes taking a deep breath or a walk can help clear your mind.',
+                'I’m really sorry you’re feeling like this. Would you like to talk about what’s bothering you?',
+                'I understand that you’re feeling down. Remember that it’s okay to feel what you’re feeling, and you’re not alone.',
+                'When you’re feeling low, sometimes doing something you enjoy, even just a little bit, can help. What’s something that usually cheers you up?'
+            ]
+        },
+        {
+            keywords: ['happy', 'joy', 'glad', 'excited', 'cheerful'],
+            responses: [
+                'That’s fantastic! I’m so glad you’re feeling great!',
+                'Your happiness is contagious! Keep spreading those good vibes!',
+                'Tell me more about what’s making you so happy! I’d love to hear all about it.',
+                'I love hearing that you’re in such a good mood! What’s the good news?',
+                'It’s great to see you smiling! What’s been going on that’s brought you joy?',
+                'Happiness is such a wonderful feeling. What’s something you’re looking forward to?',
+                'I’m so happy that you’re happy! Anything special happen today?',
+                'It’s wonderful to hear that you’re excited! What’s got you so pumped up?'
+            ]
+        },
+        {
+            keywords: ['hello', 'hi', 'greetings', 'hey', 'good morning', 'good afternoon', 'good evening'],
+            responses: [
+                'Hey there! What’s on your mind today?',
+                'Hello! How can I help you?',
+                'Hi! What can I do for you today?',
+                'Greetings! How’s everything going?',
+                'Good morning! How’s your day starting?',
+                'Good afternoon! What’s on your agenda today?',
+                'Good evening! How’s your day been so far?',
+                'Hey! How’s it going? Anything exciting happening?'
+            ]
+        },
+        {
+            keywords: ['help', 'assist', 'support', 'problem', 'issue', 'trouble'],
+            responses: [
+                'I’m here to help! What’s the issue?',
+                'Let me know how I can assist you.',
+                'If you’re facing a problem, I’m here to help. What seems to be the trouble?',
+                'Don’t worry, I’m here to assist you. What do you need help with?',
+                'Let’s tackle this together. What problem are you facing?',
+                'If you’re having trouble with something, I’ll do my best to support you. What’s going on?',
+                'I’m ready to help you out. Just let me know what’s happening.',
+                'If you need support, I’m here for you. What do you need assistance with?'
+            ]
+        },
+        {
+            keywords: ['love', 'relationship', 'crush', 'dating'],
+            responses: [
+                'Love is a beautiful thing! How are things going with your special someone?',
+                'Relationships can be challenging, but they’re worth it. Do you want to talk about yours?',
+                'It sounds like you’ve got someone special in mind! How’s everything going?',
+                'Crushes can be exciting and nerve-wracking at the same time! Do you have any plans to share your feelings?',
+                'Dating can be fun and full of surprises! Any exciting stories to share?',
+                'Relationships take work, but they’re worth every bit of effort. How’s everything on your end?',
+                'Love can be complicated, but also wonderful. Are you currently seeing someone?',
+                'If you’re in love, it must be an exciting time for you! Want to talk more about it?'
+            ]
+        },
+        {
+            keywords: ['food', 'hungry', 'eat', 'meal', 'snack'],
+            responses: [
+                'What’s your favorite thing to eat? Any cravings right now?',
+                'Feeling hungry? Maybe it’s time for a snack. What do you have in mind?',
+                'Food is always a good topic! Have you tried any new recipes lately?',
+                'If you’re hungry, how about making something simple and delicious? Any ideas?',
+                'Eating well is important. What’s your go-to meal when you’re really hungry?',
+                'Craving something specific? Maybe I can help you decide what to eat.',
+                'Food is life! What’s on your menu today?',
+                'If you’re in the mood for something tasty, what’s your favorite dish?'
+            ]
+        },
+        {
+            keywords: ['travel', 'vacation', 'holiday', 'trip', 'explore'],
+            responses: [
+                'Traveling is such an adventure! Any places you want to visit?',
+                'A vacation sounds amazing! Do you have any destinations in mind?',
+                'Trips are the best way to unwind. Where have you been dreaming of going?',
+                'Exploring new places is always exciting! Where’s the last place you traveled?',
+                'Holidays are a time to relax and explore. Any favorite destinations?',
+                'If you’re planning a trip, where’s the next stop on your journey?',
+                'Travel opens up so many opportunities. Where do you want to go next?',
+                'Vacations are perfect for recharging. What’s your ideal holiday destination?'
+            ]
+        },
+        {
+            keywords: ['hobby', 'interest', 'passion', 'free time', 'spare time'],
+            responses: [
+                'What do you like to do in your free time? Any hobbies you’re passionate about?',
+                'Hobbies are a great way to unwind. What are you currently into?',
+                'Everyone needs a hobby. What’s yours?',
+                'I’d love to hear about your passions! What keeps you going?',
+                'Spare time is perfect for indulging in something you love. What’s your favorite pastime?',
+                'Interests and hobbies make life richer. What are you currently working on?',
+                'Free time is best spent doing what you enjoy. What’s your go-to activity?',
+                'What’s something you’re passionate about? I’m curious to know more!'
+            ]
+        },
+        {
+            keywords: ['news', 'latest', 'current events', 'world', 'updates'],
+            responses: [
+                'The world is constantly changing! Anything specific you’re curious about?',
+                'It’s always good to stay informed. What news are you interested in?',
+                'A lot is happening in the world right now! Any particular topics on your mind?',
+                'Keeping up with the latest updates? What’s caught your attention?',
+                'The news can be overwhelming, but it’s important to stay informed. What’s on your mind?',
+                'Current events are always changing. Is there anything specific you want to discuss?',
+                'Staying updated is key. What news have you been following lately?',
+                'The world is full of stories. What news are you interested in today?'
+            ]
+        },
+        {
+            keywords: ['music', 'song', 'artist', 'album', 'playlist'],
+            responses: [
+                'Music is life! What’s your favorite song right now?',
+                'Got any favorite artists? I’d love to hear who you’re into!',
+                'Music can set the mood. What’s on your playlist?',
+                'Songs have a way of capturing emotions. What are you listening to these days?',
+                'Albums are like a journey through sound. Any that you’ve been loving?',
+                'If you’re into music, what genre do you prefer?',
+                'Music connects us all. What’s a song that you can’t stop playing?',
+                'Artists put so much into their work. Who’s your favorite?'
+            ]
+        },
+        {
+            keywords: ['health', 'wellness', 'fitness', 'exercise', 'workout'],
+            responses: [
+                'Health is wealth! How do you stay active?',
+                'Wellness is a journey. What’s your approach to staying healthy?',
+                'Fitness is key to a balanced life. What’s your workout routine like?',
+                'Exercise is a great way to relieve stress. Do you have a favorite workout?',
+                'Staying fit is important. What’s your go-to exercise?',
+                'Wellness includes both mind and body. How do you take care of yourself?',
+                'A good workout can do wonders! What’s your favorite way to stay in shape?',
+                'Health should always be a priority. How do you keep yourself feeling your best?'
+            ]
+        },
+        {
+            keywords: ['tech', 'technology', 'gadgets', 'devices', 'innovation'],
+            responses: [
+                'Technology is evolving fast! What new gadgets have caught your eye?',
+                'The tech world is always buzzing with new innovations. Anything you’re excited about?',
+                'Gadgets make life easier. Do you have a favorite device?',
+                'Tech is the future! What’s the latest innovation that you’re following?',
+                'Devices are becoming smarter every day. What’s something you can’t live without?',
+                'Innovation drives the world forward. What’s a tech trend that you’re interested in?',
+                'Technology is everywhere. What’s a gadget you use daily?',
+                'The future is tech! What’s your favorite piece of technology?'
+            ]
+        },
+        {
+            keywords: ['money', 'finance', 'budget', 'saving', 'investment'],
+            responses: [
+                'Managing money is essential. How do you handle your finances?',
+                'Finance can be tricky, but it’s important. Do you have a budget?',
+                'Saving money is always a good idea. How do you keep track of your savings?',
+                'Investments can grow your wealth. Are you into investing?',
+                'Budgeting is key to financial health. Do you have any tips for staying on track?',
+                'Finance doesn’t have to be complicated. What’s your approach to managing money?',
+                'Money management is crucial. How do you make sure you’re saving enough?',
+                'Investing can be rewarding. Are you looking into any new opportunities?'
+            ]
+        },
+        {
+            keywords: ['social', 'friends', 'party', 'event', 'gathering', 'meetup'],
+            responses: [
+                'Social events are great for connecting with others. Got any plans?',
+                'Friends make life better. Do you have plans to hang out soon?',
+                'Parties are a fun way to unwind! Got any invitations?',
+                'Events bring people together. What’s the last event you attended?',
+                'Meetups are perfect for catching up with friends. Any scheduled soon?',
+                'Socializing is essential for happiness. How do you stay connected?',
+                'Friends are the family we choose. Got any close friends you’ll see soon?',
+                'Parties and gatherings are always a blast! Anything coming up?'
+            ]
+        }
+    ];
 
-    // Simple NLP: keyword-based responses
-    if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
-        response = 'Hello! How can I assist you today?';
-    } else if (lowerCaseMessage.includes('how are you')) {
-        response = 'I am just a bot, but I am doing great! How can I help you?';
-    } else if (lowerCaseMessage.includes('what is your name')) {
-        response = 'I am a simple chatbot named Sigma, I\'m a real Sigma. How can I assist you?';
-    } else if (lowerCaseMessage.includes('thank you') || lowerCaseMessage.includes('thanks')) {
-        response = 'You\'re welcome! If you need anything else, just let me know.';
-    } else if (lowerCaseMessage.includes('bye') || lowerCaseMessage.includes('goodbye')) {
-        response = 'Goodbye! Have a great day!';
-    } else if (lowerCaseMessage.includes('who created you')) {
-        response = 'I was created by a team of developers who love coding and AI, named Bagas. How can I assist you today?';
-    } else if (lowerCaseMessage.includes('what can you do')) {
-        response = 'I can chat with you, answer questions, and even tell jokes! What would you like to do?';
-    } else if (lowerCaseMessage.includes('are you a real person')) {
-        response = 'I\'m just a chatbot, but I\'m here to help you as best as I can!';
-    } else if (lowerCaseMessage.includes('what\'s the weather like')) {
-        response = 'I can\'t check the weather right now, but you can easily find it with a quick online search!';
-    } else if (lowerCaseMessage.includes('what is the capital of france')) {
-        response = 'The capital of France is Paris! A beautiful city, isn\'t it?';
-    } else if (lowerCaseMessage.includes('tell me a fact')) {
-        response = 'Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!';
-    } else if (lowerCaseMessage.includes('tell me a joke')) {
-        response = 'Why don\'t scientists trust atoms? Because they make up everything!';
-    } else if (lowerCaseMessage.includes('make me laugh')) {
-        response = 'Why did the scarecrow win an award? Because he was outstanding in his field!';
-    } else if (lowerCaseMessage.includes('tell me something funny')) {
-        response = 'Why did the math book look sad? Because it had too many problems!';
-    } else if (lowerCaseMessage.includes('what\'s the latest news')) {
-        response = 'I\'m not able to fetch the latest news, but you can always check your favorite news website for updates!';
-    } else if (lowerCaseMessage.includes('what\'s happening in the world')) {
-        response = 'A lot of things are happening! You can check the news to stay informed.';
-    } else if (lowerCaseMessage.includes('how do i reset my password')) {
-        response = 'If you need to reset your password, you can usually do it from the login page by clicking "Forgot Password."';
-    } else if (lowerCaseMessage.includes('how do i delete my account')) {
-        response = 'To delete your account, you\'ll need to go to the settings page and follow the instructions there.';
-    } else if (lowerCaseMessage.includes('i\'m having trouble with my internet')) {
-        response = 'Try restarting your router. If that doesn\'t work, you might need to contact your internet service provider.';
-    } else if (lowerCaseMessage.includes('i\'m feeling sad')) {
-        response = 'I\'m sorry to hear that. Sometimes talking to someone can help. I\'m here to listen if you want to chat.';
-    } else if (lowerCaseMessage.includes('i\'m happy today')) {
-        response = 'That\'s great to hear! I\'m happy for you! What made your day so good?';
-    } else if (lowerCaseMessage.includes('i\'m bored')) {
-        response = 'How about a joke to lighten the mood? Or maybe you can tell me what\'s on your mind.';
-    } else if (lowerCaseMessage.includes('what\'s your favorite food')) {
-        response = 'As a bot, I don\'t eat, but I hear pizza is pretty popular!';
-    } else if (lowerCaseMessage.includes('do you drink coffee')) {
-        response = 'I don\'t drink anything, but I\'ve read that coffee is a great way to start the day!';
-    } else if (lowerCaseMessage.includes('can you recommend a recipe')) {
-        response = 'How about trying a simple pasta dish? Boil pasta, sauté garlic in olive oil, mix together, and top with parmesan!';
-    } else if (lowerCaseMessage.includes('do you like music')) {
-        response = 'I don\'t listen to music, but I\'ve heard it\'s a great way to relax!';
-    } else if (lowerCaseMessage.includes('can you dance')) {
-        response = 'If only I had legs! But I can certainly keep you entertained with our conversation.';
-    } else if (lowerCaseMessage.includes('what\'s your favorite color')) {
-        response = 'I don\'t see colors the way you do, but I think blue is pretty cool!';
-    } else {
-        // Response variations for undefined inputs
-        const undefinedResponses = [
-            'Alright.',
-            'Okay, got it.',
-            'Sorry, I just understood.',
-            'I\'m glad to hear that!',
-            'I\'m here for you.',
-            'Let me think...',
-            'I\'ll keep that in mind.',
-            'Hmm, interesting!',
-            'Thanks for sharing!',
-            'I didn\'t quite catch that, could you rephrase?',
-            'I\'m sorry, could you explain that again?',
-            'I\'m learning something new!',
-            'Let me know if I can help with anything else.',
-            'Gotcha!',
-            'I\'m still here!',
-            'Thanks for being patient with me.',
-            'That’s something I’m still learning about.',
-            'I’m sorry, I don’t have the answer to that yet.',
-            'I’ll try to do better next time.',
-            'I’m always here to help!'
-        ];
-
-        // Randomly select a response from the list
-        response = undefinedResponses[Math.floor(Math.random() * undefinedResponses.length)];
+    // Loop through categories to check for keywords
+    for (let category of keywordCategories) {
+        for (let keyword of category.keywords) {
+            if (lowerCaseMessage.includes(keyword)) {
+                response = category.responses[Math.floor(Math.random() * category.responses.length)];
+                return response;
+            }
+        }
     }
+
+    // Default responses if no keywords match
+    const undefinedResponses = [
+        'Alright.',
+        'Okay, got it.',
+        'Sorry, I just understood.',
+        'I\'m glad to hear that!',
+        'I\'m here for you.',
+        'Let me think...',
+        'I\'ll keep that in mind.',
+        'Hmm, interesting!',
+        'Thanks for sharing!',
+        'I didn’t quite catch that, could you rephrase?',
+        'I’m sorry, could you explain that again?',
+        'I’m learning something new!',
+        'Let me know if I can help with anything else.',
+        'Gotcha!',
+        'I’m still here!',
+        'Thanks for being patient with me.',
+        'That’s something I’m still learning about.',
+        'I’m sorry, I don’t have the answer to that yet.',
+        'I’ll try to do better next time.',
+        'I’m always here to help!'
+    ];
+
+    // Randomly select a response from the list
+    response = undefinedResponses[Math.floor(Math.random() * undefinedResponses.length)];
 
     return response;
 }
