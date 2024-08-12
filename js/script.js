@@ -287,29 +287,150 @@
         }
     }
 
-    // Default responses if no keywords match
     const undefinedResponses = [
-        'Alright.',
-        'Okay, got it.',
-        'Sorry, I just understood.',
-        'I\'m glad to hear that!',
-        'I\'m here for you.',
-        'Let me think...',
-        'I\'ll keep that in mind.',
-        'Hmm, interesting!',
-        'Thanks for sharing!',
-        'I didn’t quite catch that, could you rephrase?',
-        'I’m sorry, could you explain that again?',
-        'I’m learning something new!',
-        'Let me know if I can help with anything else.',
-        'Gotcha!',
-        'I’m still here!',
-        'Thanks for being patient with me.',
-        'That’s something I’m still learning about.',
-        'I’m sorry, I don’t have the answer to that yet.',
-        'I’ll try to do better next time.',
-        'I’m always here to help!'
+        // Statements
+        'That’s totally fair.',
+        'I see what you mean.',
+        'That’s something to think about.',
+        'I couldn’t agree more.',
+        'Absolutely, that’s a good point.',
+        'Makes perfect sense to me.',
+        'I’m right there with you on that.',
+        'Totally on board with that.',
+        'That’s definitely one way to look at it.',
+        'I get the vibe you’re going for.',
+        
+        // Acknowledgments
+        'Right, gotcha.',
+        'Noted!',
+        'Sure thing.',
+        'Understood.',
+        'Copy that!',
+        'Makes sense.',
+        'Cool, cool.',
+        'Alright, noted.',
+        'Fair enough!',
+        'I hear you!',
+        
+        // Casual Phrases
+        'No worries!',
+        'You’re good!',
+        'All good here.',
+        'No stress!',
+        'No biggie!',
+        'It’s all good.',
+        'That’s chill.',
+        'It’s whatever!',
+        'We’re cool.',
+        'No problem at all.',
+        
+        // Brief Reactions
+        'Oh, really?',
+        'Ah, I see!',
+        'Hmm, got it.',
+        'Interesting...',
+        'Oh, okay!',
+        'Well, that’s something!',
+        'Ah, makes sense now.',
+        'I didn’t see that coming!',
+        'Huh, that’s new.',
+        'Oh, for sure!',
+        
+        // Filler Responses
+        'Uh-huh, I get you.',
+        'Yeah, totally.',
+        'Mmm, I see.',
+        'Right, right...',
+        'Oh yeah?',
+        'Is that so?',
+        'Wow, really?',
+        'Okay, I’m with you.',
+        'Yeah, I feel that.',
+        'Got it, got it.',
+        
+        // Encouragement
+        'You’ve got this!',
+        'Keep it up!',
+        'You’re doing great!',
+        'I’m here with you!',
+        'Stay strong!',
+        'You’re on the right track!',
+        'That’s the spirit!',
+        'Let’s keep moving forward!',
+        'You’re killing it!',
+        'Keep pushing!',
+        
+        // Affirmative
+        'Definitely!',
+        'For sure!',
+        'Absolutely!',
+        'Without a doubt!',
+        'Of course!',
+        'No doubt about it!',
+        'You bet!',
+        'Exactly!',
+        'Yup, exactly.',
+        'True that!',
+        
+        // Casual Positive
+        'Sounds good to me!',
+        'I’m down with that!',
+        'That’s awesome!',
+        'Nice one!',
+        'Sweet!',
+        'That’s great!',
+        'Love it!',
+        'Perfect!',
+        'That’s solid!',
+        'Right on!',
+        
+        // Neutral Reactions
+        'Could be!',
+        'It’s possible.',
+        'Maybe so.',
+        'Could go either way.',
+        'Who knows?',
+        'Anything’s possible.',
+        'That’s one way to see it.',
+        'Could be worth a shot.',
+        'I guess we’ll see.',
+        'Time will tell.',
+        
+        // Closing Remarks
+        'Let’s wrap this up.',
+        'That’s about it!',
+        'Let’s leave it there for now.',
+        'That covers it!',
+        'We’re all set.',
+        'That’s all I got.',
+        'Let’s call it a day.',
+        'That’s a wrap!',
+        'We’re good here!',
+        'Let’s tie this up!',
+
+        // Apologies for Not Understanding
+    'I’m sorry, I didn’t quite get that.',
+    'My bad, I missed that.',
+    'Sorry, can you say that in another way?',
+    'Oops, I’m not sure what you mean.',
+    'Apologies, I didn’t catch that.',
+    'Sorry about that, could you explain a bit more?',
+    'I’m still learning, sorry for the confusion!',
+    'Sorry, I’m a bit lost here.',
+    'I apologize, that went over my head.',
+    'I’m sorry, I don’t fully understand.',
+    'My apologies, could you clarify that?',
+    'Sorry, I didn’t follow that.',
+    'I’m sorry, I’m not sure I got that right.',
+    'Sorry, I might have misunderstood you.',
+    'I’m sorry if I’m missing something here.',
+    'Apologies, I’m still trying to get it.',
+    'I’m sorry, that’s a bit beyond me.',
+    'I’m sorry, I might need some more context.',
+    'I’m afraid I didn’t catch what you meant.',
+    'Sorry, I didn’t understand that part.'
     ];
+    
 
     // Randomly select a response from the list
     response = undefinedResponses[Math.floor(Math.random() * undefinedResponses.length)];
