@@ -389,6 +389,25 @@ input::-webkit-outer-spin-button,
     background-color: #555; /* Slightly lighter on hover */
 }
 
+.reply-info {
+  padding: 5px;
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.reply-to {
+  font-size: 12px;
+  color: #666;
+}
+
+.message-time {
+  font-size: 0.8em;
+  color: #000000;
+  margin-top: 5px;
+  text-align: right;
+}
+
 
 @keyframes bounce {
     0%, 100% {

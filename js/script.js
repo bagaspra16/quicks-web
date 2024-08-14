@@ -67,7 +67,7 @@
     const sendMessageButton = document.querySelector('.send-btn');
     const chatInput = document.querySelector('.chat-input');
     const typingIndicator = document.getElementById('typingIndicator');
-
+        
     // Simple contextual chat history
     let chatHistory = [];
 
@@ -285,7 +285,7 @@
                 ]
             },
             {
-                keywords: ['thanks', 'thank you', 'appreciate', 'grateful', 'gratitude', 'thankful'],
+                keywords: ['thanks', 'thank you', 'appreciate', 'grateful', 'gratitude', 'thankful', 'bye'],
                 questions: [
                     'You’re very welcome! Is there anything else you need?',
                     'I’m glad I could help! Anything else on your mind?',
@@ -472,41 +472,48 @@
     
 }
 
-    function displayMessage(message, type) {
-        const messageElement = document.createElement('div');
-        messageElement.className = `chat-message ${type}`;
-        messageElement.innerHTML = message;
-        chatContainer.appendChild(messageElement);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+function displayMessage(message, type) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `chat-message ${type}`;
+    messageElement.innerHTML = message;
+
+    const timeElement = document.createElement('div');
+    timeElement.className = 'message-time';
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    timeElement.textContent = currentTime;
+
+    messageElement.appendChild(timeElement);
+    chatContainer.appendChild(messageElement);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+sendMessageButton.addEventListener('click', () => {
+    const userMessage = chatInput.value.trim();
+    if (userMessage) {
+        displayMessage(userMessage, 'sent'); // Display user message
+        chatInput.value = '';
+
+        // Show the typing indicator
+        typingIndicator.style.display = 'block';
+
+        // Delay the bot response
+        setTimeout(() => {
+            // Get and display bot response
+            const botResponse = getBotResponse(userMessage);
+            displayMessage(botResponse, 'received');
+
+            // Hide the typing indicator
+            typingIndicator.style.display = 'none';
+        }, 3000); // 3 seconds delay
     }
+});
 
-    sendMessageButton.addEventListener('click', () => {
-        const userMessage = chatInput.value.trim();
-        if (userMessage) {
-            displayMessage(userMessage, 'sent'); // Display user message
-            chatInput.value = '';
-
-            // Show the typing indicator
-            typingIndicator.style.display = 'block';
-
-            // Delay the bot response
-            setTimeout(() => {
-                // Get and display bot response
-                const botResponse = getBotResponse(userMessage);
-                displayMessage(botResponse, 'received');
-
-                // Hide the typing indicator
-                typingIndicator.style.display = 'none';
-            }, 3000); // 3 seconds delay
-        }
-    });
-
-    // Optional: Handle Enter key for sending messages
-    chatInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            sendMessageButton.click();
-        }
-    });
+// Optional: Handle Enter key for sending messages
+chatInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        sendMessageButton.click();
+    }
+});
 });
 document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('taskInput');
