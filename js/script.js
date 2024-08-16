@@ -62,459 +62,95 @@
                 taskLabel.style.display = 'inline';
             }
         });
-    document.addEventListener('DOMContentLoaded', function () {
-    const chatContainer = document.getElementById('chatContainer');
-    const sendMessageButton = document.querySelector('.send-btn');
-    const chatInput = document.querySelector('.chat-input');
-    const typingIndicator = document.getElementById('typingIndicator');
-        
-    // Simple contextual chat history
-    let chatHistory = [];
 
-    // Function to get bot response based on user input
-    function getBotResponse(userMessage) {
-        chatHistory.push({ type: 'sent', message: userMessage });
-    
-        const lowerCaseMessage = userMessage.toLowerCase();
-        let response = '';
-        const isQuestion = userMessage.trim().endsWith('?');
-    
-        const keywordCategories = [
-            {
-                keywords: ['laugh', 'joke', 'funny', 'humor', 'giggle', 'comedy', 'chuckle', 'pun'],
-                questions: [
-                    'Why did the chicken join a band? To get to the other side!',
-                    'What do you call fake spaghetti? An impasta!',
-                    'Here’s a joke: What did the grape do when he got stepped on? Nothing but let out a little wine!',
-                    'Want to hear something funny? Why can’t you give Elsa a balloon? Because she will let it go!',
-                    'Ever heard this one? Why did the stadium get hot after the game? All the fans left!'
-                ],
-                statements: [
-                    'That joke never gets old!',
-                    'Humor is the best medicine, don’t you think?',
-                    'Laughing always brightens the day!',
-                    'You have a great sense of humor!',
-                    'Laughter is contagious!'
-                ]
-            },
-            {
-                keywords: ['sad', 'mad', 'upset', 'angry', 'depressed', 'down', 'unhappy', 'frustrated', 'annoyed', 'distressed'],
-                questions: [
-                    'I’m really sorry you’re feeling this way. Want to talk about what’s bothering you?',
-                    'It’s okay to feel upset. What’s on your mind?',
-                    'Feeling down can be tough. Do you want to share what’s going on?',
-                    'I’m here for you. What’s making you feel this way?',
-                    'Do you want to discuss what’s causing your frustration?'
-                ],
-                statements: [
-                    'It’s okay to not be okay sometimes.',
-                    'Your feelings are valid, and it’s important to acknowledge them.',
-                    'I’m here to listen whenever you’re ready to talk.',
-                    'You’re not alone in this; I’m here for you.',
-                    'Sometimes, talking things out can really help.'
-                ]
-            },
-            {
-                keywords: ['happy', 'joy', 'glad', 'excited', 'cheerful', 'thrilled', 'delighted', 'content', 'satisfied'],
-                questions: [
-                    'That’s wonderful to hear! What’s making you so happy?',
-                    'I love hearing that you’re in a good mood! What’s the reason?',
-                    'Excitement is in the air! What’s got you feeling this way?',
-                    'Joy is contagious! What’s the good news?',
-                    'What’s bringing you so much happiness today?'
-                ],
-                statements: [
-                    'It’s great to see you so happy!',
-                    'Your joy is really infectious!',
-                    'I’m glad you’re feeling so good!',
-                    'Happiness looks good on you!',
-                    'It’s always nice to hear someone is doing well!'
-                ]
-            },
-            {
-                keywords: ['hello', 'hi', 'greetings', 'hey', 'good morning', 'good afternoon', 'good evening', 'what’s up', 'howdy'],
-                questions: [
-                    'Hey there! How’s your day going?',
-                    'Hello! What’s new with you today?',
-                    'Hi! Anything exciting happening?',
-                    'Greetings! How can I assist you today?',
-                    'What’s up? How are things on your end?'
-                ],
-                statements: [
-                    'Hi there! Nice to hear from you!',
-                    'Hello! I’m here to help you with anything you need.',
-                    'Good to see you online!',
-                    'Hey! I’m ready to chat whenever you are.',
-                    'Greetings! How can I make your day better?'
-                ]
-            },
-            {
-                keywords: ['help', 'assist', 'support', 'problem', 'issue', 'trouble', 'challenge', 'difficulty', 'question'],
-                questions: [
-                    'How can I assist you with that?',
-                    'What’s the issue you’re facing? I’m here to help.',
-                    'How can I support you in solving this?',
-                    'What challenge are you dealing with?',
-                    'Do you need help with something specific?'
-                ],
-                statements: [
-                    'I’m here to help!',
-                    'Let’s work on this together.',
-                    'I’ll do my best to assist you.',
-                    'I’m ready to help with any problems you have.',
-                    'Supporting you is what I’m here for!'
-                ]
-            },
-            {
-                keywords: ['love', 'relationship', 'crush', 'dating', 'romance', 'partner', 'affection', 'feelings', 'heart'],
-                questions: [
-                    'Love can be complicated. How’s everything going?',
-                    'How are things with your special someone?',
-                    'What’s been happening in your relationship lately?',
-                    'Any romantic plans coming up?',
-                    'How do you feel about your crush?'
-                ],
-                statements: [
-                    'Love is a beautiful thing!',
-                    'Relationships can be both rewarding and challenging.',
-                    'It’s great that you have someone special in your life.',
-                    'Crushes can be really exciting!',
-                    'Romance is in the air!'
-                ]
-            },
-            {
-                keywords: ['food', 'hungry', 'eat', 'meal', 'snack', 'dinner', 'breakfast', 'lunch', 'cuisine', 'craving'],
-                questions: [
-                    'What are you in the mood to eat?',
-                    'Feeling hungry? What sounds good right now?',
-                    'Got any food cravings?',
-                    'What’s your favorite meal of the day?',
-                    'Any particular cuisine you’re craving?'
-                ],
-                statements: [
-                    'Food is always a good idea!',
-                    'Eating well is so important.',
-                    'Cravings can really hit hard sometimes!',
-                    'A good meal can really lift your spirits.',
-                    'Snacks are the best part of the day!'
-                ]
-            },
-            {
-                keywords: ['travel', 'vacation', 'holiday', 'trip', 'explore', 'journey', 'adventure', 'destination', 'wanderlust'],
-                questions: [
-                    'Any exciting travel plans coming up?',
-                    'Where would you like to go on your next vacation?',
-                    'What’s your dream travel destination?',
-                    'Been on any trips lately?',
-                    'What’s your idea of the perfect holiday?'
-                ],
-                statements: [
-                    'Traveling is such an enriching experience!',
-                    'A vacation can really recharge your batteries.',
-                    'Exploring new places is always fun!',
-                    'Trips create the best memories!',
-                    'Wanderlust can take you to amazing places!'
-                ]
-            },
-            {
-                keywords: ['hobby', 'interest', 'passion', 'free time', 'spare time', 'activity', 'craft', 'skill', 'project'],
-                questions: [
-                    'What hobbies do you enjoy?',
-                    'Any new interests you’ve picked up lately?',
-                    'What’s something you’re passionate about?',
-                    'How do you spend your free time?',
-                    'Working on any projects right now?'
-                ],
-                statements: [
-                    'Hobbies are a great way to relax!',
-                    'It’s awesome to have a passion for something.',
-                    'Free time is perfect for exploring new interests.',
-                    'Crafting and creating can be so fulfilling!',
-                    'Skills you develop from hobbies can last a lifetime!'
-                ]
-            },
-            {
-                keywords: ['news', 'latest', 'current events', 'world', 'updates', 'headline', 'breaking', 'trending', 'media'],
-                questions: [
-                    'Any particular news stories you’re following?',
-                    'What’s the latest headline that caught your attention?',
-                    'Keeping up with current events?',
-                    'What’s trending in the world right now?',
-                    'Interested in any specific news topics?'
-                ],
-                statements: [
-                    'The world is full of news!',
-                    'Staying informed is so important.',
-                    'There’s always something happening in the world!',
-                    'Current events can be really eye-opening.',
-                    'The news cycle never stops!'
-                ]
-            },
-            {
-                keywords: ['music', 'song', 'artist', 'album', 'playlist', 'band', 'tune', 'melody', 'genre'],
-                questions: [
-                    'What’s your favorite song right now?',
-                    'Been listening to any new artists?',
-                    'What’s your go-to playlist?',
-                    'Any albums you’ve been enjoying lately?',
-                    'What genre of music do you like best?'
-                ],
-                statements: [
-                    'Music really sets the mood!',
-                    'Songs can bring back so many memories.',
-                    'Artists put their heart and soul into their work.',
-                    'A good playlist can make your day!',
-                    'Melodies can be so soothing.'
-                ]
-            },
-            {
-                keywords: ['health', 'wellness', 'fitness', 'exercise', 'workout', 'diet', 'nutrition', 'well-being', 'routine'],
-                questions: [
-                    'How do you stay fit and healthy?',
-                    'What’s your favorite way to exercise?',
-                    'Any wellness routines you follow?',
-                    'How do you approach your diet?',
-                    'What’s your secret to staying in shape?'
-                ],
-                statements: [
-                    'Health is wealth!',
-                    'Wellness is a journey, not a destination.',
-                    'Fitness routines can be really rewarding.',
-                    'Nutrition plays a big role in overall well-being.',
-                    'Taking care of yourself is so important.'
-                ]
-            },
-            {
-                keywords: ['thanks', 'thank you', 'appreciate', 'grateful', 'gratitude', 'thankful', 'bye'],
-                questions: [
-                    'You’re very welcome! Is there anything else you need?',
-                    'I’m glad I could help! Anything else on your mind?',
-                    'It’s my pleasure! Need assistance with anything else?',
-                    'I appreciate your gratitude! What else can I do for you?',
-                    'You’re welcome! How can I help you further?'
-                ],
-                statements: [
-                    'You’re welcome!',
-                    'Happy to help!',
-                    'It’s great to hear that!',
-                    'I appreciate your kind words!',
-                    'Glad I could assist you!'
-                ]
-            }
-        ];
-    
-        for (let category of keywordCategories) {
-            for (let keyword of category.keywords) {
-                if (lowerCaseMessage.includes(keyword)) {
-                    if (isQuestion) {
-                        response = category.statements[Math.floor(Math.random() * category.statements.length)];
-                    } else {
-                        response = category.questions[Math.floor(Math.random() * category.questions.length)];
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatContainer = document.getElementById('chatContainer');
+            const sendMessageButton = document.querySelector('.send-btn');
+            const chatInput = document.querySelector('.chat-input');
+            const typingIndicator = document.getElementById('typingIndicator');
+        
+            // API configuration
+            const apiConfig = {
+                apiKey: '18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3',
+                apiHost: 'infinite-gpt.p.rapidapi.com',
+                apiBaseUrl: 'https://infinite-gpt.p.rapidapi.com',
+                apiEndpoint: '/infinite-gpt',
+            };
+        
+            async function getResponse(userMessage) {
+                const url = `${apiConfig.apiBaseUrl}${apiConfig.apiEndpoint}`;
+        
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'x-rapidapi-key': apiConfig.apiKey,
+                        'x-rapidapi-host': apiConfig.apiHost,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: userMessage,
+                        sysMsg: 'You are a friendly Chatbot.'
+                    })
+                };
+        
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
                     }
-                    break;
+        
+                    const result = await response.json();
+                    console.log('API Response:', result); // Debug log
+        
+                    if (!result.serverError && !result.clientError && result.msg) {
+                        return result.msg;
+                    } else {
+                        return "No response from Infinite-GPT.";
+                    }
+                } catch (error) {
+                    console.error('Error fetching response:', error);
+                    return "Oops! Something went wrong.";
                 }
             }
-            if (response) break;
-        }
-    
-        if (!response) {
-            const undefinedResponses = [
-                // Statements
-                'That’s totally fair.',
-                'I see what you mean.',
-                'That’s something to think about.',
-                'I couldn’t agree more.',
-                'Absolutely, that’s a good point.',
-                'Makes perfect sense to me.',
-                'I’m right there with you on that.',
-                'Totally on board with that.',
-                'That’s definitely one way to look at it.',
-                'I get the vibe you’re going for.',
-                
-                // Acknowledgments
-                'Right, gotcha.',
-                'Noted!',
-                'Sure thing.',
-                'Understood.',
-                'Copy that!',
-                'Makes sense.',
-                'Cool, cool.',
-                'Alright, noted.',
-                'Fair enough!',
-                'I hear you!',
-                
-                // Casual Phrases
-                'No worries!',
-                'You’re good!',
-                'All good here.',
-                'No stress!',
-                'No biggie!',
-                'It’s all good.',
-                'That’s chill.',
-                'It’s whatever!',
-                'We’re cool.',
-                'No problem at all.',
-                
-                // Brief Reactions
-                'Oh, really?',
-                'Ah, I see!',
-                'Hmm, got it.',
-                'Interesting...',
-                'Oh, okay!',
-                'Well, that’s something!',
-                'Ah, makes sense now.',
-                'I didn’t see that coming!',
-                'Huh, that’s new.',
-                'Oh, for sure!',
-                
-                // Filler Responses
-                'Uh-huh, I get you.',
-                'Yeah, totally.',
-                'Mmm, I see.',
-                'Right, right...',
-                'Oh yeah?',
-                'Is that so?',
-                'Wow, really?',
-                'Okay, I’m with you.',
-                'Yeah, I feel that.',
-                'Got it, got it.',
-                
-                // Encouragement
-                'You’ve got this!',
-                'Keep it up!',
-                'You’re doing great!',
-                'I’m here with you!',
-                'Stay strong!',
-                'You’re on the right track!',
-                'That’s the spirit!',
-                'Let’s keep moving forward!',
-                'You’re killing it!',
-                'Keep pushing!',
-                
-                // Affirmative
-                'Definitely!',
-                'For sure!',
-                'Absolutely!',
-                'Without a doubt!',
-                'Of course!',
-                'No doubt about it!',
-                'You bet!',
-                'Exactly!',
-                'Yup, exactly.',
-                'True that!',
-                
-                // Casual Positive
-                'Sounds good to me!',
-                'I’m down with that!',
-                'That’s awesome!',
-                'Nice one!',
-                'Sweet!',
-                'That’s great!',
-                'Love it!',
-                'Perfect!',
-                'That’s solid!',
-                'Right on!',
-                
-                // Neutral Reactions
-                'Could be!',
-                'It’s possible.',
-                'Maybe so.',
-                'Could go either way.',
-                'Who knows?',
-                'Anything’s possible.',
-                'That’s one way to see it.',
-                'Could be worth a shot.',
-                'I guess we’ll see.',
-                'Time will tell.',
-                
-                // Closing Remarks
-                'Let’s wrap this up.',
-                'That’s about it!',
-                'Let’s leave it there for now.',
-                'That covers it!',
-                'We’re all set.',
-                'That’s all I got.',
-                'Let’s call it a day.',
-                'That’s a wrap!',
-                'We’re good here!',
-                'Let’s tie this up!',
         
-                // Apologies for Not Understanding
-            'I’m sorry, I didn’t quite get that.',
-            'My bad, I missed that.',
-            'Sorry, can you say that in another way?',
-            'Oops, I’m not sure what you mean.',
-            'Apologies, I didn’t catch that.',
-            'Sorry about that, could you explain a bit more?',
-            'I’m still learning, sorry for the confusion!',
-            'Sorry, I’m a bit lost here.',
-            'I apologize, that went over my head.',
-            'I’m sorry, I don’t fully understand.',
-            'My apologies, could you clarify that?',
-            'Sorry, I didn’t follow that.',
-            'I’m sorry, I’m not sure I got that right.',
-            'Sorry, I might have misunderstood you.',
-            'I’m sorry if I’m missing something here.',
-            'Apologies, I’m still trying to get it.',
-            'I’m sorry, that’s a bit beyond me.',
-            'I’m sorry, I might need some more context.',
-            'I’m afraid I didn’t catch what you meant.',
-            'Sorry, I didn’t understand that part.'
-            ];
-            
+            function displayMessage(message, type) {
+                const messageElement = document.createElement('div');
+                messageElement.className = `chat-message ${type}`;
+                messageElement.innerHTML = message;
         
-            // Randomly select a response from the list
-            response = undefinedResponses[Math.floor(Math.random() * undefinedResponses.length)];
-        }
-    
-        chatHistory.push({ type: 'received', message: response });
-        return response;
-    
-}
-
-function displayMessage(message, type) {
-    const messageElement = document.createElement('div');
-    messageElement.className = `chat-message ${type}`;
-    messageElement.innerHTML = message;
-
-    const timeElement = document.createElement('div');
-    timeElement.className = 'message-time';
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    timeElement.textContent = currentTime;
-
-    messageElement.appendChild(timeElement);
-    chatContainer.appendChild(messageElement);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-sendMessageButton.addEventListener('click', () => {
-    const userMessage = chatInput.value.trim();
-    if (userMessage) {
-        displayMessage(userMessage, 'sent'); // Display user message
-        chatInput.value = '';
-
-        // Show the typing indicator
-        typingIndicator.style.display = 'block';
-
-        // Delay the bot response
-        setTimeout(() => {
-            // Get and display bot response
-            const botResponse = getBotResponse(userMessage);
-            displayMessage(botResponse, 'received');
-
-            // Hide the typing indicator
-            typingIndicator.style.display = 'none';
-        }, 3000); // 3 seconds delay
-    }
-});
-
-// Optional: Handle Enter key for sending messages
-chatInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        sendMessageButton.click();
-    }
-});
-});
+                const timeElement = document.createElement('div');
+                timeElement.className = 'message-time';
+                const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                timeElement.textContent = currentTime;
+        
+                messageElement.appendChild(timeElement);
+                chatContainer.appendChild(messageElement);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        
+            sendMessageButton.addEventListener('click', async () => {
+                const userMessage = chatInput.value.trim();
+                if (userMessage) {
+                    displayMessage(userMessage, 'sent');
+                    chatInput.value = '';
+        
+                    typingIndicator.style.display = 'block';
+        
+                    setTimeout(async () => {
+                        const botResponse = await getResponse(userMessage);
+                        displayMessage(botResponse, 'received');
+                        typingIndicator.style.display = 'none';
+                    }, 3000); // Simulasi waktu mengetik 3 detik
+                }
+            });
+        
+            chatInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendMessageButton.click();
+                }
+            });
+        });
+        
 document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('taskInput');
     const taskTimer = document.getElementById('taskTimer');

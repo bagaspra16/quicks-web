@@ -1,0 +1,10 @@
+{
+    "apiConfig": {
+      "apiKey": "18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3",
+      "apiHost": "infinite-gpt.p.rapidapi.com",
+      "apiBaseUrl": "https://infinite-gpt.p.rapidapi.com",
+      "apiEndpoint": "/infinite-gpt",
+      "sysMsg": "You are a friendly Chatbot."
+    }
+  }
+  
