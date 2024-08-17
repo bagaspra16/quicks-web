@@ -69,17 +69,17 @@
             const chatInput = document.querySelector('.chat-input');
             const typingIndicator = document.getElementById('typingIndicator');
         
-            // API configuration
+            // New API configuration
             const apiConfig = {
                 apiKey: '18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3',
-                apiHost: 'infinite-gpt.p.rapidapi.com',
-                apiBaseUrl: 'https://infinite-gpt.p.rapidapi.com',
-                apiEndpoint: '/infinite-gpt',
+                apiHost: 'meta-llama-fast-api.p.rapidapi.com',
+                apiBaseUrl: 'https://meta-llama-fast-api.p.rapidapi.com',
+                apiEndpoint: '/mistralchat',
             };
         
             async function getResponse(userMessage) {
                 const url = `${apiConfig.apiBaseUrl}${apiConfig.apiEndpoint}`;
-        
+            
                 const options = {
                     method: 'POST',
                     headers: {
@@ -88,31 +88,30 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        query: userMessage,
-                        sysMsg: 'You are a friendly Chatbot.'
+                        message: userMessage
                     })
                 };
-        
+            
                 try {
                     const response = await fetch(url, options);
                     if (!response.ok) {
                         throw new Error('Network response was not ok: ' + response.statusText);
                     }
-        
-                    const result = await response.json();
+            
+                    const result = await response.text();
                     console.log('API Response:', result); // Debug log
-        
-                    if (!result.serverError && !result.clientError && result.msg) {
-                        return result.msg;
+            
+                    if (result) {
+                        return result;
                     } else {
-                        return "No response from Infinite-GPT.";
+                        return "No response from the API.";
                     }
                 } catch (error) {
                     console.error('Error fetching response:', error);
                     return "Oops! Something went wrong.";
                 }
             }
-        
+            
             function displayMessage(message, type) {
                 const messageElement = document.createElement('div');
                 messageElement.className = `chat-message ${type}`;
@@ -150,6 +149,7 @@
                 }
             });
         });
+        
         
 document.addEventListener('DOMContentLoaded', function () {
     const taskInput = document.getElementById('taskInput');
