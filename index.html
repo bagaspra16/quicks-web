@@ -419,7 +419,7 @@ input::-webkit-outer-spin-button,
     .navbar-toggler {
       position: fixed;
       top: 15px;
-      left: 6px;
+      left: 11px;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -431,7 +431,7 @@ input::-webkit-outer-spin-button,
     }
     
     .sidebar {
-    width: 50px; /* Smaller width on mobile */
+    width: 80px; /* Smaller width on mobile */
   }
 
   .sidebar.open {
@@ -442,7 +442,7 @@ input::-webkit-outer-spin-button,
     width: 20px; /* Smaller icon size */
     height: 20px; /* Smaller icon size */
     position: fixed;
-      left: 9px;
+      left: 14px;
   }
 
   .sidebar.open .icon {
@@ -453,13 +453,13 @@ input::-webkit-outer-spin-button,
   .sidebar .link-text {
     font-size: 0.8rem; /* Smaller text size */
     position: relative;
-        left: 30px;
+        left: 38px;
     
   }
 
   .sidebar-title {
     font-size: 4rem; /* Smaller sidebar title font size */
-    left: 30px;
+    left: 10px;
     
   }
 
@@ -489,7 +489,7 @@ input::-webkit-outer-spin-button,
 
 @media (max-width: 480px) {
     .sidebar {
-    width: 40px; /* Further reduced width for extra small screens */
+    width: 50px; /* Further reduced width for extra small screens */
   }
 
   .sidebar.open {
@@ -507,8 +507,13 @@ input::-webkit-outer-spin-button,
   }
 
   .sidebar-title {
-    font-size: 0.9rem; /* Even smaller title font size */
+    font-size: 1.1rem; /* Even smaller title font size */
     left: 50px; /* Further adjusted position */
+  }
+
+  .sidebar.open .sidebar-title {
+    font-size: 1.1rem; /* Even smaller title font size */
+    left: 60px; /* Further adjusted position */
   }
 }
 </style>
