@@ -29,7 +29,7 @@
         tsParticles.load("tsparticles", {
             "particles": {
                 "number": {
-                    "value": 100,
+                    "value": 50,  // Mengurangi jumlah partikel
                     "density": {
                         "enable": true,
                         "value_area": 800
