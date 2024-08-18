@@ -1,3 +1,20 @@
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('offcanvasSidebar');
+            const toggleButton = document.getElementById('navbarToggle');
+            let sidebarOpen = false;
+
+            function toggleSidebar() {
+            sidebarOpen = !sidebarOpen;
+            sidebar.classList.toggle('open', sidebarOpen);
+            toggleButton.classList.toggle('toggled', sidebarOpen);
+            }
+
+            toggleButton.addEventListener('click', function () {
+            toggleSidebar();
+            });
+        });
+
+        
         const mainBtn = document.getElementById('mainBtn');
         const talkBtn = document.getElementById('talkBtn');
         const inboxBtn = document.getElementById('taskBtn');

@@ -9,37 +9,537 @@
     <link rel="stylesheet" href="css/main.css">
     <title>Quicks</title>
 </head>
-<body class="bg-dark">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-2 left"></div>
-            <div class="col-auto divider"></div>
-            <div class="col right">
-                <div class="search-bar">
-                    <div class="input-group">
-                        <span style="background-color: #828282;">
-                            &ensp;&ensp;<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15" height="15"
-                                viewBox="0,0,256,256">
-                                <g fill="#e0e0e0" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                                    stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                                    font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                                    style="mix-blend-mode: normal">
-                                    <g transform="scale(5.12,5.12)">
-                                        <path
-                                            d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z">
-                                        </path>
-                                    </g>
-                                </g>
-                            </svg>
-                        </span>
-                        <input type="text" class="form-control" aria-label="Search">
-                    </div>
-                </div>
-                <!-- Konten lainnya dapat ditambahkan di sini -->
-            </div>
-        </div>
-    </div>
+<style>
+    * {
+  box-sizing: border-box;
+}
+body {
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
 
+    .navbar-toggler {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1050;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 40px; /* Adjusted width */
+      height: 40px; /* Adjusted height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .navbar-toggler-icon {
+      display: block;
+      width: 24px; /* Adjusted width */
+      height: 4px; /* Adjusted height */
+      background-color: #ffffff;
+      border-radius: 2px;
+      position: relative;
+      transition: all 0.3s ease;
+      margin-right: 12px;
+    }
+
+    .navbar-toggler-icon::before,
+    .navbar-toggler-icon::after {
+      content: "";
+      display: block;
+      width: 24px; /* Adjusted width */
+      height: 4px; /* Adjusted height */
+      background-color: #ffffff;
+      border-radius: 5px;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-toggler-icon::before {
+      top: -8px; /* Adjusted position */
+    }
+
+    .navbar-toggler-icon::after {
+      top: 8px; /* Adjusted position */
+    }
+
+    .navbar-toggler.toggled .navbar-toggler-icon {
+      background-color: transparent;
+    }
+
+    .navbar-toggler.toggled .navbar-toggler-icon::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+
+    .navbar-toggler.toggled .navbar-toggler-icon::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    /* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100%;
+  background-color: #333;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  padding-top: 56px;
+  z-index: 1049;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar-title {
+  position: absolute;
+  top: 15px;
+  left: 90px;
+  color: rgb(255, 216, 41);
+  font-size: 1.2rem;
+  font-weight: 800;
+  transition: left 0.3s ease;
+  margin-inline-end: 10px;
+}
+
+.sidebar.open .sidebar-title {
+  left: 80px;
+}
+
+.sidebar ul {
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar .nav-item {
+  text-align: left;
+}
+
+.sidebar .nav-link {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sidebar .icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.sidebar .link-text {
+  margin-left: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.open .link-text {
+  opacity: 1;
+}
+
+.sidebar.open .icon {
+  width: 32px;
+  height: 32px;
+}
+
+input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input[type="number"] {
+                -moz-appearance: textfield;
+            }
+
+        .form-control {
+            background-color: #828282;
+            border: none;
+            border-radius: 0;
+            height: 100%;
+            color: #e0e0e0;
+        }
+
+        .form-control:focus {
+            color: white;
+            background-color: #828282;
+            box-shadow: none;
+        }
+
+        .form-control::placeholder {
+            color: #e0e0e0;
+        }
+
+        .form-control:focus::placeholder {
+            color: #e0e0e0;
+        }
+
+        /* Floating button */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .floating-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional buttons */
+        .extra-btn {
+            position: fixed;
+            bottom: 20px;
+            background-color: #ffffff;
+            color: #4F4F4F;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .extra-btn-label {
+            position: fixed;
+            bottom: 72px;
+            background-color: transparent;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .extra-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .extra-btn-label.active {
+            opacity: 1;
+        }
+
+        .modal-custom {
+            position: absolute;
+            bottom: 100px;
+            width: 450px;
+            height: 400px;
+            background-color: #4E4E4E;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: none;
+        }
+
+        .modal-header {
+            background-color: #4E4E4E;
+            color: rgb(255, 216, 41);
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+        .chat-body {
+            height: 280px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #4e4e4e;
+            border-radius: 0px;
+            border: 1px solid #4e4e4e;
+        }
+
+        .chat-message {
+            max-width: 100%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .chat-message.sent {
+            width: 60%;
+            align-self: flex-end;
+            background-color: #007bff;
+            color: white;
+            border-top-right-radius: 0;
+            margin-inline-start: 160px;
+        }
+
+        .chat-message.received {
+            width: 60%;
+            align-self: flex-start;
+            background-color: #ffffff;
+            color: #333;
+            border-top-left-radius: 0;
+            border: 1px solid #ddd;
+            margin-inline-start: 10px;
+        }
+
+        .chat-input {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            margin-right: 10px;
+            flex: 1;
+        }
+        .modal-footer {
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    padding: 15px;
+    background-color: #4e4e4e; /* Optional: Make sure background color matches the modal body */
+}
+
+        .send-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px; /* Optional: Add some margin if needed */
+}
+
+.send-btn:hover {
+    background-color: #0056b3;
+}
+
+        .typing-indicator {
+    display: none;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #007bff;
+    text-align: center;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+    border-radius: 50%;
+    background: #007bff;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.dark-swal-popup {
+    background-color: #333; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+    border-radius: 10px;
+}
+
+.dark-swal-button {
+    background-color: rgb(255, 216, 41); /* Darker button background */
+    color: black; /* Light text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.dark-swal-button:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+
+.reply-info {
+  padding: 5px;
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.reply-to {
+  font-size: 12px;
+  color: #666;
+}
+
+.message-time {
+  font-size: 0.8em;
+  color: #000000;
+  margin-top: 5px;
+  text-align: right;
+}
+
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+.svg-icon {
+    pointer-events: none; /* This allows clicks to pass through the SVG */
+}
+@media (max-width: 768px) {
+    .navbar-toggler {
+      position: fixed;
+      top: 15px;
+      left: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 40px; /* Adjusted width */
+      height: 40px; /* Adjusted height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .sidebar {
+    width: 50px; /* Smaller width on mobile */
+  }
+
+  .sidebar.open {
+    width: 200px; /* Adjusted open width */
+  }
+
+  .sidebar .icon {
+    width: 20px; /* Smaller icon size */
+    height: 20px; /* Smaller icon size */
+    position: fixed;
+      left: 9px;
+  }
+
+  .sidebar.open .icon {
+    width: 24px; /* Slightly larger icon when sidebar is open */
+    height: 24px; /* Slightly larger icon when sidebar is open */
+  }
+
+  .sidebar .link-text {
+    font-size: 0.8rem; /* Smaller text size */
+    position: relative;
+        left: 30px;
+    
+  }
+
+  .sidebar-title {
+    font-size: 4rem; /* Smaller sidebar title font size */
+    left: 30px;
+    
+  }
+
+  .floating-btn, .extra-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .modal-custom {
+    width: 90%;
+    height: auto;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+  }
+
+  .chat-body {
+    height: 540px; /* Adjust as needed */
+    max-height: 540px;
+  }
+  .chat-message.sent{
+  margin-inline-start: 125px;
+  }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+    width: 40px; /* Further reduced width for extra small screens */
+  }
+
+  .sidebar.open {
+    width: 180px; /* Adjusted open width for extra small screens */
+  }
+
+  .sidebar .icon {
+    width: 18px; /* Further reduced icon size */
+    height: 18px; /* Further reduced icon size */
+  }
+
+  .sidebar.open .icon {
+    width: 22px; /* Slightly larger icon when sidebar is open */
+    height: 22px; /* Slightly larger icon when sidebar is open */
+  }
+
+  .sidebar-title {
+    font-size: 0.9rem; /* Even smaller title font size */
+    left: 50px; /* Further adjusted position */
+  }
+}
+</style>
+<body class="bg-dark">
+     <button class="navbar-toggler mb-3 border-box" id="navbarToggle" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon mb-3"></span>
+  </button>
+
+  <div class="sidebar" id="offcanvasSidebar">
+    <h5 class="sidebar-title">Quicks</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="#">
+          <img src="https://img.icons8.com/ios-filled/30/9b59b6/home.png" alt="Home" class="me-4 icon" style="margin-left: 2px;">
+          <span class="link-text">Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="#">
+          <img src="https://img.icons8.com/ios-filled/30/e67e22/controller.png" alt="Games" class="me-4 icon"  style="margin-left: 2px;">
+          <span class="link-text">Games</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="#">
+          <img src="https://img.icons8.com/ios-filled/30/3498db/settings.png" alt="Settings" class="me-4 icon"  style="margin-left: 2px;">
+          <span class="link-text">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </div>
     <!-- Floating Button -->
     <button class="floating-btn" id="mainBtn">
         <center><img src="images/primary-shape.png" width="75%" height="75%" alt="" srcset=""></center>
@@ -94,22 +594,23 @@
                 <input type="text" id="taskInput" class="form-control rounded-3" placeholder="Add a new task...">
                 <input type="number" inputmode="numeric" id="taskTimer" class="form-control mt-2 rounded-3" placeholder="Minutes" min="1">
                 <button class="btn btn-warning mt-2 rounded-10" id="addTaskBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256" class="my-1">
-                        <g fill="#e0e0e0" fill-rule="evenodd" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M11,2v9h-9v2h9v9h2v-9h9v-2h-9v-9z"></path></g></g>
-                        </svg>
+                    <span><i class="fa-solid fa-plus"></i></span> Add Task
                 </button>
             </div>
-            <ul id="taskList" class="list-group">
+            <ul class="list-group list-group-flush" id="taskList">
                 <!-- Tasks will be injected here -->
             </ul>
         </div>
     </div>
+</body>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/script.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
 </body>
 
 </html>
