@@ -10,33 +10,55 @@
     <title>Quicks</title>
 </head>
 <body class="bg-dark">
-     <button class="navbar-toggler mb-3 border-box" id="navbarToggle" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon mb-3"></span>
-  </button>
+     
+    <!-- Sidebar -->
+    <button class="navbar-toggler mb-3 border-box" id="navbarToggle" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mb-3"></span>
+    </button>
 
-  <div class="sidebar" id="offcanvasSidebar">
-    <h5 class="sidebar-title">Quicks</h5>
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="#">
-          <img src="https://img.icons8.com/ios-filled/30/9b59b6/home.png" alt="Home" class="me-4 icon" style="margin-left: 2px;">
-          <span class="link-text">Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="#">
-          <img src="https://img.icons8.com/ios-filled/30/e67e22/controller.png" alt="Games" class="me-4 icon"  style="margin-left: 2px;">
-          <span class="link-text">Games</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="#">
-          <img src="https://img.icons8.com/ios-filled/30/3498db/settings.png" alt="Settings" class="me-4 icon"  style="margin-left: 2px;">
-          <span class="link-text">Settings</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+    <div class="sidebar" id="offcanvasSidebar">
+        <h5 class="sidebar-title">Quicks</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('homeSection')">
+                    <img src="https://img.icons8.com/ios-filled/30/9b59b6/home.png" alt="Home" class="me-4 icon" style="margin-left: 2px;">
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('gamesSection')">
+                    <img src="https://img.icons8.com/ios-filled/30/e67e22/controller.png" alt="Games" class="me-4 icon"  style="margin-left: 2px;">
+                    <span class="link-text">Games</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('settingsSection')">
+                    <img src="https://img.icons8.com/ios-filled/30/3498db/settings.png" alt="Settings" class="me-4 icon"  style="margin-left: 2px;">
+                    <span class="link-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Sections -->
+    <div class="container text-center text-light" id="homeSection">
+        <div id="tsparticles"></div>
+        <div class="home-content">
+            <h1 class="home-title mt-5">Quicks</h1>
+            <p class="home-desc">Playful dashboard for refreshing time after your coding</p>
+        </div>
+    </div>    
+
+    <div class="container text-center text-light d-none" id="gamesSection">
+        <h2 class="mt-5">Games</h2>
+        <!-- Add your JavaScript games here -->
+    </div>
+
+    <div class="container text-center text-light d-none" id="settingsSection">
+        <h2 class="mt-5">Settings</h2>
+        <!-- Content for settings will be added later -->
+    </div>
+
     <!-- Floating Button -->
     <button class="floating-btn" id="mainBtn">
         <center><img src="images/primary-shape.png" width="75%" height="75%" alt="" srcset=""></center>
@@ -107,6 +129,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.2.0/tsparticles.bundle.min.js"></script>
     <script src="js/script.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     
