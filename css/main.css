@@ -160,6 +160,170 @@ body {
   color: #b671d1;
 }
 
+/* Base styles for gamesSection */
+#gamesSection {
+  padding: 5px;
+}
+
+/* Adjust carousel for desktop */
+.carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Height for desktop */
+  margin-top: 20px;
+}
+
+.carousel-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-item {
+  width: 70%;
+  max-width: 800px;
+  height: 500px;
+  margin: 0 15px;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.8s ease;
+  opacity: 0.4;
+  transform: scale(0.8) rotateY(-15deg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-item.active {
+  opacity: 1;
+  transform: scale(1) rotateY(0deg);
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.carousel-control-prev {
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+}
+
+.carousel-control-next {
+  top: 50%;
+  right: 8%;
+  transform: translateY(-50%);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 24px;
+  height: 24px;
+  background-size: 100%;
+  background-position: center;
+}
+
+.carousel-control-prev-icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/000000/chevron-left.png');
+}
+
+.carousel-control-next-icon {
+  background-image: url('https://img.icons8.com/ios-filled/50/000000/chevron-right.png');
+}
+
+/* Tic Tac Toe Styles */
+.tic-tac-toe {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: #2c3e50;
+  border-radius: 20px;
+}
+
+.tic-tac-toe button {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  background-color: #ecf0f1;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tic-tac-toe button:hover {
+  background-color: #bdc3c7;
+}
+
+.tic-tac-toe button:active {
+  transform: scale(0.95);
+}
+
+.tic-tac-toe button.x {
+  color: #f1c40f;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tic-tac-toe button.o {
+  color: #8e44ad;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Games title styles */
+#games-title {
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+  margin-top: 20px;
+}
+
+/* Color variations for game titles */
+.title-home {
+  color: #9f12e1;
+}
+
+.title-games {
+  color: #3cc5e7; /* Bright Red */
+}
+
+.title-settings {
+  color: #fad220; /* Bright Blue */
+}
+
 #tsparticles {
   position: absolute;
   top: 0;
@@ -169,6 +333,14 @@ body {
   z-index: -1; /* Letakkan di belakang konten */
 }
 
+#tsparticles2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Letakkan di belakang konten */
+}
 
 input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -483,6 +655,69 @@ input::-webkit-outer-spin-button,
     
   }
 
+ /* Adjust carousel for tablet and small screens */
+ .carousel {
+  height: 60vh; /* Reduce height for mobile */
+}
+
+.carousel-inner {
+  display: block;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-item {
+  width: 60%;
+  height: 60vh; /* Increase height for mobile */
+  margin: 0;
+  transform: scale(1) rotate(0deg);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  top: 0; /* Positioning at the top */
+  bottom: 0; /* Positioning at the bottom */
+  transform: translateX(-50%);
+}
+
+.carousel-control-prev {
+  left: 50%;
+  transform: translate(-50%, 20px); /* Vertically positioned with space from top */
+}
+
+.carousel-control-next {
+  right: 50%;
+  transform: translate(50%, 20px); /* Vertically positioned with space from bottom */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tic Tac Toe adjustments */
+.tic-tac-toe {
+  gap: 3px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.tic-tac-toe button {
+  font-size: 1.5rem;
+  border-radius: 5px;
+}
+
+/* Games title styles */
+#games-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
   .floating-btn, .extra-btn {
     position: absolute;
     bottom: 10px;
@@ -534,5 +769,51 @@ input::-webkit-outer-spin-button,
   .sidebar.open .sidebar-title {
     font-size: 1.1rem; /* Even smaller title font size */
     left: 60px; /* Further adjusted position */
+  }
+
+ /* Further adjust carousel for very small devices */
+  .carousel {
+    height: 50vh; /* Further reduce height */
+  }
+
+  .carousel-item {
+    left: 65px;
+    width: 80%;
+    height: 50vh; /* Increase height for mobile */
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 30px;
+    height: 30px;
+    top: 0; /* Positioning at the top */
+    bottom: 0; /* Positioning at the bottom */
+  }
+
+  .carousel-control-prev {
+    left: 50%;
+    transform: translate(-50%, 50px); /* Vertically positioned with space from top */
+  }
+
+  .carousel-control-next {
+    right: 50%;
+    transform: translate(50%, 50px); /* Vertically positioned with space from bottom */
+  }
+
+  /* Tic Tac Toe adjustments for very small devices */
+  .tic-tac-toe {
+    gap: 1px;
+    padding: 5px;
+  }
+
+  .tic-tac-toe button {
+    font-size: 1rem;
+    border-radius: 2px;
+  }
+
+  /* Smallest title size */
+  #games-title {
+    font-size: 1rem;
+    left: 85px;
   }
 }

@@ -26,10 +26,37 @@
             };
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek section yang disimpan di localStorage
+            const currentSection = localStorage.getItem('currentSection') || 'homeSection';
+        
+            // Sembunyikan semua section
+            document.getElementById('homeSection').classList.add('d-none');
+            document.getElementById('gamesSection').classList.add('d-none');
+            document.getElementById('settingsSection').classList.add('d-none');
+        
+            // Tampilkan section yang sesuai
+            document.getElementById(currentSection).classList.remove('d-none');
+        });
+        
+        function showSection(sectionId) {
+            // Sembunyikan semua section
+            document.getElementById('homeSection').classList.add('d-none');
+            document.getElementById('gamesSection').classList.add('d-none');
+            document.getElementById('settingsSection').classList.add('d-none');
+        
+            // Tampilkan section yang dipilih
+            document.getElementById(sectionId).classList.remove('d-none');
+        
+            // Simpan section yang terakhir dipilih di localStorage
+            localStorage.setItem('currentSection', sectionId);
+        }
+        
+
         tsParticles.load("tsparticles", {
             "particles": {
                 "number": {
-                    "value": 50,  // Mengurangi jumlah partikel
+                    "value": 30,  // Mengurangi jumlah partikel
                     "density": {
                         "enable": true,
                         "value_area": 800
@@ -137,6 +164,186 @@
             "retina_detect": true
         });
         
+        document.addEventListener('DOMContentLoaded', (event) => {
+            tsParticles.load("tsparticles2", {
+                "particles": {
+                    "number": {
+                        "value": 50,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#FFD700" // Warna partikel
+                    },
+                    "shape": {
+                        "type": "star",  // Contoh: bentuk partikel bintang
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.8,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.3,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.5,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": false
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "top",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "bubble"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "bubble": {
+                            "distance": 250,
+                            "size": 6,
+                            "duration": 2,
+                            "opacity": 0.8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+
+         let currentSlide = 0;
+        const gameTitles = ['Tic Tac Toe', 'Game 2', 'Game 3'];
+        const titleClasses = ['title-home', 'title-games', 'title-settings'];
+
+        function showSlide(index) {
+            const items = document.querySelectorAll('.carousel-item');
+            items[currentSlide].classList.remove('active');
+            currentSlide = (index + items.length) % items.length;
+            items[currentSlide].classList.add('active');
+
+            // Update the game title and its class
+            const titleElement = document.getElementById('games-title');
+            titleElement.textContent = gameTitles[currentSlide];
+            titleElement.className = `mt-5 ${titleClasses[currentSlide]}`;
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        // Initialize the first slide and title
+        showSlide(0);
+
+        // Tic Tac Toe Game Logic
+        const ticTacToeBoard = Array(9).fill(null);
+        let currentPlayer = 'X';
+
+        function makeMove(button, index) {
+            if (ticTacToeBoard[index] || checkWinner()) return;
+
+            ticTacToeBoard[index] = currentPlayer;
+            button.textContent = currentPlayer;
+            button.classList.add(currentPlayer.toLowerCase());
+
+            if (checkWinner()) {
+                Swal.fire({
+                    title: `Player ${currentPlayer} Wins!`,
+                    text: 'Congratulations!',
+                    icon: 'success',
+                    background: '#333',
+                    color: '#fff',
+                    confirmButtonColor: '#f1c40f',
+                    confirmButtonText: 'Play Again',
+                    onClose: resetBoard
+                }).then(() => resetBoard());
+            } else if (ticTacToeBoard.every(cell => cell)) {
+                Swal.fire({
+                    title: 'Draw!',
+                    text: 'No one wins!',
+                    icon: 'info',
+                    background: '#333',
+                    color: '#fff',
+                    confirmButtonColor: '#f1c40f',
+                    confirmButtonText: 'Play Again',
+                    onClose: resetBoard
+                }).then(() => resetBoard());
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+
+        function checkWinner() {
+            const winPatterns = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return ticTacToeBoard[a] && ticTacToeBoard[a] === ticTacToeBoard[b] && ticTacToeBoard[a] === ticTacToeBoard[c];
+            });
+        }
+
+        function resetBoard() {
+            ticTacToeBoard.fill(null);
+            document.querySelectorAll('.tic-tac-toe button').forEach(button => {
+                button.textContent = '';
+                button.classList.remove('x', 'o');
+            });
+            currentPlayer = 'X';
+        }
+
         const mainBtn = document.getElementById('mainBtn');
         const talkBtn = document.getElementById('talkBtn');
         const inboxBtn = document.getElementById('taskBtn');
