@@ -773,10 +773,11 @@ input::-webkit-outer-spin-button,
 
  /* Further adjust carousel for very small devices */
   .carousel {
-    height: 50vh; /* Further reduce height */
+    height: 80vh; /* Further reduce height */
   }
 
   .carousel-item {
+    margin-top: 30%;
     left: 65px;
     width: 80%;
     height: 50vh; /* Increase height for mobile */
@@ -791,19 +792,19 @@ input::-webkit-outer-spin-button,
   }
 
   .carousel-control-prev {
-    left: 50%;
-    transform: translate(-50%, 50px); /* Vertically positioned with space from top */
+    left: 56%;
+    transform: translate(-50%, 580px); /* Vertically positioned with space from top */
   }
 
   .carousel-control-next {
-    right: 50%;
-    transform: translate(50%, 50px); /* Vertically positioned with space from bottom */
+    right: 44%;
+    transform: translate(50%, 80px); /* Vertically positioned with space from bottom */
   }
 
   /* Tic Tac Toe adjustments for very small devices */
   .tic-tac-toe {
     gap: 1px;
-    padding: 5px;
+    padding: 10px;
   }
 
   .tic-tac-toe button {
@@ -813,7 +814,7 @@ input::-webkit-outer-spin-button,
 
   /* Smallest title size */
   #games-title {
-    font-size: 1rem;
-    left: 85px;
+    font-size: 2rem;
+    margin-left: 48px;
   }
 }
