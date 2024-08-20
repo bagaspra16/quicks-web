@@ -798,7 +798,7 @@ input::-webkit-outer-spin-button,
 
   .carousel-control-next {
     right: 44%;
-    transform: translate(50%, 80px); /* Vertically positioned with space from bottom */
+    transform: translate(50%, 50px); /* Vertically positioned with space from bottom */
   }
 
   /* Tic Tac Toe adjustments for very small devices */
