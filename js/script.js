@@ -431,11 +431,8 @@
                 function setupEventListeners() {
                     document.addEventListener("keydown", keyDownHandler);
                     document.addEventListener("keyup", keyUpHandler);
-                    if (!touchMoveHandlerAttached) {
-                        canvas.addEventListener("touchstart", touchStartHandler);
-                        canvas.addEventListener("touchmove", touchMoveHandler);
-                        touchMoveHandlerAttached = true;
-                    }
+                    canvas.addEventListener("touchstart", touchStartHandler);
+                    canvas.addEventListener("touchmove", touchMoveHandler);
                 }
         
                 function removeEventListeners() {
