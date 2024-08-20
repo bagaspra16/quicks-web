@@ -797,7 +797,7 @@ input::-webkit-outer-spin-button,
   }
 
   .carousel-control-next {
-    right: 44%;
+    right: 42%;
     transform: translate(50%, 50px); /* Vertically positioned with space from bottom */
   }
 
