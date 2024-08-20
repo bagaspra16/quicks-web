@@ -793,7 +793,7 @@ input::-webkit-outer-spin-button,
 
   .carousel-control-prev {
     left: 56%;
-    transform: translate(-50%, 580px); /* Vertically positioned with space from top */
+    transform: translate(-50%, 570px); /* Vertically positioned with space from top */
   }
 
   .carousel-control-next {
