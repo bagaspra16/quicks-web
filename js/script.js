@@ -254,7 +254,7 @@
 
         //Game Tic-Tac
          let currentSlide = 0;
-        const gameTitles = ['Tic Tac Toe', 'Game 2', 'Game 3'];
+        const gameTitles = ['Tic Tac Toe', 'Breakout', 'Game 3'];
         const titleClasses = ['title-home', 'title-games', 'title-settings'];
 
         function showSlide(index) {
