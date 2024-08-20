@@ -581,6 +581,7 @@
                     removeEventListeners();
                     gameOverMessage.style.display = 'block';
                     gameOverText.textContent = 'Game Over';
+                    breakoutCanvas.style.filter = 'blur(5px)';
                 }
         
                 function gameWon() {

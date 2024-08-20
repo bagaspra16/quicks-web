@@ -364,7 +364,7 @@ body {
 
 .breakout-play-button,
 .breakout-play-again-button {
-  background-color: #2ecc71;
+  background-color: #fad713;
   border: none;
   color: white;
   padding: 15px 30px;
@@ -378,7 +378,7 @@ body {
 
 .breakout-play-button:hover,
 .breakout-play-again-button:hover {
-  background-color: #27ae60;
+  background-color: #a58a10;
 }
 
 .breakout-canvas {
