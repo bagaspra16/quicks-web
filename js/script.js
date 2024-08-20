@@ -351,7 +351,9 @@
             const breakoutCanvas = document.getElementById('breakoutCanvas');
             const gameOverMessage = document.getElementById('gameOverMessage');
             const gameOverText = document.getElementById('gameOverText');
-            
+        
+            let lastTouchX = 0;
+        
             playButton.addEventListener('click', () => {
                 breakoutCanvas.style.filter = 'none'; // Remove blur effect
                 playButton.parentElement.style.display = 'none'; // Hide the play button container
@@ -409,6 +411,8 @@
         
                 document.addEventListener("keydown", keyDownHandler);
                 document.addEventListener("keyup", keyUpHandler);
+                canvas.addEventListener("touchstart", touchStartHandler);
+                canvas.addEventListener("touchmove", touchMoveHandler);
         
                 function keyDownHandler(e) {
                     if (e.key === "Right" || e.key === "ArrowRight") {
@@ -424,6 +428,20 @@
                     } else if (e.key === "Left" || e.key === "ArrowLeft") {
                         leftPressed = false;
                     }
+                }
+        
+                function touchStartHandler(e) {
+                    const touch = e.touches[0];
+                    lastTouchX = touch.clientX - canvas.getBoundingClientRect().left;
+                }
+        
+                function touchMoveHandler(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+                    const deltaX = touchX - lastTouchX;
+                    paddleX = Math.min(canvas.width - paddleWidth, Math.max(0, paddleX + deltaX));
+                    lastTouchX = touchX;
                 }
         
                 function drawBall() {
@@ -575,7 +593,7 @@
         
                 draw();
             }
-        });
+        });                
         
         const mainBtn = document.getElementById('mainBtn');
         const talkBtn = document.getElementById('talkBtn');
