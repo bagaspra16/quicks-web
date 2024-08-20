@@ -72,8 +72,18 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://via.placeholder.com/800x500/2ecc71/ffffff?text=Game+2" alt="Game 2">
+                    <div class="breakout-game">
+                        <div class="breakout-play-container">
+                            <button class="breakout-play-button">Play</button>
+                        </div>
+                        <canvas id="breakoutCanvas" class="breakout-canvas"></canvas>
+                        <div id="gameOverMessage" class="game-over-message" style="display: none;">
+                            <p id="gameOverText"></p>
+                            <button class="breakout-play-again-button">Play Again</button>
+                        </div>
+                    </div>
                 </div>
+                
                 <div class="carousel-item">
                     <img src="https://via.placeholder.com/800x500/e74c3c/ffffff?text=Game+3" alt="Game 3">
                 </div>
