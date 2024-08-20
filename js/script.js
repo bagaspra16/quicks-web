@@ -353,18 +353,7 @@
             const gameOverText = document.getElementById('gameOverText');
         
             let lastTouchX = 0;
-        
-            playButton.addEventListener('click', () => {
-                breakoutCanvas.style.filter = 'none'; // Remove blur effect
-                playButton.parentElement.style.display = 'none'; // Hide the play button container
-                startBreakoutGame(); // Start the game
-            });
-        
-            playAgainButton.addEventListener('click', () => {
-                gameOverMessage.style.display = 'none'; // Hide the game over message
-                breakoutCanvas.style.filter = 'none'; // Reset blur effect
-                startBreakoutGame(); // Restart the game
-            });
+            let touchMoveHandlerAttached = false; // Flag to check if touch events are attached
         
             function startBreakoutGame() {
                 const canvas = document.getElementById("breakoutCanvas");
@@ -409,11 +398,6 @@
                 let rightPressed = false;
                 let leftPressed = false;
         
-                document.addEventListener("keydown", keyDownHandler);
-                document.addEventListener("keyup", keyUpHandler);
-                canvas.addEventListener("touchstart", touchStartHandler);
-                canvas.addEventListener("touchmove", touchMoveHandler);
-        
                 function keyDownHandler(e) {
                     if (e.key === "Right" || e.key === "ArrowRight") {
                         rightPressed = true;
@@ -442,6 +426,23 @@
                     const deltaX = touchX - lastTouchX;
                     paddleX = Math.min(canvas.width - paddleWidth, Math.max(0, paddleX + deltaX));
                     lastTouchX = touchX;
+                }
+        
+                function setupEventListeners() {
+                    document.addEventListener("keydown", keyDownHandler);
+                    document.addEventListener("keyup", keyUpHandler);
+                    if (!touchMoveHandlerAttached) {
+                        canvas.addEventListener("touchstart", touchStartHandler);
+                        canvas.addEventListener("touchmove", touchMoveHandler);
+                        touchMoveHandlerAttached = true;
+                    }
+                }
+        
+                function removeEventListeners() {
+                    document.removeEventListener("keydown", keyDownHandler);
+                    document.removeEventListener("keyup", keyUpHandler);
+                    canvas.removeEventListener("touchstart", touchStartHandler);
+                    canvas.removeEventListener("touchmove", touchMoveHandler);
                 }
         
                 function drawBall() {
@@ -580,20 +581,38 @@
                 }
         
                 function gameOver() {
+                    removeEventListeners();
                     gameOverMessage.style.display = 'block';
                     gameOverText.textContent = 'Game Over';
-                    breakoutCanvas.style.filter = 'blur(5px)';
                 }
         
                 function gameWon() {
+                    removeEventListeners();
                     gameOverMessage.style.display = 'block';
                     gameOverText.textContent = 'You Won!';
                     breakoutCanvas.style.filter = 'blur(5px)';
                 }
         
+                setupEventListeners();
                 draw();
             }
-        });                
+        
+            function restartGame() {
+                gameOverMessage.style.display = 'none';
+                breakoutCanvas.style.filter = 'none';
+                startBreakoutGame();
+            }
+        
+            playButton.addEventListener('click', () => {
+                playButton.style.display = 'none';
+                restartGame();
+            });
+        
+            playAgainButton.addEventListener('click', () => {
+                restartGame();
+            });
+        });
+                
         
         const mainBtn = document.getElementById('mainBtn');
         const talkBtn = document.getElementById('talkBtn');
