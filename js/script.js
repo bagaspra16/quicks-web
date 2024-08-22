@@ -735,6 +735,7 @@
                     .replace(/\n/g, '')
                     .replace(/\t/g, '')
                     .replace(/\n\n/g, '')
+                    .replace(/nn/g, '')
                     .replace(/\\/g, ''); 
             
                 messageElement.innerHTML = formattedMessage;
