@@ -729,18 +729,26 @@
             function displayMessage(message, type) {
                 const messageElement = document.createElement('div');
                 messageElement.className = `chat-message ${type}`;
-                messageElement.innerHTML = message;
-        
+            
+                const formattedMessage = message
+                    .replace(/"/g, '') 
+                    .replace(/\n/g, '')
+                    .replace(/\t/g, '')
+                    .replace(/\n\n/g, '')
+                    .replace(/\\/g, ''); 
+            
+                messageElement.innerHTML = formattedMessage;
+            
                 const timeElement = document.createElement('div');
                 timeElement.className = 'message-time';
                 const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 timeElement.textContent = currentTime;
-        
+            
                 messageElement.appendChild(timeElement);
                 chatContainer.appendChild(messageElement);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
-        
+                                
             sendMessageButton.addEventListener('click', async () => {
                 const userMessage = chatInput.value.trim();
                 if (userMessage) {
