@@ -73,7 +73,12 @@
                 </div>
                 <div class="carousel-item">
                     <div class="breakout-game">
-                        <div class="breakout-play-container">
+                        <div id="howToPlay" class="how-to-play-container">
+                            <p class="how-to-play-text" style="font-weight: 800; color:rgb(241, 8, 241);">How To Play!!!</p>
+                            <p class="how-to-play-text">Use the arrow keys or touch to move the paddle. Break all the bricks to win!</p>
+                            <button id="howToPlayButton" class="breakout-how-to-play-button">OK</button>
+                        </div>
+                        <div class="breakout-play-container" style="display: none;">
                             <button class="breakout-play-button">Play</button>
                         </div>
                         <canvas id="breakoutCanvas" class="breakout-canvas"></canvas>
@@ -81,11 +86,11 @@
                             <p id="gameOverText"></p>
                             <button class="breakout-play-again-button">Play Again</button>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 
                 <div class="carousel-item">
-                    <img src="https://via.placeholder.com/800x500/e74c3c/ffffff?text=Game+3" alt="Game 3">
+                    <img src="https://via.placeholder.com/800x500/e74c3c/ffffff?text=Coming+Soon!" alt="Game 3">
                 </div>
             </div>
             <div class="carousel-control-next" onclick="nextSlide()">
