@@ -13,7 +13,6 @@
                 toggleSidebar();
             });
 
-            // Allow sections to be switched regardless of the sidebar state
             window.showSection = function (sectionId) {
                 const sections = document.querySelectorAll('.container');
                 sections.forEach(section => {
@@ -27,28 +26,24 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Cek section yang disimpan di localStorage
+
             const currentSection = localStorage.getItem('currentSection') || 'homeSection';
         
-            // Sembunyikan semua section
             document.getElementById('homeSection').classList.add('d-none');
             document.getElementById('gamesSection').classList.add('d-none');
             document.getElementById('settingsSection').classList.add('d-none');
         
-            // Tampilkan section yang sesuai
             document.getElementById(currentSection).classList.remove('d-none');
         });
         
         function showSection(sectionId) {
-            // Sembunyikan semua section
+        
             document.getElementById('homeSection').classList.add('d-none');
             document.getElementById('gamesSection').classList.add('d-none');
             document.getElementById('settingsSection').classList.add('d-none');
         
-            // Tampilkan section yang dipilih
             document.getElementById(sectionId).classList.remove('d-none');
         
-            // Simpan section yang terakhir dipilih di localStorage
             localStorage.setItem('currentSection', sectionId);
         }
         
@@ -56,7 +51,7 @@
         tsParticles.load("tsparticles", {
             "particles": {
                 "number": {
-                    "value": 30,  // Mengurangi jumlah partikel
+                    "value": 30,  
                     "density": {
                         "enable": true,
                         "value_area": 800
@@ -175,10 +170,10 @@
                         }
                     },
                     "color": {
-                        "value": "#FFD700" // Warna partikel
+                        "value": "#FFD700" 
                     },
                     "shape": {
-                        "type": "star",  // Contoh: bentuk partikel bintang
+                        "type": "star", 
                         "stroke": {
                             "width": 0,
                             "color": "#000000"
@@ -252,7 +247,6 @@
         });
         
 
-        //Game Tic-Tac
          let currentSlide = 0;
         const gameTitles = ['Tic Tac Toe', 'Breakout', 'Game 3'];
         const titleClasses = ['title-home', 'title-games', 'title-settings'];
@@ -263,7 +257,6 @@
             currentSlide = (index + items.length) % items.length;
             items[currentSlide].classList.add('active');
 
-            // Update the game title and its class
             const titleElement = document.getElementById('games-title');
             titleElement.textContent = gameTitles[currentSlide];
             titleElement.className = `mt-5 ${titleClasses[currentSlide]}`;
@@ -277,10 +270,8 @@
             showSlide(currentSlide + 1);
         }
 
-        // Initialize the first slide and title
         showSlide(0);
 
-        // Tic Tac Toe Game Logic
         const ticTacToeBoard = Array(9).fill(null);
         let currentPlayer = 'X';
 
@@ -358,7 +349,7 @@
             let mainBall = null;
         
             function startBreakoutGame() {
-                howToPlayContainer.style.display = 'none'; // Hide the how-to-play container
+                howToPlayContainer.style.display = 'none'; 
                 breakoutCanvas.style.filter = 'none';
                 const canvas = document.getElementById("breakoutCanvas");
                 const ctx = canvas.getContext("2d");
@@ -533,7 +524,7 @@
                                         y: canvas.height - paddleHeight - 10,
                                         dx: Math.random() * 4 - 2,
                                         dy: -Math.random() * 4 - 2,
-                                        color: "#FFA500" // Warna bola baru yang didapatkan dari partikel
+                                        color: "#FFA500" 
                                     });
                                 }
                             }
@@ -669,20 +660,17 @@
         function toggleModal(modal, button, label) {
             const isModalOpen = modal.style.display === 'block';
 
-            // Toggle the modal display
             modal.style.display = isModalOpen ? 'none' : 'block';
 
-            // Toggle the button color and label visibility
             if (isModalOpen) {
                 button.style.backgroundColor = '#ffffff';
                 label.style.display = 'inline';
             } else {
-                button.style.backgroundColor = '#4F4F4F'; // Warna yang sama dengan ikon
+                button.style.backgroundColor = '#4F4F4F'; 
                 label.style.display = 'none';
             }
         }
 
-        // Close modal if click outside
         window.addEventListener('click', function (event) {
             if (!talkBtn.contains(event.target) && !talkModal.contains(event.target)) {
                 talkModal.style.display = 'none';
@@ -702,7 +690,6 @@
             const chatInput = document.querySelector('.chat-input');
             const typingIndicator = document.getElementById('typingIndicator');
         
-            // New API configuration
             const apiConfig = {
                 apiKey: '18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3',
                 apiHost: 'meta-llama-fast-api.p.rapidapi.com',
@@ -732,7 +719,7 @@
                     }
             
                     const result = await response.text();
-                    console.log('API Response:', result); // Debug log
+                    console.log('API Response:', result); 
             
                     if (result) {
                         return result;
@@ -780,7 +767,7 @@
                         const botResponse = await getResponse(userMessage);
                         displayMessage(botResponse, 'received');
                         typingIndicator.style.display = 'none';
-                    }, 3000); // Simulasi waktu mengetik 3 detik
+                    }, 3000); 
                 }
             });
         
@@ -797,7 +784,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const taskTimer = document.getElementById('taskTimer');
     const addTaskButton = document.getElementById('addTaskBtn');
     const taskList = document.getElementById('taskList');
-    let activeTimers = {}; // To store active timers and their intervals
+    let activeTimers = {};
 
     function createTaskElement(taskText, timer) {
         const listItem = document.createElement('li');
@@ -842,7 +829,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function startTimer(timerElement, minutes, taskText) {
-        let timeLeft = minutes * 60; // Convert minutes to seconds
+        let timeLeft = minutes * 60; 
 
         function updateTimer() {
             if (timeLeft <= 0) {
@@ -860,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const timerInterval = setInterval(updateTimer, 1000);
         activeTimers[timerElement.id] = timerInterval;
-        updateTimer(); // Initial update
+        updateTimer(); 
     }
 
     function notifyUser(title, message) {
@@ -869,11 +856,11 @@ document.addEventListener('DOMContentLoaded', function () {
         text: message,
         icon: 'info',
         confirmButtonText: 'OK',
-        allowOutsideClick: false, // Prevents closing on outside click
-        allowEscapeKey: false,    // Prevents closing on ESC key
+        allowOutsideClick: false, 
+        allowEscapeKey: false,    
         customClass: {
-            popup: 'dark-swal-popup',   // Adds custom class for dark theme
-            confirmButton: 'dark-swal-button' // Custom class for the button
+            popup: 'dark-swal-popup',
+            confirmButton: 'dark-swal-button' 
         }
     });
 }
@@ -905,12 +892,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const timerId = timerElement.id;
 
             clearInterval(activeTimers[timerId]);
-            delete activeTimers[timerId]; // Stop the timer but do not delete the task
+            delete activeTimers[timerId]; 
             listItem.querySelector('.task-text').style.textDecoration = 'line-through';
             event.target.disabled = true;
 
         } else if (event.target.closest('.delete-btn')) {
-            event.stopPropagation(); // Prevents the modal from closing
+            event.stopPropagation(); 
             const listItem = event.target.closest('.list-group-item');
             const timerElement = listItem.querySelector('.timer');
             const timerId = timerElement.id;
@@ -924,7 +911,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Request notification permission on page load
     if (Notification.permission === 'default') {
         Notification.requestPermission();
     }
