@@ -25,6 +25,130 @@
             };
         });
 
+        const questions = [
+            "How was your day today?",
+            "What fun things did you do today?",
+            "Are you feeling productive today?",
+            "Have you taken a break from coding today?",
+            "What's something exciting that happened today?",
+            "What challenges have you overcome today?",
+            "What is something new you learned today?",
+            "How did you manage your tasks today?",
+            "Did you work on any interesting projects?",
+            "What motivated you the most today?",
+        ];
+
+        const funFacts = [
+            "Did you know? Honey never spoils.",
+            "Fun fact: Bananas are berries, but strawberries aren't.",
+            "Random fact: A group of flamingos is called a 'flamboyance'.",
+            "Fun fact: A day on Venus is longer than a year on Venus.",
+            "Did you know? Octopuses have three hearts.",
+            "Fun fact: Cows have best friends.",
+            "Did you know? Seahorses are monogamous and mate for life.",
+            "Fun fact: The Eiffel Tower can grow 15 cm taller in the summer.",
+            "Did you know? Sloths can hold their breath for up to 40 minutes.",
+            "Fun fact: The heart of a shrimp is located in its head.",
+        ];
+
+        let isQuestion = true;
+        let currentIndex = 0;
+        let cycles = 0;
+
+        function getRandomText() {
+            const textArray = isQuestion ? questions : funFacts;
+            const text = textArray[currentIndex % textArray.length];
+            isQuestion = !isQuestion; // Toggle between questions and fun facts
+            currentIndex++;
+            return text;
+        }
+
+        function typeText(text, callback) {
+            const futuristicText = document.getElementById('futuristicText');
+            futuristicText.style.display = 'inline-block';
+            futuristicText.textContent = ''; // Clear current content
+            let charIndex = 0;
+
+            function typeChar() {
+                if (charIndex < text.length) {
+                    futuristicText.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, 150); // Typing speed, slower for realistic feel
+                } else {
+                    setTimeout(callback, 12000); // Hold the text for 12 seconds before backspacing
+                }
+            }
+
+            typeChar(); // Start typing
+        }
+
+        function backspaceText(callback) {
+            const futuristicText = document.getElementById('futuristicText');
+            let currentText = futuristicText.textContent;
+            let charIndex = currentText.length;
+
+            function removeChar() {
+                if (charIndex > 0) {
+                    futuristicText.textContent = currentText.slice(0, --charIndex);
+                    setTimeout(removeChar, 75); // Backspacing speed
+                } else {
+                    callback(); // After backspacing, show new text
+                }
+            }
+
+            removeChar(); // Start backspacing
+        }
+
+        function showNewText() {
+            const newText = getRandomText();
+            typeText(newText, () => {
+                setTimeout(() => {
+                    backspaceText(() => {
+                        cycles++;
+                        if (cycles % 5 === 0) {
+                            showTitleAndDesc();
+                        } else {
+                            showNewText();
+                        }
+                    });
+                }, 3000); // Hold the backspace for 3 seconds before typing new text
+            });
+        }
+
+        function showTitleAndDesc() {
+            const homeTitle = document.getElementById('homeTitle');
+            const homeDesc = document.getElementById('homeDesc');
+            const futuristicText = document.getElementById('futuristicText');
+
+            // Hide futuristicText
+            futuristicText.style.display = 'none';
+
+            // Show title and desc
+            homeTitle.style.opacity = 1;
+            homeDesc.style.opacity = 1;
+
+            // After 15 seconds, hide title and desc, and show futuristicText again
+            setTimeout(() => {
+                homeTitle.style.opacity = 0;
+                homeDesc.style.opacity = 0;
+                setTimeout(showNewText, 3000); // Continue with futuristicText after fade out
+            }, 15000);
+        }
+
+        function startCycle() {
+            // Hide initial "Quicks" and "home-desc"
+            document.getElementById('homeTitle').style.opacity = 0;
+            document.getElementById('homeDesc').style.opacity = 0;
+
+            // Show first futuristic text after fade out
+            setTimeout(() => {
+                showNewText();
+            }, 3000); // Delay to allow fade out effect
+        }
+
+        // Start after 15 seconds
+        setTimeout(startCycle, 15000);
+
         document.addEventListener('DOMContentLoaded', function() {
 
             const currentSection = localStorage.getItem('currentSection') || 'homeSection';
