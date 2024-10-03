@@ -991,7 +991,7 @@ input::-webkit-outer-spin-button,
     }
 
     .futuristic-text {
-        font-size: 0.6rem; /* Ukuran font lebih kecil untuk mobile */
+        font-size: 0.7rem; /* Ukuran font lebih kecil untuk mobile */
         top: auto; /* Ubah posisi ke bawah */
         bottom: 10%; /* Letakkan di tengah bawah */
     }
