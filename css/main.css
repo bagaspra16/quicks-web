@@ -210,13 +210,73 @@ body {
 }
 
 @keyframes blink-caret {
-  from { border-color: #00ffa5; }
-  to { border-color: transparent; }
+  50% { border-color: transparent; }
 }
 
 .typing {
-  animation: blink-caret 0.75s step-end infinite;
+  animation: blink-caret 0.5s step-end infinite;
 }
+
+/* Style untuk posisi copyright */
+.copyright {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  text-align: center;
+}
+
+.copyright p {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px; /* Ukuran teks lebih kecil */
+  color: rgba(192, 192, 192, 0.5); /* Warna silver dengan efek transparansi */
+  text-shadow: 
+    0 0 5px rgba(192, 192, 192, 0.3), /* Efek cahaya ringan */
+    0 0 10px rgba(192, 192, 192, 0.2),
+    0 0 15px rgba(192, 192, 192, 0.1);
+  
+  /* Efek 3D */
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  perspective: 100px;
+  transform: translateZ(10px);
+  opacity: 0.8; /* Transparansi pada teks */
+}
+
+/* Style untuk link "bagaspra16" */
+.copyright a {
+  color: rgba(192, 192, 192, 0.8); /* Warna silver lebih jelas untuk link */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.copyright a:hover {
+  color: rgba(255, 255, 255, 1); /* Warna lebih terang saat di-hover */
+}
+
+/* Efek animasi glow untuk teks */
+.copyright p:hover {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 5px rgba(192, 192, 192, 0.3),
+      0 0 10px rgba(192, 192, 192, 0.2),
+      0 0 15px rgba(192, 192, 192, 0.1);
+  }
+  to {
+    text-shadow: 
+      0 0 10px rgba(192, 192, 192, 0.4),
+      0 0 15px rgba(192, 192, 192, 0.3),
+      0 0 20px rgba(192, 192, 192, 0.2);
+  }
+}
+
 
 /* Base styles for gamesSection */
 #gamesSection {
@@ -765,20 +825,25 @@ input::-webkit-outer-spin-button,
 @media (max-width: 768px) {
 
   .home-title {
-    font-size: 3rem; /* Reduce font size for smaller screens */
+    font-size: 2.5rem; /* Lebih kecil pada mobile */
 }
 
 .home-desc {
-    font-size: 0.7rem; /* Reduce font size for the description */
+    font-size: 0.6rem; /* Sesuaikan ukuran pada mobile */
 }
 
 .futuristic-text {
-    font-size: 1.0rem; /* Make futuristic text smaller */
+    font-size: 1rem; /* Ukuran font lebih kecil untuk mobile */
+    top: auto; /* Ubah posisi ke bawah */
+    bottom: 10%; /* Letakkan di tengah bawah */
 }
 
 .home-content {
-    top: 45%; /* Adjust position slightly for mobile */
-    padding: 0 20px; /* Add padding to prevent text from hitting screen edges */
+    top: 35%; /* Adjust content slightly for mobile */
+}
+
+.copyright p {
+  font-size: 12px; /* Ukuran teks lebih kecil lagi untuk layar sangat kecil */
 }
 
     .navbar-toggler {
@@ -918,21 +983,26 @@ input::-webkit-outer-spin-button,
 @media (max-width: 480px) {
 
   .home-title {
-    font-size: 2.5rem; /* Further reduce font size */
-}
+        font-size: 2.5rem; /* Lebih kecil pada mobile */
+    }
 
-.home-desc {
-    font-size: 0.6rem; /* Further reduce description size */
-}
+    .home-desc {
+        font-size: 0.6rem; /* Sesuaikan ukuran pada mobile */
+    }
 
-.futuristic-text {
-    font-size: 0.6rem; /* Smaller size for futuristic text */
-}
+    .futuristic-text {
+        font-size: 0.6rem; /* Ukuran font lebih kecil untuk mobile */
+        top: auto; /* Ubah posisi ke bawah */
+        bottom: 10%; /* Letakkan di tengah bawah */
+    }
 
-.home-content {
-    top: 50%; /* Center content more for very small devices */
-    padding: 0 15px;
-}
+    .home-content {
+        top: 43%; /* Adjust content slightly for mobile */
+    }
+
+    .copyright p {
+      font-size: 10px; /* Ukuran teks lebih kecil untuk layar lebih kecil */
+    }
 
     .sidebar {
     width: 50px; /* Further reduced width for extra small screens */

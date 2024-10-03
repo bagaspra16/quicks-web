@@ -25,129 +25,197 @@
             };
         });
 
-        const questions = [
-            "How was your day today?",
-            "What fun things did you do today?",
-            "Are you feeling productive today?",
-            "Have you taken a break from coding today?",
-            "What's something exciting that happened today?",
-            "What challenges have you overcome today?",
-            "What is something new you learned today?",
-            "How did you manage your tasks today?",
-            "Did you work on any interesting projects?",
-            "What motivated you the most today?",
-        ];
+        const questions = [            
+            "How are you feeling right now?",
+            "What did you enjoy today?",
+            "Did you try something new today?",
+            "What's your next big goal?",
+            "Are you happy with your progress today?",
+            "What are you grateful for today?",
+            "Have you taken a short break yet?",
+            "Did you read something interesting today?",
+            "What made you smile today?",
+            "Did you discover anything fun today?",
+            "Have you learned anything exciting today?",
+            "What made today different for you?",
+            "Did you accomplish something special today?",
+            "How did you spend your free time?",
+            "What inspired you today?",
+            "Did you help anyone today?",
+            "What was your best moment today?",
+            "What was the hardest part of today?",
+            "Did you find any new challenges?",
+            "What was your focus today?",
+            "What do you feel proud of today?",
+            "Did you complete your to-do list?",
+            "What's your plan for tomorrow?",
+            "How did you start your morning?",
+            "What did you enjoy doing most?",
+            "What surprised you today?",
+            "What was your favorite task today?",
+            "What made today productive for you?",
+            "Did you learn a new skill today?",
+            "What did you do for yourself today?",
+            "Did you work on any projects today?",
+            "How do you feel about today?",
+            "Did you stay focused on your goals?",
+            "What fun thing did you plan today?",
+            "Did you try a new hobby today?",
+            "What is your biggest achievement today?",
+            "How did you solve problems today?",
+            "Did you challenge yourself today?",
+            "What did you create today?",
+            "How did you relax today?",
+            "What motivated you to keep going?",
+            "What made today special for you?",
+            "How did you manage stress today?",
+            "What went well for you today?",
+            "Did you share ideas with anyone today?",
+            "How was your energy throughout the day?",
+            "Did you connect with someone today?",
+            "What made today feel successful?",
+          ];
 
-        const funFacts = [
+          const funFacts = [
             "Did you know? Honey never spoils.",
-            "Fun fact: Bananas are berries, but strawberries aren't.",
-            "Random fact: A group of flamingos is called a 'flamboyance'.",
-            "Fun fact: A day on Venus is longer than a year on Venus.",
-            "Did you know? Octopuses have three hearts.",
+            "Fun fact: Bananas are berries.",
+            "Did you know? Strawberries aren’t berries.",
             "Fun fact: Cows have best friends.",
-            "Did you know? Seahorses are monogamous and mate for life.",
-            "Fun fact: The Eiffel Tower can grow 15 cm taller in the summer.",
-            "Did you know? Sloths can hold their breath for up to 40 minutes.",
-            "Fun fact: The heart of a shrimp is located in its head.",
-        ];
-
-        let isQuestion = true;
-        let currentIndex = 0;
-        let cycles = 0;
-
-        function getRandomText() {
+            "Did you know? Koalas sleep 20 hours daily.",
+            "Fun fact: A shrimp's heart is in its head.",
+            "Did you know? Seahorses mate for life.",
+            "Fun fact: Giraffes sleep for 30 minutes.",
+            "Did you know? Polar bear skin is black.",
+            "Fun fact: Turtles breathe through their butts.",
+            "Did you know? Elephants can't jump.",
+            "Fun fact: Sloths move very slowly.",
+            "Did you know? Octopuses have three hearts.",
+            "Fun fact: Crocodiles can't stick their tongues out.",
+            "Did you know? A jellyfish is mostly water.",
+            "Fun fact: Cats can't taste sweetness.",
+            "Did you know? Frogs drink through their skin.",
+            "Fun fact: Snails can sleep for years.",
+            "Did you know? Horses sleep standing up.",
+            "Fun fact: Kangaroos can't walk backward.",
+            "Did you know? Dolphins sleep with one eye open.",
+            "Fun fact: Apples float in water.",
+            "Did you know? Oysters change gender often.",
+            "Fun fact: Starfish have no brains.",
+            "Did you know? Penguins can drink salt water.",
+            "Fun fact: Mosquitoes love banana eaters.",
+            "Did you know? Sea otters hold hands.",
+            "Fun fact: A sneeze moves at 100 mph.",
+            "Did you know? A group of owls is a parliament.",
+            "Fun fact: Octopuses have blue blood.",
+            "Did you know? Some frogs can freeze alive.",
+            "Fun fact: A woodpecker pecks 20 times per second.",
+            "Did you know? Flamingos eat with heads upside down.",
+            "Fun fact: Venus has longer days than years.",
+            "Did you know? A shrimp's heart is in its head.",
+            "Fun fact: Sloths digest food very slowly.",
+            "Did you know? Bees can sting other bees.",
+            "Fun fact: Frogs have transparent eyelids."
+          ];
+          
+          
+          let isQuestion = true;
+          let currentIndex = 0;
+          let cycles = 0;
+          
+          function getRandomText() {
             const textArray = isQuestion ? questions : funFacts;
             const text = textArray[currentIndex % textArray.length];
             isQuestion = !isQuestion; // Toggle between questions and fun facts
             currentIndex++;
             return text;
-        }
-
-        function typeText(text, callback) {
+          }
+          
+          function typeText(text, callback) {
             const futuristicText = document.getElementById('futuristicText');
             futuristicText.style.display = 'inline-block';
             futuristicText.textContent = ''; // Clear current content
             let charIndex = 0;
-
+          
             function typeChar() {
-                if (charIndex < text.length) {
-                    futuristicText.textContent += text.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeChar, 150); // Typing speed, slower for realistic feel
-                } else {
-                    setTimeout(callback, 12000); // Hold the text for 12 seconds before backspacing
-                }
+              if (charIndex < text.length) {
+                futuristicText.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeChar, 100); // Typing speed, faster now
+              } else {
+                setTimeout(callback, 8000); // Hold the text for 8 seconds before backspacing
+              }
             }
-
+          
             typeChar(); // Start typing
-        }
-
-        function backspaceText(callback) {
+          }
+          
+          function backspaceText(callback) {
             const futuristicText = document.getElementById('futuristicText');
             let currentText = futuristicText.textContent;
             let charIndex = currentText.length;
-
+          
             function removeChar() {
-                if (charIndex > 0) {
-                    futuristicText.textContent = currentText.slice(0, --charIndex);
-                    setTimeout(removeChar, 75); // Backspacing speed
-                } else {
-                    callback(); // After backspacing, show new text
-                }
+              if (charIndex > 0) {
+                futuristicText.textContent = currentText.slice(0, --charIndex);
+                setTimeout(removeChar, 50); // Backspacing speed, faster now
+              } else {
+                callback(); // After backspacing, show new text
+              }
             }
-
+          
             removeChar(); // Start backspacing
-        }
-
-        function showNewText() {
+          }
+          
+          function showNewText() {
             const newText = getRandomText();
             typeText(newText, () => {
-                setTimeout(() => {
-                    backspaceText(() => {
-                        cycles++;
-                        if (cycles % 5 === 0) {
-                            showTitleAndDesc();
-                        } else {
-                            showNewText();
-                        }
-                    });
-                }, 3000); // Hold the backspace for 3 seconds before typing new text
+              setTimeout(() => {
+                backspaceText(() => {
+                  cycles++;
+                  if (cycles % 5 === 0) {
+                    showTitleAndDesc();
+                  } else {
+                    showNewText();
+                  }
+                });
+              }, 2000); // Hold the backspace for 2 seconds before typing new text
             });
-        }
-
-        function showTitleAndDesc() {
+          }
+          
+          function showTitleAndDesc() {
             const homeTitle = document.getElementById('homeTitle');
             const homeDesc = document.getElementById('homeDesc');
             const futuristicText = document.getElementById('futuristicText');
-
+          
             // Hide futuristicText
             futuristicText.style.display = 'none';
-
+          
             // Show title and desc
             homeTitle.style.opacity = 1;
             homeDesc.style.opacity = 1;
-
+          
             // After 15 seconds, hide title and desc, and show futuristicText again
             setTimeout(() => {
-                homeTitle.style.opacity = 0;
-                homeDesc.style.opacity = 0;
-                setTimeout(showNewText, 3000); // Continue with futuristicText after fade out
+              homeTitle.style.opacity = 0;
+              homeDesc.style.opacity = 0;
+              setTimeout(showNewText, 3000); // Continue with futuristicText after fade out
             }, 15000);
-        }
-
-        function startCycle() {
+          }
+          
+          function startCycle() {
             // Hide initial "Quicks" and "home-desc"
             document.getElementById('homeTitle').style.opacity = 0;
             document.getElementById('homeDesc').style.opacity = 0;
-
+          
             // Show first futuristic text after fade out
             setTimeout(() => {
-                showNewText();
+              showNewText();
             }, 3000); // Delay to allow fade out effect
-        }
-
-        // Start after 15 seconds
-        setTimeout(startCycle, 15000);
+          }
+          
+          // Start after 15 seconds
+          setTimeout(startCycle, 15000);
+          
 
         document.addEventListener('DOMContentLoaded', function() {
 
