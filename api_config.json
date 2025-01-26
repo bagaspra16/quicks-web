@@ -1,6 +1,6 @@
 {
   "apiKey": "18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3",
-  "apiHost": "meta-llama-fast-api.p.rapidapi.com",
-  "apiBaseUrl": "https://meta-llama-fast-api.p.rapidapi.com",
-  "apiEndpoint": "/mistralchat"
+  "apiHost": "chatgpt-42.p.rapidapi.com",
+  "apiBaseUrl": "https://chatgpt-42.p.rapidapi.com",
+  "apiEndpoint": "/gpt4"
 }

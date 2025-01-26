@@ -884,14 +884,14 @@
         
             const apiConfig = {
                 apiKey: '18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3',
-                apiHost: 'meta-llama-fast-api.p.rapidapi.com',
-                apiBaseUrl: 'https://meta-llama-fast-api.p.rapidapi.com',
-                apiEndpoint: '/mistralchat',
+                apiHost: 'chatgpt-42.p.rapidapi.com',
+                apiBaseUrl: 'https://chatgpt-42.p.rapidapi.com',
+                apiEndpoint: '/gpt4',
             };
         
             async function getResponse(userMessage) {
                 const url = `${apiConfig.apiBaseUrl}${apiConfig.apiEndpoint}`;
-            
+        
                 const options = {
                     method: 'POST',
                     headers: {
@@ -900,53 +900,52 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: userMessage
+                        messages: [
+                            {
+                                role: 'user',
+                                content: userMessage
+                            }
+                        ],
+                        web_access: false
                     })
                 };
-            
+        
                 try {
                     const response = await fetch(url, options);
                     if (!response.ok) {
                         throw new Error('Network response was not ok: ' + response.statusText);
                     }
-            
-                    const result = await response.text();
-                    console.log('API Response:', result); 
-            
-                    if (result) {
-                        return result;
+        
+                    const result = await response.json(); // Parse JSON response
+                    console.log('API Response:', result);
+        
+                    if (result && result.result) { // Extract and return the "result" property
+                        return result.result; // Only return the "result" content
                     } else {
-                        return "No response from the API.";
+                        return "No valid response received.";
                     }
                 } catch (error) {
                     console.error('Error fetching response:', error);
                     return "Oops! Something went wrong.";
                 }
             }
-            
+        
             function displayMessage(message, type) {
                 const messageElement = document.createElement('div');
                 messageElement.className = `chat-message ${type}`;
-            
-                const formattedMessage = message
-                    .replace(/"/g, '') 
-                    .replace(/\n/g, '')
-                    .replace(/\t/g, '')
-                    .replace(/\n\n/g, '')
-                    .replace(/\\/g, ''); 
-            
-                messageElement.innerHTML = formattedMessage;
-            
+        
+                messageElement.textContent = message; // Display clean text content
+        
                 const timeElement = document.createElement('div');
                 timeElement.className = 'message-time';
                 const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 timeElement.textContent = currentTime;
-            
+        
                 messageElement.appendChild(timeElement);
                 chatContainer.appendChild(messageElement);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
-                                
+        
             sendMessageButton.addEventListener('click', async () => {
                 const userMessage = chatInput.value.trim();
                 if (userMessage) {
@@ -959,7 +958,7 @@
                         const botResponse = await getResponse(userMessage);
                         displayMessage(botResponse, 'received');
                         typingIndicator.style.display = 'none';
-                    }, 3000); 
+                    }, 3000);
                 }
             });
         
@@ -969,142 +968,142 @@
                 }
             });
         });
+               
         
-        
-document.addEventListener('DOMContentLoaded', function () {
-    const taskInput = document.getElementById('taskInput');
-    const taskTimer = document.getElementById('taskTimer');
-    const addTaskButton = document.getElementById('addTaskBtn');
-    const taskList = document.getElementById('taskList');
-    let activeTimers = {};
+    document.addEventListener('DOMContentLoaded', function () {
+        const taskInput = document.getElementById('taskInput');
+        const taskTimer = document.getElementById('taskTimer');
+        const addTaskButton = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+        let activeTimers = {};
 
-    function createTaskElement(taskText, timer) {
-        const listItem = document.createElement('li');
-        listItem.className = 'list-group-item d-flex justify-content-between align-items-center position-relative';
-        listItem.innerHTML = `
-            <div class="task-content rounded-3">
-                <span class="task-text">${taskText}</span>
-                <span> - </span>
-                <span class="timer" id="timer-${Date.now()}">${formatTime(timer)}</span>
-            </div>
-            <div>
-                <button class="btn btn-success btn-sm me-2 complete-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
-                        <g fill="#e0e0e0">
-                            <g transform="scale(5.33333,5.33333)">
-                                <path d="M40.6,12.1l-23.6,23.6l-9.6,-9.6l-2.8,2.9l12.4,12.3l26.4,-26.4z"></path>
+        function createTaskElement(taskText, timer) {
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-center position-relative';
+            listItem.innerHTML = `
+                <div class="task-content rounded-3">
+                    <span class="task-text">${taskText}</span>
+                    <span> - </span>
+                    <span class="timer" id="timer-${Date.now()}">${formatTime(timer)}</span>
+                </div>
+                <div>
+                    <button class="btn btn-success btn-sm me-2 complete-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
+                            <g fill="#e0e0e0">
+                                <g transform="scale(5.33333,5.33333)">
+                                    <path d="M40.6,12.1l-23.6,23.6l-9.6,-9.6l-2.8,2.9l12.4,12.3l26.4,-26.4z"></path>
+                                </g>
                             </g>
-                        </g>
-                    </svg>
-                </button>
-                <button class="btn btn-danger btn-sm delete-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
-                        <g fill="#e0e0e0">
-                            <g transform="scale(8,8)">
-                                <path d="M15,4c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v1h-6v2h1v16c0,1.64453 1.35547,3 3,3h12c1.64453,0 3,-1.35547 3,-3v-16h1v-2h-6v-1c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625zM15,6h4v1h-4zM10,9h14v16c0,0.55469 -0.44531,1 -1,1h-12c-0.55469,0 -1,-0.44531 -1,-1zM12,12v11h2v-11zM16,12v11h2v-11zM20,12v11h2v-11z"></path>
-                        </g>
-                    </svg>    
-                </button>   
-            </div>
-        `;
+                        </svg>
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 256 256" class="my-1 svg-icon">
+                            <g fill="#e0e0e0">
+                                <g transform="scale(8,8)">
+                                    <path d="M15,4c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v1h-6v2h1v16c0,1.64453 1.35547,3 3,3h12c1.64453,0 3,-1.35547 3,-3v-16h1v-2h-6v-1c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625zM15,6h4v1h-4zM10,9h14v16c0,0.55469 -0.44531,1 -1,1h-12c-0.55469,0 -1,-0.44531 -1,-1zM12,12v11h2v-11zM16,12v11h2v-11zM20,12v11h2v-11z"></path>
+                            </g>
+                        </svg>    
+                    </button>   
+                </div>
+            `;
 
-        if (timer > 0) {
-            startTimer(listItem.querySelector('.timer'), timer, taskText);
-        }
-
-        return listItem;
-    }
-
-    function formatTime(minutes) {
-        const seconds = minutes * 60;
-        return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-    }
-
-    function startTimer(timerElement, minutes, taskText) {
-        let timeLeft = minutes * 60; 
-
-        function updateTimer() {
-            if (timeLeft <= 0) {
-                clearInterval(activeTimers[timerElement.id]);
-                timerElement.innerText = 'Time is up!';
-                notifyUser(`Task Timer: ${taskText}`, `Your task "${taskText}" has finished.`);
-                return;
+            if (timer > 0) {
+                startTimer(listItem.querySelector('.timer'), timer, taskText);
             }
 
-            const minutesLeft = Math.floor(timeLeft / 60);
-            const secondsLeft = timeLeft % 60;
-            timerElement.innerText = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
-            timeLeft--;
+            return listItem;
         }
 
-        const timerInterval = setInterval(updateTimer, 1000);
-        activeTimers[timerElement.id] = timerInterval;
-        updateTimer(); 
+        function formatTime(minutes) {
+            const seconds = minutes * 60;
+            return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+        }
+
+        function startTimer(timerElement, minutes, taskText) {
+            let timeLeft = minutes * 60; 
+
+            function updateTimer() {
+                if (timeLeft <= 0) {
+                    clearInterval(activeTimers[timerElement.id]);
+                    timerElement.innerText = 'Time is up!';
+                    notifyUser(`Task Timer: ${taskText}`, `Your task "${taskText}" has finished.`);
+                    return;
+                }
+
+                const minutesLeft = Math.floor(timeLeft / 60);
+                const secondsLeft = timeLeft % 60;
+                timerElement.innerText = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+                timeLeft--;
+            }
+
+            const timerInterval = setInterval(updateTimer, 1000);
+            activeTimers[timerElement.id] = timerInterval;
+            updateTimer(); 
+        }
+
+        function notifyUser(title, message) {
+        Swal.fire({
+            title: title,
+            text: message,
+            icon: 'info',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false, 
+            allowEscapeKey: false,    
+            customClass: {
+                popup: 'dark-swal-popup',
+                confirmButton: 'dark-swal-button' 
+            }
+        });
     }
 
-    function notifyUser(title, message) {
-    Swal.fire({
-        title: title,
-        text: message,
-        icon: 'info',
-        confirmButtonText: 'OK',
-        allowOutsideClick: false, 
-        allowEscapeKey: false,    
-        customClass: {
-            popup: 'dark-swal-popup',
-            confirmButton: 'dark-swal-button' 
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            const timerValue = parseInt(taskTimer.value.trim(), 10) || 0;
+
+            if (taskText) {
+                const taskElement = createTaskElement(taskText, timerValue);
+                taskList.appendChild(taskElement);
+                taskInput.value = '';
+                taskTimer.value = '';
+            }
         }
-    });
-}
 
-    function addTask() {
-        const taskText = taskInput.value.trim();
-        const timerValue = parseInt(taskTimer.value.trim(), 10) || 0;
+        addTaskButton.addEventListener('click', addTask);
 
-        if (taskText) {
-            const taskElement = createTaskElement(taskText, timerValue);
-            taskList.appendChild(taskElement);
-            taskInput.value = '';
-            taskTimer.value = '';
-        }
-    }
+        taskInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
 
-    addTaskButton.addEventListener('click', addTask);
+        taskList.addEventListener('click', (event) => {
+            if (event.target.closest('.complete-btn')) {
+                const listItem = event.target.closest('.list-group-item');
+                const timerElement = listItem.querySelector('.timer');
+                const timerId = timerElement.id;
 
-    taskInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            addTask();
-        }
-    });
-
-    taskList.addEventListener('click', (event) => {
-        if (event.target.closest('.complete-btn')) {
-            const listItem = event.target.closest('.list-group-item');
-            const timerElement = listItem.querySelector('.timer');
-            const timerId = timerElement.id;
-
-            clearInterval(activeTimers[timerId]);
-            delete activeTimers[timerId]; 
-            listItem.querySelector('.task-text').style.textDecoration = 'line-through';
-            event.target.disabled = true;
-
-        } else if (event.target.closest('.delete-btn')) {
-            event.stopPropagation(); 
-            const listItem = event.target.closest('.list-group-item');
-            const timerElement = listItem.querySelector('.timer');
-            const timerId = timerElement.id;
-
-            if (activeTimers[timerId]) {
                 clearInterval(activeTimers[timerId]);
-                delete activeTimers[timerId];
-            }
+                delete activeTimers[timerId]; 
+                listItem.querySelector('.task-text').style.textDecoration = 'line-through';
+                event.target.disabled = true;
 
-            taskList.removeChild(listItem);
+            } else if (event.target.closest('.delete-btn')) {
+                event.stopPropagation(); 
+                const listItem = event.target.closest('.list-group-item');
+                const timerElement = listItem.querySelector('.timer');
+                const timerId = timerElement.id;
+
+                if (activeTimers[timerId]) {
+                    clearInterval(activeTimers[timerId]);
+                    delete activeTimers[timerId];
+                }
+
+                taskList.removeChild(listItem);
+            }
+        });
+
+        if (Notification.permission === 'default') {
+            Notification.requestPermission();
         }
     });
-
-    if (Notification.permission === 'default') {
-        Notification.requestPermission();
-    }
-});
 
