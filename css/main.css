@@ -467,44 +467,58 @@ body {
   max-width: 800px;
   height: 500px;
   margin: 0 auto;
-  background-color: #000;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
   overflow: hidden;
-  border-radius: 15px; /* Rounded corners for a smoother look */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(52, 152, 219, 0.2);
 }
 
 .how-to-play-container {
   position: absolute;
-  top: 20%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  background: rgba(26, 26, 26, 0.95);
+  padding: 25px;
+  border-radius: 15px;
   z-index: 3;
   text-align: center;
   color: #ecf0f1;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 2px solid #3498db;
+  backdrop-filter: blur(10px);
+  width: 80%;
+  max-width: 400px;
 }
 
 .how-to-play-text {
   font-size: 18px;
   margin-bottom: 20px;
+  line-height: 1.5;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .breakout-how-to-play-button {
-  background-color: #fad713;
+  background: linear-gradient(45deg, #3498db, #2980b9);
   border: none;
   color: white;
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 12px 25px;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .breakout-how-to-play-button:hover {
-  background-color: #a58a10;
+  background: linear-gradient(45deg, #2980b9, #3498db);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
 }
 
 .breakout-play-container,
@@ -515,47 +529,109 @@ body {
   transform: translate(-50%, -50%);
   z-index: 2;
   text-align: center;
+  background: rgba(26, 26, 26, 0.95);
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px solid #3498db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 .breakout-play-button,
 .breakout-play-again-button {
-  background-color: #3498db; /* Changed color for a fresh look */
+  background: linear-gradient(45deg, #3498db, #2980b9);
   border: none;
   color: white;
-  padding: 15px 30px;
-  font-size: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+  transition: all 0.3s ease;
   margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .breakout-play-button:hover,
 .breakout-play-again-button:hover {
-  background-color: #2980b9;
+  background: linear-gradient(45deg, #2980b9, #3498db);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
 }
 
 .breakout-canvas {
   width: 100%;
   height: 100%;
-  background-color: #34495e;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   display: block;
-  border: 1px solid #2c3e50;
+  border-radius: 20px;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3);
 }
 
-.game-over-message p {
-  color: #ffd102;
-  font-size: 24px;
-  margin: 0;
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .breakout-game {
+    height: calc(100% - 40px);
+    width: calc(100% - 20px);
+    margin: 20px auto;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+
+  .breakout-canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+  }
+
+  .how-to-play-container {
+    width: 85%;
+    padding: 20px;
+  }
 }
 
-.game-over-message p {
-  font-size: 32px;
-  font-weight: 800;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
-}
+@media (max-width: 480px) {
+  .breakout-game {
+    height: calc(100% - 20px);
+    width: calc(100% - 10px);
+    margin: 10px auto;
+    position: relative;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
+  .breakout-canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  .how-to-play-container {
+    width: 90%;
+    padding: 15px;
+    max-width: 280px;
+  }
+
+  .how-to-play-text {
+    font-size: 0.9em;
+    margin-bottom: 12px;
+  }
+
+  .breakout-how-to-play-button,
+  .breakout-play-button,
+  .breakout-play-again-button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+
+  .game-over-message {
+    width: 85%;
+    padding: 15px;
+  }
+}
 
 input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -1080,7 +1156,7 @@ input::-webkit-outer-spin-button,
   }
 
   .breakout-game {
-    height: 400px; /* Sesuaikan tinggi untuk layar kecil */
+    height: 430px; /* Sesuaikan tinggi untuk layar kecil */
   }
 
   .breakout-play-button,
@@ -1111,4 +1187,200 @@ input::-webkit-outer-spin-button,
     font-size: 14px;
     margin-bottom: 20px;
   }
+}
+
+/* Snake Game Styles */
+.snake-game-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Fixed height for desktop */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #1a1a1a, #2d1a3c);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.snake-canvas {
+    background: #1a1a1a;
+    border: 2px solid #bc58ff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(188, 88, 255, 0.3);
+    display: none;
+    width: 450px; /* Fixed width for desktop */
+    height: 450px; /* Fixed height for desktop */
+}
+
+.game-stats {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-around;
+    width: 300px; /* Fixed width for better visibility */
+    padding: 10px 20px;
+    background: rgba(26, 26, 26, 0.9);
+    border: 1px solid #bc58ff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+    z-index: 1;
+    box-shadow: 0 0 15px rgba(188, 88, 255, 0.2);
+}
+
+.snake-how-to-play-container {
+    background: rgba(26, 26, 26, 0.95);
+    border: 2px solid #bc58ff;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 30px rgba(188, 88, 255, 0.3);
+}
+
+.how-to-play-text {
+    color: #ffffff;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.snake-how-to-play-button,
+.snake-play-again-button {
+    background: linear-gradient(45deg, #bc58ff, #9f3dd9);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(188, 88, 255, 0.3);
+}
+
+.snake-how-to-play-button:hover,
+.snake-play-again-button:hover {
+    background: linear-gradient(45deg, #9f3dd9, #bc58ff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(188, 88, 255, 0.4);
+}
+
+.game-over-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    z-index: 2;
+    border: 2px solid #ff4444;
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+}
+
+#snakeGameOverText {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #ff4444;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .snake-game-container {
+        height: 400px;
+        padding: 10px;
+        margin: 0 auto;
+        position: relative;
+        left: -30px;
+    }
+
+    .snake-canvas {
+        width: 350px;
+        height: 350px;
+    }
+
+    .game-stats {
+        width: 280px;
+        font-size: 0.9em;
+        padding: 8px 15px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .snake-how-to-play-container {
+        width: 90%;
+        max-width: 350px;
+        padding: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 480px) {
+    .snake-game-container {
+        height: 450px;
+        padding: 5px;
+        margin: 0 auto;
+        position: relative;
+        left: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .snake-canvas {
+        width: 480px;
+        height: 480px;
+        margin: 0 auto;
+    }
+
+    .game-stats {
+        width: 250px;
+        font-size: 0.8em;
+        padding: 5px 10px;
+        top: 10px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .snake-how-to-play-container {
+        width: 90%;
+        max-width: 280px;
+        padding: 15px;
+        position: absolute;
+        left: 50%;
+        top: 80%;
+        transform: translate(-50%, -50%);
+    }
+
+    .how-to-play-text {
+        font-size: 0.7em;
+        margin-bottom: 15px;
+    }
+
+    .snake-how-to-play-button,
+    .snake-play-again-button {
+        padding: 10px 20px;
+        font-size: 0.7em;
+    }
+    
 }

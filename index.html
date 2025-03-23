@@ -88,7 +88,22 @@
                 </div>
                 
                 <div class="carousel-item">
-                    <img src="https://via.placeholder.com/800x500/e74c3c/ffffff?text=Coming+Soon!" alt="Game 3">
+                    <div class="snake-game-container">
+                        <div id="snakeHowToPlay" class="how-to-play-container">
+                            <p class="how-to-play-text" style="font-weight: 800; color:rgb(241, 8, 241);">Snake Game!</p>
+                            <p class="how-to-play-text">Use arrow keys or WASD to control the snake. Eat the food to grow longer!</p>
+                            <button id="snakeHowToPlayButton" class="snake-how-to-play-button">Start Game</button>
+                        </div>
+                        <div class="game-stats" style="display: none;">
+                            <span class="score">Score: 0</span>
+                            <span class="high-score">High Score: 0</span>
+                        </div>
+                        <canvas id="snakeCanvas" class="snake-canvas"></canvas>
+                        <div id="snakeGameOver" class="game-over-message" style="display: none;">
+                            <p id="snakeGameOverText"></p>
+                            <button class="snake-play-again-button">Play Again</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="carousel-control-next" onclick="nextSlide()">
