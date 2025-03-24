@@ -1240,8 +1240,8 @@ input::-webkit-outer-spin-button,
   }
 
   .breakout-game {
-    height: 450px;
-    width: 310px;
+    height: 445px;
+    width: 305px;
     padding: 5px;
     margin: 0 auto;
     position: relative;
