@@ -375,49 +375,129 @@ body {
   background-image: url('https://img.icons8.com/ios-filled/50/000000/chevron-right.png');
 }
 
+.swipe-indicators {
+  display: none !important;
+}
+
 /* Tic Tac Toe Styles */
+.tic-tac-toe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
 .tic-tac-toe {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 5px;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
-  background-color: #2c3e50;
-  border-radius: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .tic-tac-toe button {
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  background-color: #ecf0f1;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(241, 196, 15, 0.3);
+    border-radius: 12px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .tic-tac-toe button:hover {
-  background-color: #bdc3c7;
-}
-
-.tic-tac-toe button:active {
-  transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(241, 196, 15, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(241, 196, 15, 0.2);
 }
 
 .tic-tac-toe button.x {
-  color: #f1c40f;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: #f1c40f;
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
 }
 
 .tic-tac-toe button.o {
-  color: #8e44ad;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: #8e44ad;
+    text-shadow: 0 0 10px rgba(142, 68, 173, 0.5);
+}
+
+.tic-tac-toe button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+
+.tic-tac-toe button:hover:before {
+    transform: translateX(100%);
+}
+
+.ttt-how-to-play-button {
+    background: linear-gradient(45deg, #f1c40f, #f39c12);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+}
+
+.ttt-how-to-play-button:hover {
+    background: linear-gradient(45deg, #f39c12, #f1c40f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(241, 196, 15, 0.4);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .tic-tac-toe {
+        max-width: 350px;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .tic-tac-toe button {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tic-tac-toe {
+        max-width: 280px;
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .tic-tac-toe button {
+        font-size: 1.8rem;
+        border-width: 1px;
+    }
 }
 
 /* Games title styles */
@@ -594,12 +674,12 @@ body {
 
 @media (max-width: 480px) {
   .breakout-game {
-    height: calc(100% - 20px);
-    width: calc(100% - 10px);
-    margin: 10px auto;
+    height: 430px;
+    padding: 5px;
+    margin: 0 auto;
     position: relative;
-    left: -10px;
-    top: 50%;
+    left: -30px;
+    top: 0%;
     transform: translateY(-50%);
   }
 
@@ -630,6 +710,10 @@ body {
   .game-over-message {
     width: 85%;
     padding: 15px;
+  }
+
+  .swipe-indicators {
+    display: none !important;
   }
 }
 
@@ -737,7 +821,7 @@ input::-webkit-outer-spin-button,
             background-color: #4E4E4E;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
+            z-index: 9999;
             display: none;
         }
 
@@ -1044,7 +1128,7 @@ input::-webkit-outer-spin-button,
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1050;
+    z-index: 9999;
   }
 
   .chat-body {
@@ -1156,7 +1240,14 @@ input::-webkit-outer-spin-button,
   }
 
   .breakout-game {
-    height: 430px; /* Sesuaikan tinggi untuk layar kecil */
+    height: 450px;
+    width: 320px;
+    padding: 5px;
+    margin: 0 auto;
+    position: relative;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .breakout-play-button,
@@ -1186,6 +1277,20 @@ input::-webkit-outer-spin-button,
   .how-to-play-text {
     font-size: 14px;
     margin-bottom: 20px;
+  }
+
+  .snake-game-container {
+    height: 450px;
+    padding: 5px;
+    margin: 0 auto;
+    position: relative;
+    left: 0px;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+
+  .swipe-indicators {
+    display: none !important;
   }
 }
 
@@ -1302,16 +1407,18 @@ input::-webkit-outer-spin-button,
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .snake-game-container {
-        height: 400px;
+        height: calc(100% - 40px);
         padding: 10px;
-        margin: 0 auto;
+        margin: 20px auto;
         position: relative;
-        left: -30px;
+        left: 0;
+        transform: none;
     }
 
     .snake-canvas {
         width: 350px;
         height: 350px;
+        margin: 0 auto;
     }
 
     .game-stats {
@@ -1321,7 +1428,7 @@ input::-webkit-outer-spin-button,
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 2;
+        top: 10px;
     }
 
     .snake-how-to-play-container {
@@ -1336,18 +1443,18 @@ input::-webkit-outer-spin-button,
 
 @media (max-width: 480px) {
     .snake-game-container {
-        height: 450px;
+        height: calc(100% - 0px);
         padding: 5px;
-        margin: 0 auto;
+        margin: 10px auto;
         position: relative;
-        left: 0px;
-        top: 50%;
+        left: 0;
+        top: 48%;
         transform: translateY(-50%);
     }
 
     .snake-canvas {
-        width: 480px;
-        height: 480px;
+        width: 280px;
+        height: 280px;
         margin: 0 auto;
     }
 
@@ -1356,10 +1463,6 @@ input::-webkit-outer-spin-button,
         font-size: 0.8em;
         padding: 5px 10px;
         top: 10px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2;
     }
 
     .snake-how-to-play-container {
@@ -1368,7 +1471,7 @@ input::-webkit-outer-spin-button,
         padding: 15px;
         position: absolute;
         left: 50%;
-        top: 80%;
+        top: 50%;
         transform: translate(-50%, -50%);
     }
 
@@ -1383,4 +1486,1365 @@ input::-webkit-outer-spin-button,
         font-size: 0.7em;
     }
     
+}
+
+/* Styling untuk icon navigasi */
+.nav-link {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.nav-link .icon {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+/* Efek hover untuk icon */
+.nav-link:hover .icon {
+    transform: scale(1.1);
+}
+
+/* Glow effect untuk setiap icon */
+.nav-link[onclick*="homeSection"] .icon {
+    filter: drop-shadow(0 0 8px rgba(98, 0, 255, 0.4));
+}
+
+.nav-link[onclick*="gamesSection"] .icon {
+    filter: drop-shadow(0 0 8px rgba(255, 82, 82, 0.4));
+}
+
+.nav-link[onclick*="settingsSection"] .icon {
+    filter: drop-shadow(0 0 8px rgba(0, 183, 255, 0.4));
+}
+
+/* Hover effects untuk setiap section */
+.nav-link[onclick*="homeSection"]:hover .icon {
+    filter: drop-shadow(0 0 12px rgba(98, 0, 255, 0.6));
+}
+
+.nav-link[onclick*="gamesSection"]:hover .icon {
+    filter: drop-shadow(0 0 12px rgba(255, 82, 82, 0.6));
+}
+
+.nav-link[onclick*="settingsSection"]:hover .icon {
+    filter: drop-shadow(0 0 12px rgba(0, 183, 255, 0.6));
+}
+
+/* Active state untuk nav links */
+.nav-link.active .icon {
+    transform: scale(1.1);
+}
+
+/* Pulse animation untuk hover */
+@keyframes iconPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.nav-link:hover .icon {
+    animation: iconPulse 1s infinite;
+}
+
+/* Kanban Board Styles */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: calc(100vh - 150px);
+}
+
+.kanban-column {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 100%;
+    overflow: hidden; /* Ensures the content doesn't overflow */
+}
+
+.column-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.column-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.task-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    /* Styling the scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Custom Scrollbar Styling */
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Task Card dalam Scrollable Column */
+.task-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:last-child {
+    margin-bottom: 5px;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.task-card h4 {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.task-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.task-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.priority-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.priority-high {
+    background: rgba(255, 82, 82, 0.15);
+    color: #ff5252;
+    border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.priority-medium {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.priority-low {
+    background: rgba(76, 175, 80, 0.15);
+    color: #4caf50;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.due-date {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.due-date::before {
+    content: '📅';
+    font-size: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .kanban-board {
+        grid-template-columns: repeat(2, 1fr);
+        height: calc(100vh - 100px);
+    }
+
+    .kanban-column {
+        height: calc((100vh - 100px) / 2 - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .kanban-board {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 15px;
+        padding: 20px 20px 20px 65px; /* Tambah padding kiri untuk menghindari sidebar */
+        margin-right: 10px;
+    }
+
+    .kanban-column {
+        height: calc(100vh - 200px);
+        min-width: 280px; /* Minimum width untuk konten */
+        margin-left: 10px; /* Sedikit space dari sidebar */
+    }
+
+    /* Pastikan konten tidak tertutup sidebar */
+    .task-list {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Adjust task cards untuk mobile */
+    .task-card {
+        margin-left: 2px;
+        margin-right: 2px;
+    }
+}
+
+/* Tambahan untuk layar yang lebih kecil */
+@media (max-width: 480px) {
+    .kanban-board {
+        padding-left: 60px; /* Sedikit kurangi padding kiri */
+        padding-right: 15px;
+    }
+
+    .kanban-column {
+        min-width: 260px; /* Sedikit lebih kecil untuk layar yang sangat kecil */
+        margin-left: 8px;
+    }
+
+    /* Memastikan scroll horizontal tidak muncul */
+    .container {
+        overflow-x: hidden;
+    }
+}
+
+/* Update task counter styling */
+.task-counter {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 8px;
+}
+
+/* Priority Select Styling */
+.form-select#taskPriority {
+    appearance: none;
+    background: #333333 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") no-repeat right 0.75rem center;
+    background-size: 16px 12px;
+    cursor: pointer;
+}
+
+.form-select#taskPriority option {
+    padding: 10px;
+}
+
+/* Custom Priority Select Options */
+.form-select#taskPriority option[value="high"] {
+    background-color: rgba(255, 82, 82, 0.1);
+    color: #ff5252;
+}
+
+.form-select#taskPriority option[value="medium"] {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.form-select#taskPriority option[value="low"] {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #4caf50;
+}
+
+/* Modal Styling */
+.modal-dialog {
+    max-width: 600px;
+}
+
+.modal-content.bg-dark {
+    background: #2a2a2a !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.modal-header {
+    background: #2a2a2a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+}
+
+.modal-header .modal-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    background: #2a2a2a;
+    padding: 1.25rem;
+}
+
+.modal-footer {
+    background: #2a2a2a;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+}
+
+/* Form Controls */
+.form-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+
+.form-control, .form-select {
+    background: #333333 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #fff !important;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    background: #383838 !important;
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Textarea specific */
+textarea.form-control {
+    resize: none;
+}
+
+/* Select styling */
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+}
+
+.form-select option {
+    background-color: #333333;
+    color: #fff;
+}
+
+/* Date input styling */
+input[type="date"] {
+    padding-right: 2.5rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.6;
+}
+
+/* Modal Buttons */
+.modal .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.modal .btn-primary {
+    background: #4a90e2;
+    border: none;
+}
+
+.modal .btn-primary:hover {
+    background: #357abd;
+}
+
+.modal .btn-secondary {
+    background: #404040;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal .btn-secondary:hover {
+    background: #4a4a4a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .col-md-7.pe-md-2,
+    .col-md-5.ps-md-2 {
+        padding: 0;
+    }
+    
+    .row > [class*="col-"] {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Styling untuk Priority Radio Buttons */
+.priority-radio-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+}
+
+.priority-radio {
+    position: relative;
+}
+
+.priority-radio input[type="radio"] {
+    display: none;
+}
+
+.priority-radio label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.priority-dot.low {
+    background: #4caf50;
+}
+
+.priority-dot.medium {
+    background: #ffc107;
+}
+
+.priority-dot.high {
+    background: #ff5252;
+}
+
+.priority-radio input[type="radio"]:checked + label {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hover effects */
+.priority-radio label:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Active states dengan warna yang sesuai */
+.priority-radio input[type="radio"]:checked + label {
+    font-weight: 500;
+}
+
+.priority-radio input[type="radio"]:checked + label[for="lowPriority"] {
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.priority-radio input[type="radio"]:checked + label[for="mediumPriority"] {
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.priority-radio input[type="radio"]:checked + label[for="highPriority"] {
+    background: rgba(255, 82, 82, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .priority-radio label {
+        padding: 6px;
+        font-size: 0.75rem;
+    }
+    
+    .priority-dot {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+/* Styling untuk Add Task Button */
+.column-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.add-task-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-task-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.add-task-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.add-task-btn:hover svg {
+    transform: rotate(90deg);
+}
+
+/* Update styling untuk floating buttons pada mobile */
+@media (max-width: 768px) {
+    .floating-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .extra-btn {
+        position: fixed;
+        bottom: 20px;
+        z-index: 1000;
+    }
+    
+    #talkBtn {
+        right: 80px;
+    }
+    
+    #taskBtn {
+        right: 140px;
+    }
+    
+    .extra-btn-label {
+        position: fixed;
+        bottom: 70px;
+        z-index: 999;
+    }
+    
+    #talkLabel {
+        right: 94px;
+    }
+    
+    #taskLabel {
+        right: 152px;
+    }
+}
+
+/* Untuk layar yang lebih kecil, sesuaikan spacing */
+@media (max-width: 480px) {
+    .floating-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .extra-btn {
+        width: 45px;
+        height: 45px;
+        bottom: 15px;
+    }
+    
+    #talkBtn {
+        right: 70px;
+    }
+    
+    #taskBtn {
+        right: 125px;
+    }
+    
+    .extra-btn-label {
+        bottom: 65px;
+        font-size: 0.85rem;
+    }
+    
+    #talkLabel {
+        right: 84px;
+    }
+    
+    #taskLabel {
+        right: 137px;
+    }
+}
+
+/* Update styling untuk modal pada mobile responsive */
+@media (max-width: 768px) {
+    .modal-custom {
+        position: fixed;
+        bottom: 80px;
+        z-index: 9999;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+    
+    #talkModal {
+        right: 20px !important;
+    }
+    
+    #taskModal {
+        right: 20px !important;
+    }
+    
+    .modal-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+/* Untuk layar yang lebih kecil */
+@media (max-width: 480px) {
+    .modal-custom {
+        width: 90%;
+        max-width: 320px;
+        bottom: 70px;
+        right: 10px !important;
+        z-index: 9999;
+    }
+    
+    .modal-header {
+        padding: 10px 15px;
+    }
+    
+    .modal-header .modal-title {
+        font-size: 1rem;
+    }
+    
+    .modal-body {
+        padding: 10px 15px;
+        max-height: 50vh;
+    }
+    
+    /* Ensure scrolling within modal instead of page */
+    .modal-custom {
+        overflow-y: hidden;
+    }
+    
+    .chat-body, 
+    .task-modal-body {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Ensure modals stay above other content but below buttons */
+.modal-custom {
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced Modal Styling */
+.modal-custom {
+    position: fixed;
+    width: 350px;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 990;
+}
+
+/* Modal Header */
+.modal-custom .modal-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.modal-custom .modal-title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    flex-grow: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Modal Body */
+.modal-custom .modal-body {
+    padding: 20px;
+    max-height: 350px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.modal-custom .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-custom .modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-custom .modal-body::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+/* Modal Footer */
+.modal-custom .modal-footer {
+    display: flex;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Chat Modal Specific */
+#talkModal .chat-body {
+    display: flex;
+    flex-direction: column;
+}
+
+#chatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 12px 15px;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-message.sent {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    border-bottom-right-radius: 5px;
+    margin-right: 10px;
+}
+
+.chat-message.received {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-bottom-left-radius: 5px;
+    margin-left: 10px;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px 20px;
+    border-radius: 15px;
+    border-bottom-left-radius: 5px;
+    margin: 10px 0 10px 10px;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    animation: typing 1.3s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.6s;
+    margin-right: 0;
+}
+
+@keyframes typing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.chat-input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 10px 15px !important;
+    margin-right: 10px;
+}
+
+.chat-input:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1) !important;
+}
+
+.send-btn {
+    background: linear-gradient(135deg, #4a90e2, #357abd) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    transition: all 0.2s ease;
+}
+
+.send-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #357abd, #4a90e2) !important;
+}
+
+/* Task Modal Specific */
+#taskModal .form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    margin-bottom: 10px;
+}
+
+#taskModal .form-control:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05) !important;
+}
+
+#taskInput {
+    margin-bottom: 8px !important;
+}
+
+#addTaskBtn {
+    background: linear-gradient(135deg, #ffc107, #ff9800) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 8px 15px !important;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    transition: all 0.2s ease;
+}
+
+#addTaskBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+}
+
+.list-group {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.list-group-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: white !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 12px 15px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list-group-item:last-child {
+    border-bottom: none !important;
+}
+
+.list-group-item .task-text {
+    flex-grow: 1;
+    font-size: 0.95rem;
+}
+
+.list-group-item .delete-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.list-group-item .delete-btn:hover {
+    color: #ff5252;
+}
+
+.list-group-item .task-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.list-group-item .task-check.checked {
+    background: #4caf50;
+    border-color: #4caf50;
+}
+
+.list-group-item .task-check.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 0.9rem;
+}
+
+.list-group-item.done .task-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-timer {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .modal-custom {
+        width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-custom {
+        width: 280px;
+    }
+    
+    .modal-custom .modal-header {
+        padding: 12px 15px;
+    }
+    
+    .modal-custom .modal-title {
+        font-size: 1.1rem;
+    }
+    
+    .modal-custom .modal-body,
+    .modal-custom .modal-footer {
+        padding: 15px;
+    }
+    
+    .chat-message {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}
+
+/* Konsisten Modal Styling (mirip dengan modal tambah task kanban) */
+.modal-custom {
+    position: fixed;
+    width: 350px;
+    background: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    z-index: 990;
+}
+
+/* Modal Header */
+.modal-custom .modal-header {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-custom .modal-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Modal Body */
+.modal-custom .modal-body {
+    background: #2a2a2a;
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Modal Footer */
+.modal-custom .modal-footer {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+/* Chat Modal Specific */
+#talkModal .chat-body {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.chat-message.sent {
+    align-self: flex-end;
+    background: #4a90e2;
+    color: white;
+}
+
+.chat-message.received {
+    align-self: flex-start;
+    background: #333333;
+    color: white;
+}
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    margin: 5px 0;
+    align-self: flex-start;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.chat-input {
+    flex-grow: 1;
+    background: #333333 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 6px !important;
+    font-size: 0.9rem;
+    padding: 8px 12px !important;
+    margin-right: 10px;
+}
+
+.chat-input:focus {
+    background: #383838 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: none !important;
+}
+
+.send-btn {
+    background: #4a90e2 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn:hover {
+    background: #357abd !important;
+}
+
+/* Task Modal Specific */
+#taskModal .form-control {
+    background: #333333 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+#taskModal .form-control:focus {
+    background: #383838 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: none !important;
+}
+
+#addTaskBtn {
+    background: #4a90e2 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 0.9rem;
+}
+
+#addTaskBtn:hover {
+    background: #357abd !important;
+}
+
+.list-group {
+    margin-top: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.list-group-item {
+    background: #333333 !important;
+    color: white !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 10px 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.list-group-item:last-child {
+    border-bottom: none !important;
+}
+
+.list-group-item .delete-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0;
+}
+
+.list-group-item .delete-btn:hover {
+    color: #ff5252;
+}
+
+.list-group-item.done .task-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .modal-custom {
+        width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-custom {
+        width: 280px;
+    }
+    
+    .modal-custom .modal-body {
+        max-height: 250px;
+    }
+}
+
+/* Styling untuk Delete Task Button */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.task-header h4 {
+    margin: 0;
+    padding-right: 10px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.delete-task-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-task-btn:hover {
+    color: #ff5252;
+    background: rgba(255, 82, 82, 0.1);
+}
+
+.delete-task-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Tambahan Hover State untuk Task Card */
+.task-card {
+    position: relative;
+}
+
+.task-card:hover .delete-task-btn {
+    opacity: 1;
+}
+
+.task-card .delete-task-btn {
+    opacity: 0.7;
+}
+
+/* Animasi Delete */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.task-card.deleting {
+    animation: fadeOut 0.3s forwards;
+}
+/* SweetAlert Dark Theme Styling */
+.swal-dark-theme {
+    background: #2a2a2a !important;
+    color: #fff !important;
+    border-radius: 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.swal2-title, .swal2-content {
+    color: #fff !important;
+}
+
+.swal2-icon.swal2-warning {
+    border-color: #f8bb86 !important;
+    color: #f8bb86 !important;
+}
+
+.swal2-icon.swal2-success {
+    border-color: #a5dc86 !important;
+    color: #a5dc86 !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #a5dc86 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+    border-color: #a5dc86 !important;
+}
+
+/* Improved Animation for Delete */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.task-card.deleting {
+    animation: fadeOut 0.3s forwards;
+    pointer-events: none;
 }

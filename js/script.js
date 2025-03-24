@@ -440,7 +440,7 @@
         
 
          let currentSlide = 0;
-        const gameTitles = ['Tic Tac Toe', 'Breakout', 'Game 3'];
+        const gameTitles = ['Tic Tac Toe', 'Breakout', 'Snake is Hungry'];
         const titleClasses = ['title-home', 'title-games', 'title-settings'];
 
         function showSlide(index) {
@@ -526,288 +526,20 @@
                 button.classList.remove('x', 'o');
             });
             currentPlayer = 'X';
+            
+            // Tampilkan kembali how to play ketika game selesai
+            document.getElementById('ticTacToeHowToPlay').style.display = 'block';
+            document.getElementById('ticTacToe').style.display = 'none';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const playButton = document.querySelector('.breakout-play-button');
-            const playAgainButton = document.querySelector('.breakout-play-again-button');
-            const breakoutCanvas = document.getElementById('breakoutCanvas');
-            const gameOverMessage = document.getElementById('gameOverMessage');
-            const gameOverText = document.getElementById('gameOverText');
-            const howToPlayContainer = document.getElementById('howToPlay');
-            const howToPlayButton = document.getElementById('howToPlayButton');
-        
-            let lastTouchX = 0;
-            let mainBall = null;
-        
-            function startBreakoutGame() {
-                howToPlayContainer.style.display = 'none'; 
-                breakoutCanvas.style.filter = 'none';
-                const canvas = document.getElementById("breakoutCanvas");
-                const ctx = canvas.getContext("2d");
-        
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-        
-                let ballRadius = 5;
-                mainBall = {
-                    x: canvas.width / 2,
-                    y: canvas.height - 30,
-                    dx: Math.random() * 4 - 2,
-                    dy: -Math.random() * 4 - 2,
-                    color: "#FFA500"
-                };
-                let balls = [mainBall];
-        
-                let paddleHeight = 10;
-                let paddleWidth = 100;
-                let paddleX = (canvas.width - paddleWidth) / 2;
-        
-                let brickRowCount = Math.floor(Math.random() * 5) + 5;
-                let brickColumnCount = Math.floor(Math.random() * 6) + 6;
-                let brickWidth = Math.floor(canvas.width / brickColumnCount) - 10;
-                let brickHeight = 15;
-                let brickPadding = 5;
-                let brickOffsetTop = 30;
-                let brickOffsetLeft = 30;
-        
-                let bricks = [];
-                for (let c = 0; c < brickColumnCount; c++) {
-                    bricks[c] = [];
-                    for (let r = 0; r < brickRowCount; r++) {
-                        bricks[c][r] = {
-                            x: (c * (brickWidth + brickPadding)) + brickOffsetLeft,
-                            y: (r * (brickHeight + brickPadding)) + brickOffsetTop,
-                            status: 1
-                        };
-                    }
-                }
-        
-                let particles = [];
-                let rightPressed = false;
-                let leftPressed = false;
-        
-                function keyDownHandler(e) {
-                    if (e.key === "Right" || e.key === "ArrowRight") {
-                        rightPressed = true;
-                    } else if (e.key === "Left" || e.key === "ArrowLeft") {
-                        leftPressed = true;
-                    }
-                }
-        
-                function keyUpHandler(e) {
-                    if (e.key === "Right" || e.key === "ArrowRight") {
-                        rightPressed = false;
-                    } else if (e.key === "Left" || e.key === "ArrowLeft") {
-                        leftPressed = false;
-                    }
-                }
-        
-                function touchStartHandler(e) {
-                    const touch = e.touches[0];
-                    lastTouchX = touch.clientX - canvas.getBoundingClientRect().left;
-                }
-        
-                function touchMoveHandler(e) {
-                    e.preventDefault();
-                    const touch = e.touches[0];
-                    const touchX = touch.clientX - canvas.getBoundingClientRect().left;
-                    const deltaX = touchX - lastTouchX;
-                    paddleX = Math.min(canvas.width - paddleWidth, Math.max(0, paddleX + deltaX));
-                    lastTouchX = touchX;
-                }
-        
-                function setupEventListeners() {
-                    document.addEventListener("keydown", keyDownHandler);
-                    document.addEventListener("keyup", keyUpHandler);
-                    canvas.addEventListener("touchstart", touchStartHandler);
-                    canvas.addEventListener("touchmove", touchMoveHandler);
-                }
-        
-                function removeEventListeners() {
-                    document.removeEventListener("keydown", keyDownHandler);
-                    document.removeEventListener("keyup", keyUpHandler);
-                    canvas.removeEventListener("touchstart", touchStartHandler);
-                    canvas.removeEventListener("touchmove", touchMoveHandler);
-                }
-        
-                function drawBall() {
-                    for (let i = 0; i < balls.length; i++) {
-                        ctx.beginPath();
-                        ctx.arc(balls[i].x, balls[i].y, ballRadius, 0, Math.PI * 2);
-                        ctx.fillStyle = balls[i].color;
-                        ctx.fill();
-                        ctx.closePath();
-                    }
-                }
-        
-                function drawPaddle() {
-                    ctx.beginPath();
-                    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-                    ctx.fillStyle = "#3498db";
-                    ctx.fill();
-                    ctx.closePath();
-                }
-        
-                function drawBricks() {
-                    let bricksRemaining = 0;
-                    for (let c = 0; c < brickColumnCount; c++) {
-                        for (let r = 0; r < brickRowCount; r++) {
-                            if (bricks[c][r].status === 1) {
-                                bricksRemaining++;
-                                const brickX = bricks[c][r].x;
-                                const brickY = bricks[c][r].y;
-                                ctx.beginPath();
-                                ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                                ctx.fillStyle = "#BA55D3";
-                                ctx.fill();
-                                ctx.closePath();
-                            }
-                        }
-                    }
-                    return bricksRemaining;
-                }
-        
-                function drawParticles() {
-                    for (let i = 0; i < particles.length; i++) {
-                        let p = particles[i];
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
-                        ctx.fillStyle = "#F0E68C";
-                        ctx.fill();
-                        ctx.closePath();
-                        p.y += p.dy;
-        
-                        if (p.y > canvas.height) {
-                            particles.splice(i, 1);
-                            i--;
-                        }
-                    }
-                }
+            const ticTacToeGame = document.getElementById('ticTacToe');
+            const howToPlayDiv = document.getElementById('ticTacToeHowToPlay');
+            const startButton = document.getElementById('ticTacToeHowToPlayButton');
 
-                function collisionDetection() {
-                    for (let i = 0; i < balls.length; i++) {
-                        for (let c = 0; c < brickColumnCount; c++) {
-                            for (let r = 0; r < brickRowCount; r++) {
-                                let b = bricks[c][r];
-                                if (b.status === 1) {
-                                    if (balls[i].x > b.x && balls[i].x < b.x + brickWidth && balls[i].y > b.y && balls[i].y < b.y + brickHeight) {
-                                        balls[i].dy = -balls[i].dy;
-                                        b.status = 0;
-        
-                                        if (Math.random() < 0.1) {
-                                            particles.push({
-                                                x: b.x + brickWidth / 2,
-                                                y: b.y + brickHeight / 2,
-                                                dy: 1
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-        
-                            for (let j = 0; j < particles.length; j++) {
-                                let p = particles[j];
-                                if (p.x > paddleX && p.x < paddleX + paddleWidth && p.y + 4 > canvas.height - paddleHeight) {
-                                    particles.splice(j, 1);
-                                    j--;
-                                    balls.push({
-                                        x: paddleX + paddleWidth / 2,
-                                        y: canvas.height - paddleHeight - 10,
-                                        dx: Math.random() * 4 - 2,
-                                        dy: -Math.random() * 4 - 2,
-                                        color: "#FFA500" 
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-        
-                function draw() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    drawBricks();
-                    drawBall();
-                    drawPaddle();
-                    drawParticles();
-                    collisionDetection();
-        
-                    let allBallsOut = true;
-                    for (let i = 0; i < balls.length; i++) {
-                        let b = balls[i];
-                        if (b.x + b.dx > canvas.width - ballRadius || b.x + b.dx < ballRadius) {
-                            b.dx = -b.dx;
-                        }
-                        if (b.y + b.dy < ballRadius) {
-                            b.dy = -b.dy;
-                        } else if (b.y + b.dy > canvas.height - ballRadius) {
-                            if (b.x > paddleX && b.x < paddleX + paddleWidth) {
-                                b.dy = -b.dy;
-                            } else {
-                                particles.push({
-                                    x: b.x,
-                                    y: b.y,
-                                    size: ballRadius,
-                                    dx: b.dx / 2,
-                                    dy: b.dy / 2,
-                                    alpha: 1
-                                });
-                                balls.splice(i, 1);
-                                i--;
-                                continue;
-                            }
-                        }
-        
-                        b.x += b.dx;
-                        b.y += b.dy;
-        
-                        if (b.x > -ballRadius && b.x < canvas.width + ballRadius &&
-                            b.y > -ballRadius && b.y < canvas.height + ballRadius) {
-                            allBallsOut = false;
-                        }
-                    }
-        
-                    if (rightPressed && paddleX < canvas.width - paddleWidth) {
-                        paddleX += 7;
-                    } else if (leftPressed && paddleX > 0) {
-                        paddleX -= 7;
-                    }
-        
-                    let bricksRemaining = drawBricks();
-                    if (bricksRemaining === 0) {
-                        gameOver("You Win!");
-                    } else if (allBallsOut) {
-                        gameOver("Game Over");
-                    } else {
-                        requestAnimationFrame(draw);
-                    }
-                }
-        
-                function gameOver(message) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    gameOverText.textContent = message;
-                    gameOverMessage.style.display = "block";
-                    removeEventListeners();
-                }
-        
-                setupEventListeners();
-                draw();
-            }
-        
-            howToPlayButton.addEventListener('click', () => {
-                howToPlayContainer.style.display = 'none';
-                document.querySelector('.breakout-play-container').style.display = 'block';
-            });
-        
-            playButton.addEventListener('click', () => {
-                document.querySelector('.breakout-play-container').style.display = 'none';
-                breakoutCanvas.style.display = 'block';
-                startBreakoutGame();
-            });
-        
-            playAgainButton.addEventListener('click', () => {
-                gameOverMessage.style.display = "none";
-                startBreakoutGame();
+            startButton.addEventListener('click', () => {
+                howToPlayDiv.style.display = 'none';
+                ticTacToeGame.style.display = 'grid';
             });
         });
         
@@ -1491,3 +1223,217 @@ class SnakeGame {
 document.addEventListener('DOMContentLoaded', () => {
     const snakeGame = new SnakeGame();
 });
+
+// Kanban Board Functionality
+let currentColumn = null;
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    const draggedElement = document.getElementById(data);
+    const dropZone = ev.target.closest('.task-list');
+    
+    if (dropZone) {
+        dropZone.appendChild(draggedElement);
+        const columnId = dropZone.parentElement.id;
+        updateTaskCounter(columnId);
+        // Update counter for previous column
+        const columns = document.querySelectorAll('.kanban-column');
+        columns.forEach(column => updateTaskCounter(column.id));
+        updateTaskStatus(data, columnId);
+    }
+}
+
+function showAddTaskModal(columnId) {
+    currentColumn = columnId;
+    const modal = new bootstrap.Modal(document.getElementById('addTaskModal'));
+    modal.show();
+}
+
+function addNewTask() {
+    const title = document.getElementById('taskTitle').value;
+    const description = document.getElementById('taskDescription').value;
+    const dueDate = document.getElementById('taskDueDate').value;
+    const priority = document.querySelector('input[name="taskPriority"]:checked').value;
+    
+    if (!title) return;
+    
+    const taskId = 'task-' + Date.now();
+    const taskElement = createTaskElement(taskId, title, description, dueDate, priority);
+    
+    const columnTaskList = document.querySelector(`#${currentColumn} .task-list`);
+    columnTaskList.appendChild(taskElement);
+    
+    // Update task counter
+    updateTaskCounter(currentColumn);
+    
+    // Close modal and reset form
+    bootstrap.Modal.getInstance(document.getElementById('addTaskModal')).hide();
+    document.getElementById('addTaskForm').reset();
+    
+    // Save to localStorage
+    saveTask(taskId, {
+        title,
+        description,
+        dueDate,
+        priority,
+        status: currentColumn
+    });
+}
+
+function createTaskElement(id, title, description, dueDate, priority) {
+    const task = document.createElement('div');
+    task.id = id;
+    task.className = 'task-card';
+    task.draggable = true;
+    task.setAttribute('ondragstart', 'drag(event)');
+    
+    task.innerHTML = `
+        <div class="task-header">
+            <h4>${title}</h4>
+            <button class="delete-task-btn" onclick="deleteTask('${id}')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+            </button>
+        </div>
+        <p>${description}</p>
+        <div class="task-meta">
+            <span class="due-date">${dueDate ? new Date(dueDate).toLocaleDateString() : 'No due date'}</span>
+            <span class="priority-badge priority-${priority}">${priority}</span>
+        </div>
+    `;
+    
+    return task;
+}
+
+function saveTask(id, taskData) {
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    tasks[id] = taskData;
+    localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+}
+
+function updateTaskStatus(taskId, newStatus) {
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    if (tasks[taskId]) {
+        tasks[taskId].status = newStatus;
+        localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+    }
+}
+
+// Load tasks from localStorage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    
+    Object.entries(tasks).forEach(([taskId, taskData]) => {
+        const taskElement = createTaskElement(
+            taskId,
+            taskData.title,
+            taskData.description,
+            taskData.dueDate,
+            taskData.priority
+        );
+        document.querySelector(`#${taskData.status} .task-list`).appendChild(taskElement);
+    });
+});
+
+// Tambahkan fungsi untuk update task counter
+function updateTaskCounter(columnId) {
+    const column = document.getElementById(columnId);
+    const taskList = column.querySelector('.task-list');
+    const taskCount = taskList.children.length;
+    
+    let counter = column.querySelector('.task-counter');
+    if (!counter) {
+        counter = document.createElement('span');
+        counter.className = 'task-counter';
+        column.querySelector('.column-header h3').appendChild(counter);
+    }
+    counter.textContent = taskCount;
+
+    // Add/remove scroll class based on task count
+    if (taskCount > 3) {
+        taskList.style.overflowY = 'scroll';
+    } else {
+        taskList.style.overflowY = 'auto';
+    }
+}
+
+// Initialize counters on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const columns = document.querySelectorAll('.kanban-column');
+    columns.forEach(column => updateTaskCounter(column.id));
+});
+
+// Update fungsi deleteTask menggunakan SweetAlert
+function deleteTask(taskId) {
+    Swal.fire({
+        title: 'Delete Task',
+        text: 'Are you sure you want to delete this task?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        background: '#2a2a2a',
+        color: '#fff',
+        backdrop: `rgba(0,0,0,0.4)`,
+        customClass: {
+            confirmButton: 'btn btn-danger',
+            cancelButton: 'btn btn-secondary',
+            popup: 'swal-dark-theme'
+        },
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Remove task from DOM with animation
+            const taskElement = document.getElementById(taskId);
+            if (taskElement) {
+                const columnId = taskElement.closest('.kanban-column').id;
+                
+                // Add animation class
+                taskElement.classList.add('deleting');
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    taskElement.remove();
+                    updateTaskCounter(columnId);
+                    
+                    // Show success message
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your task has been deleted.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false,
+                        background: '#2a2a2a',
+                        color: '#fff',
+                        customClass: {
+                            popup: 'swal-dark-theme'
+                        }
+                    });
+                    
+                    // Remove from localStorage
+                    removeTaskFromStorage(taskId);
+                }, 300);
+            }
+        }
+    });
+}
+
+// Fungsi untuk menghapus task dari localStorage
+function removeTaskFromStorage(taskId) {
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    if (tasks[taskId]) {
+        delete tasks[taskId];
+        localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+    }
+}

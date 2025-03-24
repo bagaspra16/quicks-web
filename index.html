@@ -20,19 +20,19 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('homeSection')">
-                    <img src="https://img.icons8.com/ios-filled/30/bc58ff/home.png" alt="Home" class="me-4 icon" style="margin-left: 2px;">
+                    <img src="https://img.icons8.com/fluency/48/home.png" alt="Home" class="me-4 icon" style="margin-left: 2px;">
                     <span class="link-text">Home</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('gamesSection')">
-                    <img src="https://img.icons8.com/ios-filled/30/ff1717/controller.png" alt="Games" class="me-4 icon"  style="margin-left: 2px;">
+                    <img src="https://img.icons8.com/fluency/48/controller.png" alt="Games" class="me-4 icon" style="margin-left: 2px;">
                     <span class="link-text">Games</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center" href="#" onclick="showSection('settingsSection')">
-                    <img src="https://img.icons8.com/ios-filled/30/12b4ff/settings.png" alt="Settings" class="me-4 icon"  style="margin-left: 2px;">
+                    <img src="https://img.icons8.com/fluency/48/settings.png" alt="Settings" class="me-4 icon" style="margin-left: 2px;">
                     <span class="link-text">Settings</span>
                 </a>
             </li>
@@ -57,7 +57,13 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="tic-tac-toe" id="ticTacToe">
+                    <div class="tic-tac-toe-container">
+                        <div id="ticTacToeHowToPlay" class="how-to-play-container">
+                            <p class="how-to-play-text" style="font-weight: 800; color:rgb(241, 8, 241);">Tic Tac Toe!</p>
+                            <p class="how-to-play-text">Player X starts first. Click any cell to make your move. Get three in a row to win!</p>
+                            <button id="ticTacToeHowToPlayButton" class="ttt-how-to-play-button">Start Game</button>
+                        </div>
+                        <div class="tic-tac-toe" id="ticTacToe" style="display: none;">
                         <button onclick="makeMove(this, 0)"></button>
                         <button onclick="makeMove(this, 1)"></button>
                         <button onclick="makeMove(this, 2)"></button>
@@ -67,6 +73,7 @@
                         <button onclick="makeMove(this, 6)"></button>
                         <button onclick="makeMove(this, 7)"></button>
                         <button onclick="makeMove(this, 8)"></button>
+                        </div>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -112,9 +119,116 @@
         </div>
     </div>
 
-    <div class="container text-center text-light d-none" id="settingsSection">
-        <h2 class="mt-5">Settings</h2>
-        
+    <div class="container text-center text-light" id="settingsSection">
+        <h2 class="mt-4 mb-4">Task Management</h2>
+        <div class="kanban-board">
+            <div class="kanban-column" id="newTask">
+                <div class="column-header">
+                    <h3>New Task</h3>
+                    <button class="add-task-btn" onclick="showAddTaskModal('newTask')">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <!-- Tasks will be added here -->
+                </div>
+            </div>
+            
+            <div class="kanban-column" id="onProgress">
+                <div class="column-header">
+                    <h3>On Progress</h3>
+                </div>
+                <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <!-- Tasks will be added here -->
+                </div>
+            </div>
+            
+            <div class="kanban-column" id="done">
+                <div class="column-header">
+                    <h3>Done</h3>
+                </div>
+                <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <!-- Tasks will be added here -->
+                </div>
+            </div>
+            
+            <div class="kanban-column" id="undone">
+                <div class="column-header">
+                    <h3>Undone</h3>
+                </div>
+                <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <!-- Tasks will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding new task -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Task</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTaskForm">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-7 pe-md-2">
+                                <div class="mb-3">
+                                    <label for="taskTitle" class="form-label">Task Title</label>
+                                    <input type="text" class="form-control" id="taskTitle" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taskDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="taskDescription" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <!-- Right Column -->
+                            <div class="col-md-5 ps-md-2">
+                                <div class="mb-3">
+                                    <label for="taskDueDate" class="form-label">Due Date</label>
+                                    <input type="date" class="form-control" id="taskDueDate">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Priority</label>
+                                    <div class="priority-radio-group">
+                                        <div class="priority-radio">
+                                            <input type="radio" name="taskPriority" id="lowPriority" value="low" checked>
+                                            <label for="lowPriority">
+                                                <span class="priority-dot low"></span>
+                                                Low
+                                            </label>
+                                        </div>
+                                        <div class="priority-radio">
+                                            <input type="radio" name="taskPriority" id="mediumPriority" value="medium">
+                                            <label for="mediumPriority">
+                                                <span class="priority-dot medium"></span>
+                                                Medium
+                                            </label>
+                                        </div>
+                                        <div class="priority-radio">
+                                            <input type="radio" name="taskPriority" id="highPriority" value="high">
+                                            <label for="highPriority">
+                                                <span class="priority-dot high"></span>
+                                                High
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="addNewTask()">Add Task</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <button class="floating-btn" id="mainBtn">
