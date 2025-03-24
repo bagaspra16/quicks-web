@@ -2874,3 +2874,131 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
     z-index: 2;
 }
+
+/* Styling untuk Edit Task Button */
+.task-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.edit-task-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-task-btn:hover {
+    color: #4a90e2;
+    background: rgba(74, 144, 226, 0.1);
+}
+
+.edit-task-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Task Card Hover Effects */
+.task-card:hover .edit-task-btn,
+.task-card:hover .delete-task-btn {
+    opacity: 1;
+}
+
+.task-card .edit-task-btn,
+.task-card .delete-task-btn {
+    opacity: 0.7;
+}
+
+/* Edit Modal styling */
+#editTaskModal .modal-content {
+    border-radius: 10px;
+}
+
+#editTaskModal .form-control:focus {
+    border-color: #4a90e2;
+}
+
+/* Styling khusus untuk priority radio buttons pada modal edit */
+#editTaskModal .priority-radio input[type="radio"] + label {
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover styles dengan warna sesuai prioritas */
+#editTaskModal .priority-radio input[type="radio"] + label[for="editLowPriority"]:hover {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+#editTaskModal .priority-radio input[type="radio"] + label[for="editMediumPriority"]:hover {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.3);
+}
+
+#editTaskModal .priority-radio input[type="radio"] + label[for="editHighPriority"]:hover {
+    background: rgba(255, 82, 82, 0.1);
+    border-color: rgba(255, 82, 82, 0.3);
+}
+
+/* Selected styles dengan warna yang lebih jelas */
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editLowPriority"] {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.1);
+}
+
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editMediumPriority"] {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 193, 7, 0.1);
+}
+
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editHighPriority"] {
+    background: rgba(255, 82, 82, 0.2);
+    border-color: rgba(255, 82, 82, 0.5);
+    box-shadow: 0 0 0 1px rgba(255, 82, 82, 0.1);
+}
+
+/* Focused state untuk accessibility */
+#editTaskModal .priority-radio input[type="radio"]:focus + label {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Stronger visual feedback saat hover + checked */
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editLowPriority"]:hover {
+    background: rgba(76, 175, 80, 0.25);
+    border-color: rgba(76, 175, 80, 0.6);
+}
+
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editMediumPriority"]:hover {
+    background: rgba(255, 193, 7, 0.25);
+    border-color: rgba(255, 193, 7, 0.6);
+}
+
+#editTaskModal .priority-radio input[type="radio"]:checked + label[for="editHighPriority"]:hover {
+    background: rgba(255, 82, 82, 0.25);
+    border-color: rgba(255, 82, 82, 0.6);
+}
+
+/* Dot styling yang lebih jelas */
+#editTaskModal .priority-radio .priority-dot.low {
+    background: #4caf50;
+    box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.3);
+}
+
+#editTaskModal .priority-radio .priority-dot.medium {
+    background: #ffc107;
+    box-shadow: 0 0 0 1px rgba(255, 193, 7, 0.3);
+}
+
+#editTaskModal .priority-radio .priority-dot.high {
+    background: #ff5252;
+    box-shadow: 0 0 0 1px rgba(255, 82, 82, 0.3);
+}

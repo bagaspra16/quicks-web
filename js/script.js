@@ -1299,12 +1299,19 @@ function createTaskElement(id, title, description, dueDate, priority) {
     task.innerHTML = `
         <div class="task-header">
             <h4>${title}</h4>
-            <button class="delete-task-btn" onclick="deleteTask('${id}')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg>
-            </button>
+            <div class="task-actions">
+                <button class="edit-task-btn" onclick="showEditTaskModal('${id}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg>
+                </button>
+                <button class="delete-task-btn" onclick="deleteTask('${id}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
         <p>${description}</p>
         <div class="task-meta">
@@ -1436,291 +1443,291 @@ function removeTaskFromStorage(taskId) {
         delete tasks[taskId];
         localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
     }
-}
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const playButton = document.querySelector('.breakout-play-button');
-    const playAgainButton = document.querySelector('.breakout-play-again-button');
-    const breakoutCanvas = document.getElementById('breakoutCanvas');
-    const gameOverMessage = document.getElementById('gameOverMessage');
-    const gameOverText = document.getElementById('gameOverText');
-    const howToPlayContainer = document.getElementById('howToPlay');
-    const howToPlayButton = document.getElementById('howToPlayButton');
-
-    let lastTouchX = 0;
-    let mainBall = null;
-
-    function startBreakoutGame() {
-        howToPlayContainer.style.display = 'none'; 
-        breakoutCanvas.style.filter = 'none';
-        const canvas = document.getElementById("breakoutCanvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-
-        let ballRadius = 5;
-        mainBall = {
-            x: canvas.width / 2,
-            y: canvas.height - 30,
-            dx: Math.random() * 4 - 2,
-            dy: -Math.random() * 4 - 2,
-            color: "#FFA500"
-        };
-        let balls = [mainBall];
-
-        let paddleHeight = 10;
-        let paddleWidth = 100;
-        let paddleX = (canvas.width - paddleWidth) / 2;
-
-        let brickRowCount = Math.floor(Math.random() * 5) + 5;
-        let brickColumnCount = Math.floor(Math.random() * 6) + 6;
-        let brickWidth = Math.floor(canvas.width / brickColumnCount) - 10;
-        let brickHeight = 15;
-        let brickPadding = 5;
-        let brickOffsetTop = 30;
-        let brickOffsetLeft = 30;
-
-        let bricks = [];
-        for (let c = 0; c < brickColumnCount; c++) {
-            bricks[c] = [];
-            for (let r = 0; r < brickRowCount; r++) {
-                bricks[c][r] = {
-                    x: (c * (brickWidth + brickPadding)) + brickOffsetLeft,
-                    y: (r * (brickHeight + brickPadding)) + brickOffsetTop,
-                    status: 1
+        document.addEventListener('DOMContentLoaded', () => {
+            const playButton = document.querySelector('.breakout-play-button');
+            const playAgainButton = document.querySelector('.breakout-play-again-button');
+            const breakoutCanvas = document.getElementById('breakoutCanvas');
+            const gameOverMessage = document.getElementById('gameOverMessage');
+            const gameOverText = document.getElementById('gameOverText');
+            const howToPlayContainer = document.getElementById('howToPlay');
+            const howToPlayButton = document.getElementById('howToPlayButton');
+        
+            let lastTouchX = 0;
+            let mainBall = null;
+        
+            function startBreakoutGame() {
+                howToPlayContainer.style.display = 'none'; 
+                breakoutCanvas.style.filter = 'none';
+                const canvas = document.getElementById("breakoutCanvas");
+                const ctx = canvas.getContext("2d");
+        
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+        
+                let ballRadius = 5;
+                mainBall = {
+                    x: canvas.width / 2,
+                    y: canvas.height - 30,
+                    dx: Math.random() * 4 - 2,
+                    dy: -Math.random() * 4 - 2,
+                    color: "#FFA500"
                 };
-            }
-        }
-
-        let particles = [];
-        let rightPressed = false;
-        let leftPressed = false;
-
-        function keyDownHandler(e) {
-            if (e.key === "Right" || e.key === "ArrowRight") {
-                rightPressed = true;
-            } else if (e.key === "Left" || e.key === "ArrowLeft") {
-                leftPressed = true;
-            }
-        }
-
-        function keyUpHandler(e) {
-            if (e.key === "Right" || e.key === "ArrowRight") {
-                rightPressed = false;
-            } else if (e.key === "Left" || e.key === "ArrowLeft") {
-                leftPressed = false;
-            }
-        }
-
-        function touchStartHandler(e) {
-            const touch = e.touches[0];
-            lastTouchX = touch.clientX - canvas.getBoundingClientRect().left;
-        }
-
-        function touchMoveHandler(e) {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const touchX = touch.clientX - canvas.getBoundingClientRect().left;
-            const deltaX = touchX - lastTouchX;
-            paddleX = Math.min(canvas.width - paddleWidth, Math.max(0, paddleX + deltaX));
-            lastTouchX = touchX;
-        }
-
-        function setupEventListeners() {
-            document.addEventListener("keydown", keyDownHandler);
-            document.addEventListener("keyup", keyUpHandler);
-            canvas.addEventListener("touchstart", touchStartHandler);
-            canvas.addEventListener("touchmove", touchMoveHandler);
-        }
-
-        function removeEventListeners() {
-            document.removeEventListener("keydown", keyDownHandler);
-            document.removeEventListener("keyup", keyUpHandler);
-            canvas.removeEventListener("touchstart", touchStartHandler);
-            canvas.removeEventListener("touchmove", touchMoveHandler);
-        }
-
-        function drawBall() {
-            for (let i = 0; i < balls.length; i++) {
-                ctx.beginPath();
-                ctx.arc(balls[i].x, balls[i].y, ballRadius, 0, Math.PI * 2);
-                ctx.fillStyle = balls[i].color;
-                ctx.fill();
-                ctx.closePath();
-            }
-        }
-
-        function drawPaddle() {
-            ctx.beginPath();
-            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-            ctx.fillStyle = "#3498db";
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        function drawBricks() {
-            let bricksRemaining = 0;
-            for (let c = 0; c < brickColumnCount; c++) {
-                for (let r = 0; r < brickRowCount; r++) {
-                    if (bricks[c][r].status === 1) {
-                        bricksRemaining++;
-                        const brickX = bricks[c][r].x;
-                        const brickY = bricks[c][r].y;
+                let balls = [mainBall];
+        
+                let paddleHeight = 10;
+                let paddleWidth = 100;
+                let paddleX = (canvas.width - paddleWidth) / 2;
+        
+                let brickRowCount = Math.floor(Math.random() * 5) + 5;
+                let brickColumnCount = Math.floor(Math.random() * 6) + 6;
+                let brickWidth = Math.floor(canvas.width / brickColumnCount) - 10;
+                let brickHeight = 15;
+                let brickPadding = 5;
+                let brickOffsetTop = 30;
+                let brickOffsetLeft = 30;
+        
+                let bricks = [];
+                for (let c = 0; c < brickColumnCount; c++) {
+                    bricks[c] = [];
+                    for (let r = 0; r < brickRowCount; r++) {
+                        bricks[c][r] = {
+                            x: (c * (brickWidth + brickPadding)) + brickOffsetLeft,
+                            y: (r * (brickHeight + brickPadding)) + brickOffsetTop,
+                            status: 1
+                        };
+                    }
+                }
+        
+                let particles = [];
+                let rightPressed = false;
+                let leftPressed = false;
+        
+                function keyDownHandler(e) {
+                    if (e.key === "Right" || e.key === "ArrowRight") {
+                        rightPressed = true;
+                    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                        leftPressed = true;
+                    }
+                }
+        
+                function keyUpHandler(e) {
+                    if (e.key === "Right" || e.key === "ArrowRight") {
+                        rightPressed = false;
+                    } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                        leftPressed = false;
+                    }
+                }
+        
+                function touchStartHandler(e) {
+                    const touch = e.touches[0];
+                    lastTouchX = touch.clientX - canvas.getBoundingClientRect().left;
+                }
+        
+                function touchMoveHandler(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+                    const deltaX = touchX - lastTouchX;
+                    paddleX = Math.min(canvas.width - paddleWidth, Math.max(0, paddleX + deltaX));
+                    lastTouchX = touchX;
+                }
+        
+                function setupEventListeners() {
+                    document.addEventListener("keydown", keyDownHandler);
+                    document.addEventListener("keyup", keyUpHandler);
+                    canvas.addEventListener("touchstart", touchStartHandler);
+                    canvas.addEventListener("touchmove", touchMoveHandler);
+                }
+        
+                function removeEventListeners() {
+                    document.removeEventListener("keydown", keyDownHandler);
+                    document.removeEventListener("keyup", keyUpHandler);
+                    canvas.removeEventListener("touchstart", touchStartHandler);
+                    canvas.removeEventListener("touchmove", touchMoveHandler);
+                }
+        
+                function drawBall() {
+                    for (let i = 0; i < balls.length; i++) {
                         ctx.beginPath();
-                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                        ctx.fillStyle = "#BA55D3";
+                        ctx.arc(balls[i].x, balls[i].y, ballRadius, 0, Math.PI * 2);
+                        ctx.fillStyle = balls[i].color;
                         ctx.fill();
                         ctx.closePath();
                     }
                 }
-            }
-            return bricksRemaining;
-        }
-
-        function drawParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
-                ctx.fillStyle = "#F0E68C";
-                ctx.fill();
-                ctx.closePath();
-                p.y += p.dy;
-
-                if (p.y > canvas.height) {
-                    particles.splice(i, 1);
-                    i--;
+        
+                function drawPaddle() {
+                    ctx.beginPath();
+                    ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+                    ctx.fillStyle = "#3498db";
+                    ctx.fill();
+                    ctx.closePath();
                 }
-            }
-        }
+        
+                function drawBricks() {
+                    let bricksRemaining = 0;
+                    for (let c = 0; c < brickColumnCount; c++) {
+                        for (let r = 0; r < brickRowCount; r++) {
+                            if (bricks[c][r].status === 1) {
+                                bricksRemaining++;
+                                const brickX = bricks[c][r].x;
+                                const brickY = bricks[c][r].y;
+                                ctx.beginPath();
+                                ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                                ctx.fillStyle = "#BA55D3";
+                                ctx.fill();
+                                ctx.closePath();
+                            }
+                        }
+                    }
+                    return bricksRemaining;
+                }
+        
+                function drawParticles() {
+                    for (let i = 0; i < particles.length; i++) {
+                        let p = particles[i];
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                        ctx.fillStyle = "#F0E68C";
+                        ctx.fill();
+                        ctx.closePath();
+                        p.y += p.dy;
+        
+                        if (p.y > canvas.height) {
+                            particles.splice(i, 1);
+                            i--;
+                        }
+                    }
+                }
 
-        function collisionDetection() {
-            for (let i = 0; i < balls.length; i++) {
-                for (let c = 0; c < brickColumnCount; c++) {
-                    for (let r = 0; r < brickRowCount; r++) {
-                        let b = bricks[c][r];
-                        if (b.status === 1) {
-                            if (balls[i].x > b.x && balls[i].x < b.x + brickWidth && balls[i].y > b.y && balls[i].y < b.y + brickHeight) {
-                                balls[i].dy = -balls[i].dy;
-                                b.status = 0;
-
-                                if (Math.random() < 0.1) {
-                                    particles.push({
-                                        x: b.x + brickWidth / 2,
-                                        y: b.y + brickHeight / 2,
-                                        dy: 1
+                function collisionDetection() {
+                    for (let i = 0; i < balls.length; i++) {
+                        for (let c = 0; c < brickColumnCount; c++) {
+                            for (let r = 0; r < brickRowCount; r++) {
+                                let b = bricks[c][r];
+                                if (b.status === 1) {
+                                    if (balls[i].x > b.x && balls[i].x < b.x + brickWidth && balls[i].y > b.y && balls[i].y < b.y + brickHeight) {
+                                        balls[i].dy = -balls[i].dy;
+                                        b.status = 0;
+        
+                                        if (Math.random() < 0.1) {
+                                            particles.push({
+                                                x: b.x + brickWidth / 2,
+                                                y: b.y + brickHeight / 2,
+                                                dy: 1
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+        
+                            for (let j = 0; j < particles.length; j++) {
+                                let p = particles[j];
+                                if (p.x > paddleX && p.x < paddleX + paddleWidth && p.y + 4 > canvas.height - paddleHeight) {
+                                    particles.splice(j, 1);
+                                    j--;
+                                    balls.push({
+                                        x: paddleX + paddleWidth / 2,
+                                        y: canvas.height - paddleHeight - 10,
+                                        dx: Math.random() * 4 - 2,
+                                        dy: -Math.random() * 4 - 2,
+                                        color: "#FFA500" 
                                     });
                                 }
                             }
                         }
                     }
-
-                    for (let j = 0; j < particles.length; j++) {
-                        let p = particles[j];
-                        if (p.x > paddleX && p.x < paddleX + paddleWidth && p.y + 4 > canvas.height - paddleHeight) {
-                            particles.splice(j, 1);
-                            j--;
-                            balls.push({
-                                x: paddleX + paddleWidth / 2,
-                                y: canvas.height - paddleHeight - 10,
-                                dx: Math.random() * 4 - 2,
-                                dy: -Math.random() * 4 - 2,
-                                color: "#FFA500" 
-                            });
+                }
+        
+                function draw() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawBricks();
+                    drawBall();
+                    drawPaddle();
+                    drawParticles();
+                    collisionDetection();
+        
+                    let allBallsOut = true;
+                    for (let i = 0; i < balls.length; i++) {
+                        let b = balls[i];
+                        if (b.x + b.dx > canvas.width - ballRadius || b.x + b.dx < ballRadius) {
+                            b.dx = -b.dx;
+                        }
+                        if (b.y + b.dy < ballRadius) {
+                            b.dy = -b.dy;
+                        } else if (b.y + b.dy > canvas.height - ballRadius) {
+                            if (b.x > paddleX && b.x < paddleX + paddleWidth) {
+                                b.dy = -b.dy;
+                            } else {
+                                particles.push({
+                                    x: b.x,
+                                    y: b.y,
+                                    size: ballRadius,
+                                    dx: b.dx / 2,
+                                    dy: b.dy / 2,
+                                    alpha: 1
+                                });
+                                balls.splice(i, 1);
+                                i--;
+                                continue;
+                            }
+                        }
+        
+                        b.x += b.dx;
+                        b.y += b.dy;
+        
+                        if (b.x > -ballRadius && b.x < canvas.width + ballRadius &&
+                            b.y > -ballRadius && b.y < canvas.height + ballRadius) {
+                            allBallsOut = false;
                         }
                     }
-                }
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawBricks();
-            drawBall();
-            drawPaddle();
-            drawParticles();
-            collisionDetection();
-
-            let allBallsOut = true;
-            for (let i = 0; i < balls.length; i++) {
-                let b = balls[i];
-                if (b.x + b.dx > canvas.width - ballRadius || b.x + b.dx < ballRadius) {
-                    b.dx = -b.dx;
-                }
-                if (b.y + b.dy < ballRadius) {
-                    b.dy = -b.dy;
-                } else if (b.y + b.dy > canvas.height - ballRadius) {
-                    if (b.x > paddleX && b.x < paddleX + paddleWidth) {
-                        b.dy = -b.dy;
+        
+                    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                        paddleX += 7;
+                    } else if (leftPressed && paddleX > 0) {
+                        paddleX -= 7;
+                    }
+        
+                    let bricksRemaining = drawBricks();
+                    if (bricksRemaining === 0) {
+                        gameOver("You Win!");
+                    } else if (allBallsOut) {
+                        gameOver("Game Over");
                     } else {
-                        particles.push({
-                            x: b.x,
-                            y: b.y,
-                            size: ballRadius,
-                            dx: b.dx / 2,
-                            dy: b.dy / 2,
-                            alpha: 1
-                        });
-                        balls.splice(i, 1);
-                        i--;
-                        continue;
+                        requestAnimationFrame(draw);
                     }
                 }
-
-                b.x += b.dx;
-                b.y += b.dy;
-
-                if (b.x > -ballRadius && b.x < canvas.width + ballRadius &&
-                    b.y > -ballRadius && b.y < canvas.height + ballRadius) {
-                    allBallsOut = false;
+        
+                function gameOver(message) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    gameOverText.textContent = message;
+                    gameOverMessage.style.display = "block";
+                    removeEventListeners();
                 }
+        
+                setupEventListeners();
+                draw();
             }
-
-            if (rightPressed && paddleX < canvas.width - paddleWidth) {
-                paddleX += 7;
-            } else if (leftPressed && paddleX > 0) {
-                paddleX -= 7;
-            }
-
-            let bricksRemaining = drawBricks();
-            if (bricksRemaining === 0) {
-                gameOver("You Win!");
-            } else if (allBallsOut) {
-                gameOver("Game Over");
-            } else {
-                requestAnimationFrame(draw);
-            }
-        }
-
-        function gameOver(message) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            gameOverText.textContent = message;
-            gameOverMessage.style.display = "block";
-            removeEventListeners();
-        }
-
-        setupEventListeners();
-        draw();
-    }
-
-    howToPlayButton.addEventListener('click', () => {
-        howToPlayContainer.style.display = 'none';
-        document.querySelector('.breakout-play-container').style.display = 'block';
-    });
-
-    playButton.addEventListener('click', () => {
-        document.querySelector('.breakout-play-container').style.display = 'none';
-        breakoutCanvas.style.display = 'block';
-        startBreakoutGame();
-    });
-
-    playAgainButton.addEventListener('click', () => {
-        gameOverMessage.style.display = "none";
-        startBreakoutGame();
-    });
-});
-
+        
+            howToPlayButton.addEventListener('click', () => {
+                howToPlayContainer.style.display = 'none';
+                document.querySelector('.breakout-play-container').style.display = 'block';
+            });
+        
+            playButton.addEventListener('click', () => {
+                document.querySelector('.breakout-play-container').style.display = 'none';
+                breakoutCanvas.style.display = 'block';
+                startBreakoutGame();
+            });
+        
+            playAgainButton.addEventListener('click', () => {
+                gameOverMessage.style.display = "none";
+                startBreakoutGame();
+            });
+        });
+        
 // Tambahkan konfigurasi particles.js untuk settings section
 document.addEventListener("DOMContentLoaded", function() {
     // Konfigurasi particles yang sudah ada tetap sama
@@ -1807,3 +1814,81 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+// Fungsi untuk menampilkan modal edit task
+function showEditTaskModal(taskId) {
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    const task = tasks[taskId];
+    
+    if (!task) return;
+    
+    // Populate form fields
+    document.getElementById('editTaskId').value = taskId;
+    document.getElementById('editTaskTitle').value = task.title;
+    document.getElementById('editTaskDescription').value = task.description || '';
+    document.getElementById('editTaskDueDate').value = task.dueDate || '';
+    
+    // Set priority radio button
+    const priorityRadio = document.getElementById(`edit${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}Priority`);
+    if (priorityRadio) {
+        priorityRadio.checked = true;
+    }
+    
+    // Show modal
+    const editModal = new bootstrap.Modal(document.getElementById('editTaskModal'));
+    editModal.show();
+}
+
+// Fungsi untuk menyimpan task yang sudah diedit
+function saveEditedTask() {
+    const taskId = document.getElementById('editTaskId').value;
+    const title = document.getElementById('editTaskTitle').value;
+    const description = document.getElementById('editTaskDescription').value;
+    const dueDate = document.getElementById('editTaskDueDate').value;
+    const priority = document.querySelector('input[name="editTaskPriority"]:checked').value;
+    
+    if (!title) return;
+    
+    // Update in localStorage
+    const tasks = JSON.parse(localStorage.getItem('kanbanTasks') || '{}');
+    if (tasks[taskId]) {
+        tasks[taskId].title = title;
+        tasks[taskId].description = description;
+        tasks[taskId].dueDate = dueDate;
+        tasks[taskId].priority = priority;
+        localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
+        
+        // Update DOM
+        const taskElement = document.getElementById(taskId);
+        if (taskElement) {
+            const titleEl = taskElement.querySelector('h4');
+            const descriptionEl = taskElement.querySelector('p');
+            const dueDateEl = taskElement.querySelector('.due-date');
+            const priorityEl = taskElement.querySelector('.priority-badge');
+            
+            titleEl.textContent = title;
+            descriptionEl.textContent = description;
+            dueDateEl.textContent = dueDate ? new Date(dueDate).toLocaleDateString() : 'No due date';
+            
+            priorityEl.className = `priority-badge priority-${priority}`;
+            priorityEl.textContent = priority;
+        }
+        
+        // Close modal with success message
+        bootstrap.Modal.getInstance(document.getElementById('editTaskModal')).hide();
+        
+        // Show success notification
+        Swal.fire({
+            title: 'Updated!',
+            text: 'Task has been updated successfully',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            background: '#2a2a2a',
+            color: '#fff',
+            customClass: {
+                popup: 'swal-dark-theme'
+            }
+        });
+    }
+}

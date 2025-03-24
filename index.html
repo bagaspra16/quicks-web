@@ -233,6 +233,73 @@
         </div>
     </div>
 
+    <!-- Tambahkan Modal Edit Task -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Task</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTaskForm">
+                        <input type="hidden" id="editTaskId">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-7 pe-md-2">
+                                <div class="mb-3">
+                                    <label for="editTaskTitle" class="form-label">Task Title</label>
+                                    <input type="text" class="form-control" id="editTaskTitle" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editTaskDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="editTaskDescription" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <!-- Right Column -->
+                            <div class="col-md-5 ps-md-2">
+                                <div class="mb-3">
+                                    <label for="editTaskDueDate" class="form-label">Due Date</label>
+                                    <input type="date" class="form-control" id="editTaskDueDate">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Priority</label>
+                                    <div class="priority-radio-group">
+                                        <div class="priority-radio">
+                                            <input type="radio" name="editTaskPriority" id="editLowPriority" value="low">
+                                            <label for="editLowPriority">
+                                                <span class="priority-dot low"></span>
+                                                Low
+                                            </label>
+                                        </div>
+                                        <div class="priority-radio">
+                                            <input type="radio" name="editTaskPriority" id="editMediumPriority" value="medium">
+                                            <label for="editMediumPriority">
+                                                <span class="priority-dot medium"></span>
+                                                Medium
+                                            </label>
+                                        </div>
+                                        <div class="priority-radio">
+                                            <input type="radio" name="editTaskPriority" id="editHighPriority" value="high">
+                                            <label for="editHighPriority">
+                                                <span class="priority-dot high"></span>
+                                                High
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEditedTask()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button class="floating-btn" id="mainBtn">
         <center><img src="images/primary-shape.png" width="75%" height="75%" alt="" srcset=""></center>
     </button>
