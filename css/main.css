@@ -384,12 +384,12 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     border-radius: 20px;
-    padding: 20px;
+  padding: 20px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
 }
 
@@ -415,8 +415,8 @@ body {
     font-size: 2.5rem;
     font-weight: bold;
     color: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
@@ -456,12 +456,12 @@ body {
 
 .ttt-how-to-play-button {
     background: linear-gradient(45deg, #f1c40f, #f39c12);
-    color: white;
+  color: white;
     border: none;
     padding: 12px 25px;
     border-radius: 25px;
     font-size: 1.1em;
-    cursor: pointer;
+  cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -476,14 +476,14 @@ body {
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-    .tic-tac-toe {
+.tic-tac-toe {
         max-width: 350px;
         gap: 8px;
         padding: 12px;
-    }
+}
 
-    .tic-tac-toe button {
-        font-size: 2rem;
+.tic-tac-toe button {
+  font-size: 2rem;
     }
 }
 
@@ -1241,7 +1241,7 @@ input::-webkit-outer-spin-button,
 
   .breakout-game {
     height: 450px;
-    width: 320px;
+    width: 310px;
     padding: 5px;
     margin: 0 auto;
     position: relative;
@@ -1443,7 +1443,7 @@ input::-webkit-outer-spin-button,
 
 @media (max-width: 480px) {
     .snake-game-container {
-        height: calc(100% - 0px);
+        height: calc(100% - -2px);
         padding: 5px;
         margin: 10px auto;
         position: relative;
