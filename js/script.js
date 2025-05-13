@@ -618,7 +618,7 @@
                 apiKey: '18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3',
                 apiHost: 'chatgpt-42.p.rapidapi.com',
                 apiBaseUrl: 'https://chatgpt-42.p.rapidapi.com',
-                apiEndpoint: '/gpt4',
+                apiEndpoint: '/matag2',
             };
         
             async function getResponse(userMessage) {
@@ -638,7 +638,11 @@
                                 content: userMessage
                             }
                         ],
-                        web_access: false
+                        system_prompt: '',
+                        temperature: 0.9,
+                        top_k: 5,
+                        top_p: 0.9,
+                        max_tokens: 256
                     })
                 };
         
